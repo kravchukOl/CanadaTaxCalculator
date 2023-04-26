@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/nav_bar_income_tax"
-        />
-    <item android:title="@string/gst_hst" />
+    <item
+        android:id="@+id/nav_income"
+        android:icon="@drawable/ic_baseline_request_page_24"
+        android:title="@string/nav_bar_income_tax"/>
 
+
+    <item
+        android:id="@+id/nav_sales"
+        android:title="@string/gst_hst"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"/>
 
 
 </menu>
