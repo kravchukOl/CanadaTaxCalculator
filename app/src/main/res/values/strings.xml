@@ -2,4 +2,7 @@
     <string name="app_name">Canada Tax Calculator</string>
     <string name="nav_bar_income_tax">Income Tax</string>
     <string name="gst_hst">GST/HST</string>
+    <string name="input_card_province">Province:</string>
+    <string name="input_card_annual_income">Annual Income:</string>
+    <string name="input_card_currancy_cad">CAD</string>
 </resources>
