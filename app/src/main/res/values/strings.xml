@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Canada Tax Calculator</string>
+    <string name="nav_bar_income_tax">Income Tax</string>
+    <string name="gst_hst">GST/HST</string>
+</resources>
