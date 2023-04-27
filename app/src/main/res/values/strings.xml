@@ -4,5 +4,11 @@
     <string name="gst_hst">GST/HST</string>
     <string name="input_card_province">Province:</string>
     <string name="input_card_annual_income">Annual Income:</string>
-    <string name="input_card_currancy_cad">CAD</string>
+    <string name="input_card_currency_cad">CAD</string>
+    <string name="button_calculate_taxes">Calculate taxes</string>
+    <string name="federal_tax_text_view">Federal Tax:</string>
+    <string name="provincial_tax_text_view">Provincial Tax:</string>
+    <string name="total_income_tax_text_view">Total Income Tax:</string>
+    <string name="average_tax_rate_text_view">Average Tax Rate:</string>
+    <string name="net_income_text_view">Net Income:</string>
 </resources>
