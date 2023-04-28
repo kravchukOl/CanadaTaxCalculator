@@ -12,4 +12,5 @@
     <string name="total_income_tax_text_view">Total Income Tax:</string>
     <string name="average_tax_rate_text_view">Average Tax Rate:</string>
     <string name="net_income_text_view">Net Income:</string>
+    <string name="content_description_flag_image">Province flag image</string>
 </resources>

@@ -23,20 +23,23 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/text_view_province"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/input_card_province"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/spinner_provinces"
+                android:textSize="18sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinner_provinces"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner_provinces"
-                android:layout_width="50dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/support_simple_spinner_dropdown_item" />
+                tools:listitem="@layout/support_simple_spinner_dropdown_item"
+                style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar"/>
 
             <TextView
                 android:id="@+id/text_view_annual_income"
@@ -86,11 +89,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_calculate_taxes"
-        android:orientation="vertical">
+        app:layout_constraintTop_toBottomOf="@id/button_calculate_taxes">
 
         <GridLayout
             android:layout_width="match_parent"
@@ -147,12 +150,12 @@
                 tools:text="8,123.32 CAD" />
 
             <com.google.android.material.divider.MaterialDivider
-                android:layout_column="0"
                 android:layout_row="4"
-                app:dividerThickness="2dp"
-                android:layout_columnWeight="1"
+                android:layout_column="0"
                 android:layout_columnSpan="2"
-                app:dividerColor="#9575CD"/>
+                android:layout_columnWeight="1"
+                app:dividerColor="#9575CD"
+                app:dividerThickness="2dp" />
 
             <TextView
                 android:layout_columnWeight="1"
@@ -188,14 +191,10 @@
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_column="0"
-                app:dividerThickness="3dp"
-                app:dividerColor="#9575CD"
+                android:layout_columnSpan="2"
                 android:layout_columnWeight="1"
-                android:layout_columnSpan="2"/>
-
-
-
-
+                app:dividerColor="#9575CD"
+                app:dividerThickness="3dp" />
 
 
         </GridLayout>
