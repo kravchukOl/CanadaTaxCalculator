@@ -16,20 +16,24 @@
         android:paddingEnd="16dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/image_view_flag"
+        app:layout_constraintEnd_toStartOf="@id/card_view_flag_image"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Newfoundland and Labrador" />
 
 
-    <ImageView
-        android:id="@+id/image_view_flag"
-        android:layout_width="72dp"
-        android:layout_height="36dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/flag_of_newfoundland_and_labrador"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_flag_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/content_description_flag_image" />
-
-
+        app:cardCornerRadius="4dp">
+        <ImageView
+            android:id="@+id/image_view_flag"
+            android:layout_width="72dp"
+            android:layout_height="36dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/flag_of_newfoundland_and_labrador"
+            android:contentDescription="@string/content_description_flag_image" />
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

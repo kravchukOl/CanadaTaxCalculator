@@ -15,7 +15,7 @@ import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBind
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
-    private lateinit var incomeTax : IncomeTax
+    private var incomeTax = IncomeTax()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,39 +33,46 @@ class IncomeTaxFragment : Fragment() {
 
     private fun setUI() {
         setSpinnerAdapter()
-        binding.buttonCalculateTaxes.setOnClickListener { calculateTaxes() }
+        binding.buttonCalculateTaxes.setOnClickListener {
+            calculateTaxes()
+            binding.tableLayoutSummary.visibility = View.VISIBLE
+        }
     }
 
 
     private fun calculateTaxes() {
 
-        if(binding.editTextAnnualIncome.text.isNullOrEmpty()) {
+        if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
             Toast.makeText(context, "Enter Annual Income", Toast.LENGTH_LONG).show()
             return
         }
 
-        incomeTax = IncomeTax( Province("Alberta", 0),
-            binding.editTextAnnualIncome.text.toString().toDouble())
+        val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+        val federalTax = incomeTax.getFederalTax(annualIncome)
+        val provinceTax = incomeTax.getProvinceTax( annualIncome,
+            binding.spinnerProvinces.selectedItem as Province
+        )
 
-        binding.textViewFederal1Tax.text = incomeTax.getFederalTax().toString()
+        binding.textViewFederalTax.text =
+            String.format("%.2f ${getString(R.string.input_card_currency_cad)}", federalTax)
+
+        binding.textViewProvincialTax.text =
+            String.format("%.2f ${getString(R.string.input_card_currency_cad)}", provinceTax)
+
+        binding.textViewTotalIncomeTax.text =
+            String.format("%.2f ${getString(R.string.input_card_currency_cad)}", provinceTax + federalTax)
+
+        binding.textViewNetIncome.text =
+            String.format("%.2f ${getString(R.string.input_card_currency_cad)}",  annualIncome - provinceTax - federalTax)
+
+        binding.textViewAverageTaxRate.text =
+            String.format("%.1f%%",  (provinceTax + federalTax) / annualIncome * 100)
+
+
     }
 
     private fun setSpinnerAdapter() {
-        val provincesArray = arrayOf(
-            Province("Alberta", R.drawable.flag_of_alberta),
-            Province("British Columbia", R.drawable.flag_of_british_columbia),
-            Province("Manitoba", R.drawable.flag_of_manitoba),
-            Province("New Brunswick", R.drawable.flag_of_new_brunswick),
-            Province("Newfoundland and Labrador", R.drawable.flag_of_newfoundland_and_labrador),
-            Province("Northwest Territories", R.drawable.flag_of_the_northwest_territories),
-            Province("Nova Scotia", R.drawable.flag_of_nova_scotia),
-            Province("Nunavut", R.drawable.flag_of_nunavut),
-            Province("Ontario", R.drawable.flag_of_ontario),
-            Province("Prince Edward Island", R.drawable.flag_of_prince_edward_island),
-            Province("Quebec", R.drawable.flag_of_quebec),
-            Province("Saskatchewan", R.drawable.flag_of_saskatchewan),
-            Province("Yukon", R.drawable.flag_of_yukon),
-        )
+        val provincesArray = incomeTax.getIndividualsIncomeTaxRates()
         binding.spinnerProvinces.adapter = ProvinceArrayAdapter(provincesArray)
     }
 

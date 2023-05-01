@@ -36,7 +36,7 @@ class ProvinceArrayAdapter(private val dataArray: Array<Province>)
             view = convertView
             itemHolder = view.tag as ItemHolder
         }
-        itemHolder.provinceNameTextView.text = dataArray[position].name
+        itemHolder.provinceNameTextView.text = dataArray[position].provinceName
         itemHolder.provinceFlagImageView.setImageResource(dataArray[position].imageId)
 
         //val id = context.resources.getIdentifier(dataSource.get(position).url, "drawable", context.packageName)

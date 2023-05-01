@@ -1,8 +1,7 @@
 package com.oleksiikravchuk.canadataxcalculator
 
-data class Province(
-    val name: String,
+class Province(
+    val provinceName: String,
     val imageId : Int,
-) {
-
-}
+    val individualsIncomeTaxRates: Array<Pair<Int,Double>>
+) : java.io.Serializable
