@@ -114,8 +114,12 @@ class IncomeTax() {
             )
         ),
         Province(
+            // Quebec income tax rates
             "Quebec", R.drawable.flag_of_quebec, arrayOf(
-                Pair(0, 0.0),
+                Pair(0, 0.14),
+                Pair(49275, 0.19),
+                Pair(98540, 0.24),
+                Pair(119910, 0.2575),
             )
         ),
         Province(
@@ -142,15 +146,9 @@ class IncomeTax() {
 
     fun getFederalTax(annualIncome: Double) = calculateTaxCommonRates(annualIncome)
 
-    fun getProvinceTax(annualIncome: Double, province: Province) = when (province.provinceName)
-    {
-        "Quebec" -> calculateQuebecTax( annualIncome, province )
-        else -> calculateTaxCommonRates(annualIncome, province)
-    }
+    fun getProvinceTax(annualIncome: Double, province: Province) =
+        calculateTaxCommonRates(annualIncome, province)
 
-    private fun calculateQuebecTax(annualIncome: Double, province: Province): Double {
-        TODO()
-    }
 
     private fun calculateTaxCommonRates(annualIncome: Double, province: Province? = null): Double {
         var taxValue = 0.0
