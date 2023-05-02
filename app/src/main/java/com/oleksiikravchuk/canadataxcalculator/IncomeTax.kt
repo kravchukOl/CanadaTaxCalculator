@@ -10,6 +10,9 @@ class IncomeTax() {
         Pair(235675, 0.33)
     )
 
+    private val federalEmploymentInsuranceRates2023 = Pair(61500, 0.0163)
+    private val quebecEmploymentInsuranceRates2023 = Pair(61500, 0.0127)
+
     private val individualsIncomeTaxRates2023 = arrayOf(
         Province(
             "Alberta", R.drawable.flag_of_alberta,
@@ -143,8 +146,18 @@ class IncomeTax() {
 
 
     fun getIndividualsIncomeTaxRates() = individualsIncomeTaxRates2023
-
     fun getFederalTax(annualIncome: Double) = calculateTaxCommonRates(annualIncome)
+
+    fun getEmploymentInsuranceDeduction(annualIncome: Double, province: Province) : Double {
+        val ratesEI = if (province.provinceName == "Quebec")
+            quebecEmploymentInsuranceRates2023
+        else federalEmploymentInsuranceRates2023
+
+        return if(annualIncome >= ratesEI.first)
+            ratesEI.first * ratesEI.second
+        else
+            annualIncome * ratesEI.second
+    }
 
     fun getProvinceTax(annualIncome: Double, province: Province) =
         calculateTaxCommonRates(annualIncome, province)

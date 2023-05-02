@@ -155,6 +155,23 @@
                     tools:text="8,123.32 CAD" />
             </TableRow>
 
+            <TableRow>
+
+                <TextView
+                    android:layout_margin="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/ei_deduction"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/text_view_employment_insurance_deduction"
+                    android:layout_column="1"
+                    android:layout_margin="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="16sp"
+                    tools:text="1,002.45 CAD"/>
+            </TableRow>
+
             <com.google.android.material.divider.MaterialDivider
                 android:layout_columnWeight="0.5"
                 app:dividerColor="#9575CD"
