@@ -29,13 +29,46 @@ class IncomeTaxFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUI()
+
+        if (savedInstanceState != null)
+            applySavedInstanceStates(savedInstanceState)
+
+    }
+
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("Annual Income", binding.editTextAnnualIncome.text.toString())
+
+        if( binding.tableLayoutSummary.visibility == View.VISIBLE ) {
+            outState.putInt("Summary Table Visibility", binding.tableLayoutSummary.visibility)
+            outState.putString("Federal Tax", binding.textViewFederalTax.text.toString())
+            outState.putString("Provincial Tax", binding.textViewProvincialTax.text.toString())
+            outState.putString("Total Income Tax", binding.textViewTotalIncomeTax.text.toString())
+            outState.putString("Net Income", binding.textViewNetIncome.text.toString())
+            outState.putString("Average Tax Rate", binding.textViewAverageTaxRate.text.toString())
+        }
+    }
+
+    private fun applySavedInstanceStates(instanceState: Bundle) {
+        binding.editTextAnnualIncome.setText(instanceState.getString("Annual Income"))
+
+        if(instanceState.getInt("Summary Table Visibility") == View.VISIBLE) {
+            binding.tableLayoutSummary.visibility = View.VISIBLE
+            binding.textViewFederalTax.text = instanceState.getString("Federal Tax")
+            binding.textViewProvincialTax.text = instanceState.getString("Provincial Tax")
+            binding.textViewNetIncome.text = instanceState.getString("Total Income Tax")
+            binding.textViewNetIncome.text = instanceState.getString("Net Income")
+            binding.textViewAverageTaxRate.text = instanceState.getString("Average Tax Rate")
+
+        }
     }
 
     private fun setUI() {
         setSpinnerAdapter()
         binding.buttonCalculateTaxes.setOnClickListener {
             calculateTaxes()
-            binding.tableLayoutSummary.visibility = View.VISIBLE
         }
     }
 
@@ -44,31 +77,37 @@ class IncomeTaxFragment : Fragment() {
 
         if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
             Toast.makeText(context, "Enter Annual Income", Toast.LENGTH_LONG).show()
-            return
+        } else {
+            binding.tableLayoutSummary.visibility = View.VISIBLE
+
+            val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+            val federalTax = incomeTax.getFederalTax(annualIncome)
+            val provinceTax = incomeTax.getProvinceTax(
+                annualIncome,
+                binding.spinnerProvinces.selectedItem as Province
+            )
+
+            binding.textViewFederalTax.text =
+                String.format("%.2f ${getString(R.string.input_card_currency_cad)}", federalTax)
+
+            binding.textViewProvincialTax.text =
+                String.format("%.2f ${getString(R.string.input_card_currency_cad)}", provinceTax)
+
+            binding.textViewTotalIncomeTax.text =
+                String.format(
+                    "%.2f ${getString(R.string.input_card_currency_cad)}",
+                    provinceTax + federalTax
+                )
+
+            binding.textViewNetIncome.text =
+                String.format(
+                    "%.2f ${getString(R.string.input_card_currency_cad)}",
+                    annualIncome - provinceTax - federalTax
+                )
+
+            binding.textViewAverageTaxRate.text =
+                String.format("%.1f%%", (provinceTax + federalTax) / annualIncome * 100)
         }
-
-        val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
-        val federalTax = incomeTax.getFederalTax(annualIncome)
-        val provinceTax = incomeTax.getProvinceTax( annualIncome,
-            binding.spinnerProvinces.selectedItem as Province
-        )
-
-        binding.textViewFederalTax.text =
-            String.format("%.2f ${getString(R.string.input_card_currency_cad)}", federalTax)
-
-        binding.textViewProvincialTax.text =
-            String.format("%.2f ${getString(R.string.input_card_currency_cad)}", provinceTax)
-
-        binding.textViewTotalIncomeTax.text =
-            String.format("%.2f ${getString(R.string.input_card_currency_cad)}", provinceTax + federalTax)
-
-        binding.textViewNetIncome.text =
-            String.format("%.2f ${getString(R.string.input_card_currency_cad)}",  annualIncome - provinceTax - federalTax)
-
-        binding.textViewAverageTaxRate.text =
-            String.format("%.1f%%",  (provinceTax + federalTax) / annualIncome * 100)
-
-
     }
 
     private fun setSpinnerAdapter() {
