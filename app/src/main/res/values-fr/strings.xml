@@ -14,4 +14,6 @@
     <string name="net_income_text_view">Net Income:</string>
     <string name="content_description_flag_image">Province flag image</string>
     <string name="ei_deduction">EI Deduction:</string>
+    <string name="switch_ei_deduction">EI Deduction</string>
+    <string name="switch_cpp_deduction">CPP Deduction</string>
 </resources>

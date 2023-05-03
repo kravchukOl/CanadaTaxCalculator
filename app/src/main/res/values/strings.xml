@@ -3,7 +3,7 @@
     <string name="nav_bar_income_tax">Income Tax</string>
     <string name="gst_hst">GST/HST</string>
     <string name="input_card_province">Province:</string>
-    <string name="input_card_annual_income">Annual Income:</string>
+    <string name="input_card_annual_income">Taxable Income:</string>
     <string name="input_card_currency_cad">CAD</string>
     <string name="button_calculate_taxes">Calculate taxes</string>
     <string name="federal_tax_text_view">Federal Tax:</string>
@@ -13,4 +13,6 @@
     <string name="net_income_text_view">Net Income:</string>
     <string name="content_description_flag_image">Province flag image</string>
     <string name="ei_deduction">EI Deduction:</string>
+    <string name="switch_ei_deduction">EI Deduction</string>
+    <string name="switch_cpp_deduction">CPP Deduction</string>
 </resources>
