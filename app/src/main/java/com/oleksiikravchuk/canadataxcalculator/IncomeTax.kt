@@ -15,6 +15,7 @@ class IncomeTax {
     private val quebecEmploymentInsuranceRates2023 = Pair(61500, 0.0127)
 
     private val canadaPensionPlanRates2023 = Pair(63100, 0.0595)
+    private val quebecPensionPlanRates2023 = Pair(66600, 0.054)
 
     private val individualsIncomeTaxRates2023 = arrayOf(
         Province(
@@ -173,14 +174,26 @@ class IncomeTax {
 
     fun getCanadaPensionPlanContribution(
         annualIncome: Double,
+        province: Province,
         isSelfEmployed: Boolean = false
     ): Double {
-        var contributionRate = canadaPensionPlanRates2023.second
+
+        var contributionRate : Double
+        val maxAmountContributeOn : Int
+
+        if(province.provinceName == "Quebec") {
+            contributionRate = quebecPensionPlanRates2023.second
+            maxAmountContributeOn = quebecPensionPlanRates2023.first
+        }
+        else {
+            contributionRate = canadaPensionPlanRates2023.second
+            maxAmountContributeOn = canadaPensionPlanRates2023.first
+        }
 
         if (isSelfEmployed) contributionRate *= 2
 
-        return if (annualIncome >= canadaPensionPlanRates2023.first)
-            canadaPensionPlanRates2023.first * contributionRate
+        return if (annualIncome >= maxAmountContributeOn)
+            maxAmountContributeOn * contributionRate
         else
             annualIncome * contributionRate
     }
