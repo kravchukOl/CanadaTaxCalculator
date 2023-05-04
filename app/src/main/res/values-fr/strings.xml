@@ -16,4 +16,5 @@
     <string name="ei_deduction">EI Deduction:</string>
     <string name="switch_ei_deduction">EI Deduction</string>
     <string name="switch_cpp_deduction">CPP Deduction</string>
+    <string name="cpp_contribution">CPP Contribution:</string>
 </resources>

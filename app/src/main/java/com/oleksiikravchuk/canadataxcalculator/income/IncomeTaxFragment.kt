@@ -48,6 +48,10 @@ class IncomeTaxFragment : Fragment() {
                 "EI Deduction",
                 binding.textViewEmploymentInsuranceDeduction.text.toString()
             )
+            outState.putString(
+                "CPP Contribution",
+                binding.textViewCppContribution.text.toString()
+            )
             outState.putString("Net Income", binding.textViewNetIncome.text.toString())
             outState.putString("Average Tax Rate", binding.textViewAverageTaxRate.text.toString())
         }
@@ -63,6 +67,7 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNetIncome.text = instanceState.getString("Total Income Tax")
             binding.textViewEmploymentInsuranceDeduction.text =
                 instanceState.getString("EI Deduction")
+            binding.textViewCppContribution.text = instanceState.getString("CPP Contribution")
             binding.textViewNetIncome.text = instanceState.getString("Net Income")
             binding.textViewAverageTaxRate.text = instanceState.getString("Average Tax Rate")
 
@@ -110,6 +115,12 @@ class IncomeTaxFragment : Fragment() {
                         annualIncome,
                         binding.spinnerProvinces.selectedItem as Province
                     )
+                )
+
+            binding.textViewCppContribution.text =
+                String.format(
+                    "%.2f $",
+                    incomeTax.getCanadaPensionPlanContribution(annualIncome, false),
                 )
 
             binding.textViewNetIncome.text =
