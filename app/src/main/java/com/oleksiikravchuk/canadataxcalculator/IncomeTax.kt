@@ -17,12 +17,12 @@ class IncomeTax {
     private val canadaPensionPlanRates2023 = Pair(63100, 0.0595)
     private val quebecPensionPlanRates2023 = Pair(66600, 0.054)
 
-    private val individualsIncomeTaxRates2023 = arrayOf(
+    private val provincesAndRates2023 = arrayOf(
         Province(
             "Alberta", R.drawable.flag_of_alberta,
             arrayOf(
                 Pair(0, 0.1),
-                Pair(142058, 0.12),
+                Pair(142292, 0.12),
                 Pair(170751, 0.13),
                 Pair(227668, 0.14),
                 Pair(341502, 0.15)
@@ -32,13 +32,13 @@ class IncomeTax {
         Province(
             "British Columbia", R.drawable.flag_of_british_columbia,
             arrayOf(
-                Pair(0, 0.0504),
+                Pair(0, 0.0506),
                 Pair(45654, 0.077),
                 Pair(91310, 0.105),
                 Pair(104835, 0.1229),
-                Pair(172602, 0.147),
-                Pair(240716, 0.168),
-                Pair(341502, 0.205),
+                Pair(127299, 0.147),
+                Pair(172602, 0.168),
+                Pair(240716, 0.205),
             ),
             11981
         ),
@@ -67,23 +67,13 @@ class IncomeTax {
                 Pair(0, 0.087),
                 Pair(41457, 0.145),
                 Pair(82913, 0.158),
-                Pair(148027, 0.158),
-                Pair(207239, 0.178),
-                Pair(264750, 0.198),
-                Pair(529500, 0.208),
-                Pair(1059000, 0.213),
+                Pair(148027, 0.178),
+                Pair(207239, 0.198),
+                Pair(264750, 0.208),
+                Pair(529500, 0.213),
+                Pair(1059000, 0.218),
             ),
             10382
-        ),
-        Province(
-            "Northwest Territories", R.drawable.flag_of_the_northwest_territories,
-            arrayOf(
-                Pair(0, 0.059),
-                Pair(48326, 0.086),
-                Pair(96655, 0.122),
-                Pair(157139, 0.1405),
-            ),
-            16593
         ),
         Province(
             "Nova Scotia", R.drawable.flag_of_nova_scotia,
@@ -95,6 +85,16 @@ class IncomeTax {
                 Pair(150000, 0.21)
             ),
             8481
+        ),
+        Province(
+            "Northwest Territories", R.drawable.flag_of_the_northwest_territories,
+            arrayOf(
+                Pair(0, 0.059),
+                Pair(48326, 0.086),
+                Pair(96655, 0.122),
+                Pair(157139, 0.1405),
+            ),
+            16593
         ),
         Province(
             "Nunavut", R.drawable.flag_of_nunavut,
@@ -157,9 +157,19 @@ class IncomeTax {
         ),
     )
 
+    fun getIndividualsIncomeTaxRates() = provincesAndRates2023
 
-    fun getIndividualsIncomeTaxRates() = individualsIncomeTaxRates2023
-    fun getFederalTax(annualIncome: Double) = calculateTaxCommonRates(annualIncome)
+    fun getFederalTax(annualIncome: Double, province: Province): Double {
+        return if( province.provinceName == "Quebec") {
+            val commonFederalTax = calculateTaxCommonRates(annualIncome)
+            commonFederalTax - commonFederalTax * 0.165
+        } else {
+            calculateTaxCommonRates(annualIncome)
+        }
+    }
+
+    fun getProvinceTax(annualIncome: Double, province: Province) =
+        calculateTaxCommonRates(annualIncome, province)
 
     fun getEmploymentInsuranceDeduction(annualIncome: Double, province: Province): Double {
         val ratesEI = if (province.provinceName == "Quebec")
@@ -178,14 +188,13 @@ class IncomeTax {
         isSelfEmployed: Boolean = false
     ): Double {
 
-        var contributionRate : Double
-        val maxAmountContributeOn : Int
+        var contributionRate: Double
+        val maxAmountContributeOn: Int
 
-        if(province.provinceName == "Quebec") {
+        if (province.provinceName == "Quebec") {
             contributionRate = quebecPensionPlanRates2023.second
             maxAmountContributeOn = quebecPensionPlanRates2023.first
-        }
-        else {
+        } else {
             contributionRate = canadaPensionPlanRates2023.second
             maxAmountContributeOn = canadaPensionPlanRates2023.first
         }
@@ -198,17 +207,14 @@ class IncomeTax {
             annualIncome * contributionRate
     }
 
-
-    fun getProvinceTax(annualIncome: Double, province: Province) =
-        calculateTaxCommonRates(annualIncome, province)
-
+    fun getProvincesArray() = provincesAndRates2023
 
     private fun calculateTaxCommonRates(annualIncome: Double, province: Province? = null): Double {
         var taxValue = 0.0
         val ratesArray = province?.individualsIncomeTaxRates ?: federalTaxBrackets2023
         val taxCredit = province?.personalTaxCredit ?: personaFederalTaxCredit2023
 
-        if (annualIncome < taxCredit) return 0.0
+        if (annualIncome <= taxCredit) return 0.0
 
         for (i in 1..ratesArray.size) {
             if (i == ratesArray.size && annualIncome > ratesArray[i - 1].first) {

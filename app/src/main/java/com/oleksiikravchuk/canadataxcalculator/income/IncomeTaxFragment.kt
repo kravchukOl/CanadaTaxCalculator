@@ -90,10 +90,14 @@ class IncomeTaxFragment : Fragment() {
             binding.tableLayoutSummary.visibility = View.VISIBLE
 
             val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
-            val federalTax = incomeTax.getFederalTax(annualIncome)
-            val provinceTax = incomeTax.getProvinceTax(
-                annualIncome,
-                binding.spinnerProvinces.selectedItem as Province
+            val province = binding.spinnerProvinces.selectedItem as Province
+            val federalTax = incomeTax.getFederalTax(annualIncome, province)
+            val provinceTax = incomeTax.getProvinceTax(annualIncome, province)
+            val employmentInsuranceDeduction = incomeTax.getEmploymentInsuranceDeduction(
+                annualIncome, province
+            )
+            val contributionCPP = incomeTax.getCanadaPensionPlanContribution(
+                annualIncome, province
             )
 
             binding.textViewFederalTax.text =
@@ -104,29 +108,25 @@ class IncomeTaxFragment : Fragment() {
 
             binding.textViewTotalIncomeTax.text =
                 String.format(
-                    "%.2f $",
-                    provinceTax + federalTax
+                    "%.2f $", provinceTax + federalTax
                 )
 
             binding.textViewEmploymentInsuranceDeduction.text =
                 String.format(
                     "%.2f $",
-                    incomeTax.getEmploymentInsuranceDeduction(
-                        annualIncome,
-                        binding.spinnerProvinces.selectedItem as Province
-                    )
+                    employmentInsuranceDeduction
                 )
 
             binding.textViewCppContribution.text =
                 String.format(
                     "%.2f $",
-                    incomeTax.getCanadaPensionPlanContribution(annualIncome, false),
+                    contributionCPP
                 )
 
             binding.textViewNetIncome.text =
                 String.format(
                     "%.2f $",
-                    annualIncome - provinceTax - federalTax
+                    annualIncome - provinceTax - federalTax - contributionCPP - employmentInsuranceDeduction
                 )
 
             binding.textViewAverageTaxRate.text =
