@@ -16,6 +16,12 @@ class IncomeTax {
 
     private val canadaPensionPlanRates2023 = Pair(63100, 0.0595)
     private val quebecPensionPlanRates2023 = Pair(66600, 0.054)
+    private val federalTaxReductionForQuebec = 0.165
+
+    private val ontarioSurtaxRates = arrayOf(
+        Pair(5315, 0.2),
+        Pair(6802, 0.56)
+    )
 
     private val provincesAndRates2023 = arrayOf(
         Province(
@@ -160,16 +166,37 @@ class IncomeTax {
     fun getIndividualsIncomeTaxRates() = provincesAndRates2023
 
     fun getFederalTax(annualIncome: Double, province: Province): Double {
-        return if( province.provinceName == "Quebec") {
+        return if (province.provinceName == "Quebec") {
             val commonFederalTax = calculateTaxCommonRates(annualIncome)
-            commonFederalTax - commonFederalTax * 0.165
+            commonFederalTax - commonFederalTax * federalTaxReductionForQuebec
         } else {
             calculateTaxCommonRates(annualIncome)
         }
     }
 
-    fun getProvinceTax(annualIncome: Double, province: Province) =
-        calculateTaxCommonRates(annualIncome, province)
+    fun getProvinceTax(annualIncome: Double, province: Province): Double {
+        return if (province.provinceName == "Ontario") {
+            val baseProvinceTax = calculateTaxCommonRates(annualIncome, province)
+            baseProvinceTax + getSurtaxForOntario(baseProvinceTax)
+        } else {
+            calculateTaxCommonRates(annualIncome, province)
+        }
+    }
+
+    private fun getSurtaxForOntario(baseOntarioProvinceTax: Double): Double {
+        if (baseOntarioProvinceTax <= ontarioSurtaxRates[0].first) {
+            return 0.0
+        }
+        return if (baseOntarioProvinceTax <= ontarioSurtaxRates[1].first) {
+            (baseOntarioProvinceTax - ontarioSurtaxRates[0].first) * ontarioSurtaxRates[0].second
+        } else {
+            val firstTier =
+                (ontarioSurtaxRates[1].first - ontarioSurtaxRates[0].first) * ontarioSurtaxRates[0].second
+            val secondTier =
+                (baseOntarioProvinceTax - ontarioSurtaxRates[1].first) * ontarioSurtaxRates[1].second
+            firstTier + secondTier
+        }
+    }
 
     fun getEmploymentInsuranceDeduction(annualIncome: Double, province: Province): Double {
         val ratesEI = if (province.provinceName == "Quebec")
