@@ -16,6 +16,8 @@ class IncomeTax {
 
     private val canadaPensionPlanRates2023 = Pair(63100, 0.0595)
     private val quebecPensionPlanRates2023 = Pair(66600, 0.054)
+    private val basicExemptionAmountCPP = 3500
+
     private val federalTaxReductionForQuebec = 0.165
 
     private val ontarioSurtaxRates = arrayOf(
@@ -214,6 +216,9 @@ class IncomeTax {
         province: Province,
         isSelfEmployed: Boolean = false
     ): Double {
+
+        if(annualIncome <= basicExemptionAmountCPP)
+            return 0.0
 
         var contributionRate: Double
         val maxAmountContributeOn: Int

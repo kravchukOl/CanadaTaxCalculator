@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:background="#F6F6F6">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_input_data"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="175dp"
         android:elevation="45dp"
+        android:layout_margin="28dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,10 +40,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="@string/input_card_annual_income"
-                android:textSize="18sp"
                 android:fontFamily="sans-serif-medium"
+                android:text="@string/input_card_annual_income"
                 android:textColor="@color/white"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -71,21 +72,21 @@
                 android:id="@+id/switch_ei_deduction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/switch_ei_deduction"
                 android:fontFamily="sans-serif-medium"
+                android:text="@string/switch_ei_deduction"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_cpp_deduction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/switch_cpp_deduction"
                 android:fontFamily="sans-serif-medium"
+                android:text="@string/switch_cpp_deduction"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -102,15 +103,20 @@
         app:layout_constraintTop_toBottomOf="@id/card_view_input_data" />
 
 
-    <ScrollView
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_calculate_taxes">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_calculate_taxes"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="28dp"
+            android:orientation="vertical">
 
         <TableLayout
             android:id="@+id/table_layout_summary"
@@ -159,6 +165,26 @@
                     tools:text="8,123.32 $" />
             </TableRow>
 
+            <TableRow
+                android:id="@+id/table_row_ontario_surtax"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:layout_margin="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/ontario_surtax"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/text_view_ontario_surtax"
+                    android:layout_column="1"
+                    android:layout_margin="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="16sp"
+                    tools:text="3,215.32 $" />
+            </TableRow>
+
             <TableRow>
 
                 <TextView
@@ -172,12 +198,13 @@
                     android:layout_column="1"
                     android:layout_margin="8dp"
                     android:fontFamily="sans-serif-black"
-                    android:textSize="16sp"
                     android:textColor="@color/red600"
+                    android:textSize="16sp"
                     tools:text="8,123.32 $" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:layout_margin="8dp"
                     android:fontFamily="sans-serif-medium"
@@ -190,11 +217,13 @@
                     android:layout_margin="8dp"
                     android:fontFamily="sans-serif-medium"
                     android:textSize="16sp"
-                    tools:text="1,002.45 $"/>
+                    tools:text="1,002.45 $" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
+                    android:id="@+id/text_view_cpp_qpp_contribution_text"
                     android:layout_margin="8dp"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/cpp_contribution"
@@ -206,7 +235,7 @@
                     android:layout_margin="8dp"
                     android:fontFamily="sans-serif-medium"
                     android:textSize="16sp"
-                    tools:text="3,500 $"/>
+                    tools:text="3,500 $" />
             </TableRow>
 
             <com.google.android.material.divider.MaterialDivider
@@ -214,8 +243,7 @@
                 app:dividerColor="#9575CD"
                 app:dividerThickness="2dp" />
 
-            <TableRow
-                android:gravity="center">
+            <TableRow android:gravity="center">
 
                 <TextView
                     android:layout_margin="8dp"
@@ -230,7 +258,7 @@
                     android:fontFamily="sans-serif-black"
                     android:textColor="@color/green700"
                     android:textSize="16sp"
-                    tools:text="8,123.32 $"/>
+                    tools:text="8,123.32 $" />
             </TableRow>
 
             <TableRow>
@@ -255,6 +283,11 @@
                 app:dividerColor="#9575CD"
                 app:dividerThickness="2dp" />
         </TableLayout>
+
     </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

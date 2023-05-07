@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.oleksiikravchuk.canadataxcalculator.IncomeTax
 import com.oleksiikravchuk.canadataxcalculator.Province
+import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 
@@ -110,6 +111,9 @@ class IncomeTaxFragment : Fragment() {
                 String.format(
                     "%.2f $", provinceTax + federalTax
                 )
+
+            if(province.provinceName == "Quebec")
+                binding.textViewCppQppContributionText.text = getText(R.string.qpp_contribution)
 
             binding.textViewEmploymentInsuranceDeduction.text =
                 String.format(
