@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:background="#F6F6F6">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_input_data"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="200dp"
         android:layout_margin="28dp"
         android:elevation="10dp"
         app:cardCornerRadius="16dp"
@@ -29,8 +30,8 @@
                 style="@style/Widget.AppCompat.Spinner.DropDown"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
                 android:layout_marginBottom="16dp"
+                android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TouchTargetSizeCheck"
@@ -45,8 +46,8 @@
                 android:text="@string/input_card_annual_income"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_input_layout_annual_income" />
+                app:layout_constraintBaseline_toBaselineOf="@id/text_input_layout_annual_income"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_annual_income"
@@ -72,61 +73,98 @@
                 android:id="@+id/text_view_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
                 android:text="2023"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-black"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:textSize="26sp"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
-<!--            <androidx.appcompat.widget.SwitchCompat-->
-<!--                android:id="@+id/switch_ei_deduction"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="sans-serif-medium"-->
-<!--                android:text="@string/switch_ei_deduction"-->
-<!--                android:textColor="@color/white"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent" />-->
+            <!--            <androidx.appcompat.widget.SwitchCompat-->
+            <!--                android:id="@+id/switch_ei_deduction"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="sans-serif-medium"-->
+            <!--                android:text="@string/switch_ei_deduction"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent" />-->
 
-<!--            <androidx.appcompat.widget.SwitchCompat-->
-<!--                android:id="@+id/switch_cpp_deduction"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="sans-serif-medium"-->
-<!--                android:text="@string/switch_cpp_deduction"-->
-<!--                android:textColor="@color/white"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent" />-->
+            <!--            <androidx.appcompat.widget.SwitchCompat-->
+            <!--                android:id="@+id/switch_cpp_deduction"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:fontFamily="sans-serif-medium"-->
+            <!--                android:text="@string/switch_cpp_deduction"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/text_view_capital_gains_and_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:text="Capital Gains and Options"
+                    android:layout_marginHorizontal="8dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-medium"
+                    app:layout_constraintStart_toEndOf="@id/image_view_dropdown"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/image_view_dropdown"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_baseline_arrow_drop_down_circle_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/text_view_capital_gains_and_options"
+                    app:layout_constraintBottom_toBottomOf="@id/text_view_capital_gains_and_options"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 
     <Button
         android:id="@+id/button_calculate_taxes"
         android:layout_width="0dp"
+        android:visibility="visible"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/button_calculate_taxes"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.583"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_view_input_data" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_summary"
         style="@style/CustomCardViewStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_calculate_taxes">
+        app:layout_constraintTop_toBottomOf="@id/button_calculate_taxes"
+        tools:visibility="gone">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <TableLayout
@@ -134,12 +172,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:rowCount="5"
-                android:stretchColumns="*"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:stretchColumns="0,1">
 
                 <TableRow>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_margin="8dp"
@@ -190,7 +226,7 @@
 
                     <TextView
                         android:id="@+id/text_view_ontario_surtax"
-                        android:layout_column="1"
+                        android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textAlignment="textEnd"
@@ -208,7 +244,6 @@
 
                     <TextView
                         android:id="@+id/text_view_total_income_tax"
-                        android:layout_column="1"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"
                         android:textAlignment="textEnd"
@@ -227,7 +262,6 @@
 
                     <TextView
                         android:id="@+id/text_view_employment_insurance_deduction"
-                        android:layout_column="1"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textAlignment="textEnd"
@@ -246,7 +280,6 @@
 
                     <TextView
                         android:id="@+id/text_view_cpp_contribution"
-                        android:layout_column="1"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textAlignment="textEnd"
@@ -259,7 +292,7 @@
                     app:dividerColor="#9575CD"
                     app:dividerThickness="2dp" />
 
-                <TableRow android:gravity="center">
+                <TableRow >
 
                     <TextView
                         android:layout_margin="8dp"
@@ -269,7 +302,6 @@
 
                     <TextView
                         android:id="@+id/text_view_net_income"
-                        android:layout_column="1"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"
                         android:textAlignment="textEnd"
@@ -288,7 +320,6 @@
 
                     <TextView
                         android:id="@+id/text_view_average_tax_rate"
-                        android:layout_column="1"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textAlignment="textEnd"
@@ -297,7 +328,6 @@
                 </TableRow>
 
                 <com.google.android.material.divider.MaterialDivider
-                    android:layout_columnWeight="1"
                     app:dividerColor="#9575CD"
                     app:dividerThickness="2dp" />
             </TableLayout>

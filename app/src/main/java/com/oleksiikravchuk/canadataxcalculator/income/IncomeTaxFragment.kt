@@ -1,6 +1,7 @@
 package com.oleksiikravchuk.canadataxcalculator.income
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,10 +42,10 @@ class IncomeTaxFragment : Fragment() {
         outState.putString("Annual Income", binding.editTextAnnualIncome.text.toString())
 
         if (binding.tableLayoutSummary.visibility == View.VISIBLE) {
-            outState.putInt("Summary Table Visibility", binding.tableLayoutSummary.visibility)
+            outState.putInt("Summary Visibility", binding.cardViewSummary.visibility)
             outState.putString("Federal Tax", binding.textViewFederalTax.text.toString())
             outState.putString("Provincial Tax", binding.textViewProvincialTax.text.toString())
-            outState.putString("Total Income Tax", binding.textViewTotalIncomeTax.text.toString())
+            outState.putString("Total Tax", binding.textViewTotalIncomeTax.text.toString())
             outState.putString(
                 "EI Deduction",
                 binding.textViewEmploymentInsuranceDeduction.text.toString()
@@ -61,11 +62,11 @@ class IncomeTaxFragment : Fragment() {
     private fun applySavedInstanceStates(instanceState: Bundle) {
         binding.editTextAnnualIncome.setText(instanceState.getString("Annual Income"))
 
-        if (instanceState.getInt("Summary Table Visibility") == View.VISIBLE) {
+        if (instanceState.getInt("Summary Visibility") == View.VISIBLE) {
             binding.tableLayoutSummary.visibility = View.VISIBLE
             binding.textViewFederalTax.text = instanceState.getString("Federal Tax")
             binding.textViewProvincialTax.text = instanceState.getString("Provincial Tax")
-            binding.textViewNetIncome.text = instanceState.getString("Total Income Tax")
+            binding.textViewNetIncome.text = instanceState.getString("Total Tax")
             binding.textViewEmploymentInsuranceDeduction.text =
                 instanceState.getString("EI Deduction")
             binding.textViewCppContribution.text = instanceState.getString("CPP Contribution")
@@ -77,6 +78,18 @@ class IncomeTaxFragment : Fragment() {
 
     private fun setUI() {
         setSpinnerAdapter()
+
+        binding.editTextAnnualIncome.setOnKeyListener(
+            object : View.OnKeyListener {
+                override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                    if (event?.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                        calculateTaxes()
+                        return true
+                    }
+                    return false
+                }
+            }
+        )
         binding.buttonCalculateTaxes.setOnClickListener {
             calculateTaxes()
         }
@@ -88,7 +101,7 @@ class IncomeTaxFragment : Fragment() {
         if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
             Toast.makeText(context, "Enter Annual Income", Toast.LENGTH_LONG).show()
         } else {
-            binding.tableLayoutSummary.visibility = View.VISIBLE
+            binding.cardViewSummary.visibility = View.VISIBLE
 
             val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
             val province = binding.spinnerProvinces.selectedItem as Province
@@ -102,34 +115,34 @@ class IncomeTaxFragment : Fragment() {
             )
 
             binding.textViewFederalTax.text =
-                String.format("%.2f $", federalTax)
+                String.format("%.2f C$", federalTax)
 
             binding.textViewProvincialTax.text =
-                String.format("%.2f $", provinceTax)
+                String.format("%.2f C$", provinceTax)
 
             binding.textViewTotalIncomeTax.text =
                 String.format(
-                    "%.2f $", provinceTax + federalTax
+                    "%.2f C$", provinceTax + federalTax
                 )
 
-            if(province.provinceName == "Quebec")
+            if (province.provinceName == "Quebec")
                 binding.textViewCppQppContributionText.text = getText(R.string.qpp_contribution)
 
             binding.textViewEmploymentInsuranceDeduction.text =
                 String.format(
-                    "%.2f $",
+                    "%.2f C$",
                     employmentInsuranceDeduction
                 )
 
             binding.textViewCppContribution.text =
                 String.format(
-                    "%.2f $",
+                    "%.2f C$",
                     contributionCPP
                 )
 
             binding.textViewNetIncome.text =
                 String.format(
-                    "%.2f $",
+                    "%.2f C$",
                     annualIncome - provinceTax - federalTax - contributionCPP - employmentInsuranceDeduction
                 )
 
