@@ -4,7 +4,7 @@
     <string name="gst_hst">GST/HST</string>
     <string name="input_card_province">Province:</string>
     <string name="input_card_annual_income">Taxable Income:</string>
-    <string name="input_card_currency_cad">CAD</string>
+    <string name="input_card_currency_cad">CA$</string>
     <string name="button_calculate_taxes">Calculate taxes</string>
     <string name="federal_tax_text_view">Federal Tax:</string>
     <string name="provincial_tax_text_view">Provincial Tax:</string>
@@ -18,4 +18,6 @@
     <string name="cpp_contribution">CPP Contribution:</string>
     <string name="qpp_contribution">QPP Contribution:</string>
     <string name="ontario_surtax">Ontario Surtax:</string>
+    <string name="show_all_options">Show All Options</string>
+    <string name="current_year">2023</string>
 </resources>

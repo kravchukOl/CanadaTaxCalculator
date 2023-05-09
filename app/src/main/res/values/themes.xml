@@ -15,15 +15,26 @@
     </style>
 
     <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_corners_top_30</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
+    <style name="ShapeAppearanceOverlay_card_corners_top_30" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">30dp</item>
         <item name="cornerSizeTopLeft">30dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="CardViewStyleCornerRadiusBottom16" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_corners_bottom_16</item>
+    </style>
+    <style name="ShapeAppearanceOverlay_card_corners_bottom_16" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
     </style>
 
 </resources>
