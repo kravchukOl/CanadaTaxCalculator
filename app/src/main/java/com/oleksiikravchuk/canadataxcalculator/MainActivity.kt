@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //supportActionBar?.hide()
+        supportActionBar?.hide()
 
             setUI()
     }
