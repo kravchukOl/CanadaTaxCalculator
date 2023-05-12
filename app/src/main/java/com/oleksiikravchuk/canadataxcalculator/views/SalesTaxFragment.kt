@@ -1,4 +1,4 @@
-package com.oleksiikravchuk.canadataxcalculator.sales
+package com.oleksiikravchuk.canadataxcalculator.views
 
 import android.os.Bundle
 import android.view.LayoutInflater

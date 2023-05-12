@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationBarView
 import com.oleksiikravchuk.canadataxcalculator.databinding.ActivityMainBinding
-import com.oleksiikravchuk.canadataxcalculator.income.IncomeTaxFragment
-import com.oleksiikravchuk.canadataxcalculator.sales.SalesTaxFragment
+import com.oleksiikravchuk.canadataxcalculator.views.IncomeTaxFragment
+import com.oleksiikravchuk.canadataxcalculator.views.SalesTaxFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
 

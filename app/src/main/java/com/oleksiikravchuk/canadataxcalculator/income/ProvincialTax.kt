@@ -1,32 +1,9 @@
-package com.oleksiikravchuk.canadataxcalculator
+package com.oleksiikravchuk.canadataxcalculator.income
 
+import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 
-class IncomeTax {
-
-    private val federalTaxBrackets2023 = arrayOf(
-        Pair(0, 0.15),
-        Pair(53359, 0.205),
-        Pair(106717, 0.26),
-        Pair(165430, 0.29),
-        Pair(235675, 0.33)
-    )
-    private val personaFederalTaxCredit2023: Int = 15000
-
-    private val federalEmploymentInsuranceRates2023 = Pair(61500, 0.0163)
-    private val quebecEmploymentInsuranceRates2023 = Pair(61500, 0.0127)
-
-    private val canadaPensionPlanRates2023 = Pair(63100, 0.0595)
-    private val quebecPensionPlanRates2023 = Pair(66600, 0.054)
-    private val basicExemptionAmountCPP = 3500
-
-    private val federalTaxReductionForQuebec = 0.165
-
-    private val ontarioSurtaxRates = arrayOf(
-        Pair(5315, 0.2),
-        Pair(6802, 0.56)
-    )
-
+class ProvincialTax {
     private val provincesAndRates2023 = arrayOf(
         Province(
             "Alberta", R.drawable.flag_of_alberta,
@@ -166,24 +143,27 @@ class IncomeTax {
             15000
         ),
     )
+    private val ontarioSurtaxRates = arrayOf(
+        Pair(5315, 0.2),
+        Pair(6802, 0.56)
+    )
 
-    fun getIndividualsIncomeTaxRates() = provincesAndRates2023
-
-    fun getFederalTax(annualIncome: Double, province: Province): Double {
-        return if (province.provinceName == "Quebec") {
-            val commonFederalTax = calculateTaxCommonRates(annualIncome)
-            commonFederalTax - commonFederalTax * federalTaxReductionForQuebec
-        } else {
-            calculateTaxCommonRates(annualIncome)
-        }
-    }
+    fun getProvincesArray() = provincesAndRates2023
 
     fun getProvinceTax(annualIncome: Double, province: Province): Double {
         return if (province.provinceName == "Ontario") {
-            val baseProvinceTax = calculateTaxCommonRates(annualIncome, province)
+            val baseProvinceTax = calculateTaxCommonRates(
+                annualIncome,
+                province.provinceTaxRates,
+                province.provinceTaxCredit
+            )
             baseProvinceTax + getSurtaxForOntario(baseProvinceTax)
         } else {
-            calculateTaxCommonRates(annualIncome, province)
+            calculateTaxCommonRates(
+                annualIncome,
+                province.provinceTaxRates,
+                province.provinceTaxCredit
+            )
         }
     }
 
@@ -200,68 +180,5 @@ class IncomeTax {
                 (baseOntarioProvinceTax - ontarioSurtaxRates[1].first) * ontarioSurtaxRates[1].second
             firstTier + secondTier
         }
-    }
-
-    fun getEmploymentInsuranceDeduction(annualIncome: Double, province: Province): Double {
-        val ratesEI = if (province.provinceName == "Quebec")
-            quebecEmploymentInsuranceRates2023
-        else federalEmploymentInsuranceRates2023
-
-        return if (annualIncome >= ratesEI.first)
-            ratesEI.first * ratesEI.second
-        else
-            annualIncome * ratesEI.second
-    }
-
-    fun getCanadaPensionPlanContribution(
-        annualIncome: Double,
-        province: Province,
-        isSelfEmployed: Boolean = false
-    ): Double {
-
-        if(annualIncome <= basicExemptionAmountCPP)
-            return 0.0
-
-        var contributionRate: Double
-        val maxAmountContributeOn: Int
-
-        if (province.provinceName == "Quebec") {
-            contributionRate = quebecPensionPlanRates2023.second
-            maxAmountContributeOn = quebecPensionPlanRates2023.first
-        } else {
-            contributionRate = canadaPensionPlanRates2023.second
-            maxAmountContributeOn = canadaPensionPlanRates2023.first
-        }
-
-        if (isSelfEmployed) contributionRate *= 2
-
-        return if (annualIncome >= maxAmountContributeOn)
-            maxAmountContributeOn * contributionRate
-        else
-            annualIncome * contributionRate
-    }
-
-    fun getProvincesArray() = provincesAndRates2023
-
-    private fun calculateTaxCommonRates(annualIncome: Double, province: Province? = null): Double {
-        var taxValue = 0.0
-        val ratesArray = province?.individualsIncomeTaxRates ?: federalTaxBrackets2023
-        val taxCredit = province?.personalTaxCredit ?: personaFederalTaxCredit2023
-
-        if (annualIncome <= taxCredit) return 0.0
-
-        for (i in 1..ratesArray.size) {
-            if (i == ratesArray.size && annualIncome > ratesArray[i - 1].first) {
-                taxValue += (annualIncome - ratesArray[i - 1].first) * ratesArray[i - 1].second
-                break
-            }
-            if (annualIncome <= ratesArray[i].first) {
-                taxValue += (annualIncome - ratesArray[i - 1].first) * ratesArray[i - 1].second
-                break
-            } else {
-                taxValue += (ratesArray[i].first - ratesArray[i - 1].first) * ratesArray[i - 1].second
-            }
-        }
-        return taxValue - taxCredit * ratesArray[0].second
     }
 }

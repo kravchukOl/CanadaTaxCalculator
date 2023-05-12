@@ -1,6 +1,7 @@
 package com.oleksiikravchuk.canadataxcalculator
 
 import com.google.common.truth.Truth.assertThat
+import com.oleksiikravchuk.canadataxcalculator.income.IncomeTax
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

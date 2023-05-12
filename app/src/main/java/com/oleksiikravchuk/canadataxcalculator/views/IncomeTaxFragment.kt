@@ -1,4 +1,4 @@
-package com.oleksiikravchuk.canadataxcalculator.income
+package com.oleksiikravchuk.canadataxcalculator.views
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.oleksiikravchuk.canadataxcalculator.IncomeTax
+import com.oleksiikravchuk.canadataxcalculator.income.IncomeTax
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
@@ -16,6 +16,7 @@ import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBind
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
+
     private var incomeTax = IncomeTax()
 
     override fun onCreateView(
