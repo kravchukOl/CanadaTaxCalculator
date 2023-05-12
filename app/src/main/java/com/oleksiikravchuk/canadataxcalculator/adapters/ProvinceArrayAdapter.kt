@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.oleksiikravchuk.canadataxcalculator.Province
+import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 
 class ProvinceArrayAdapter(private val dataArray: Array<Province>)

@@ -1,5 +1,7 @@
 package com.oleksiikravchuk.canadataxcalculator
 
+import com.oleksiikravchuk.canadataxcalculator.models.Province
+
 class IncomeTax {
 
     private val federalTaxBrackets2023 = arrayOf(

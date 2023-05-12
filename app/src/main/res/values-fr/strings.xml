@@ -15,11 +15,12 @@
     <string name="content_description_flag_image">Province flag image</string>
     <string name="ei_deduction">EI Deduction:</string>
     <string name="switch_ei_deduction">EI Deduction</string>
-    <string name="switch_cpp_deduction">CPP Contribution</string>
+    <string name="switch_cpp_deduction">CPP/QPP Contribution</string>
     <string name="cpp_contribution">CPP Contribution:</string>
     <string name="qpp_contribution">QPP Contribution:</string>
     <string name="ontario_surtax">Ontario Surtax:</string>
     <string name="show_all_options">Show All Options</string>
     <string name="current_year">2023</string>
     <string name="self_employed">Self Employed</string>
+    <string name="optional">Optional</string>
 </resources>

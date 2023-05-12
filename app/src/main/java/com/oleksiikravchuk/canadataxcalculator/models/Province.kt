@@ -1,4 +1,4 @@
-package com.oleksiikravchuk.canadataxcalculator
+package com.oleksiikravchuk.canadataxcalculator.models
 
 class Province(
     val provinceName: String,
