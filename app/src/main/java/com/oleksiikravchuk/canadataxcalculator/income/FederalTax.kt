@@ -30,4 +30,19 @@ class FederalTax {
             )
         }
     }
+
+    fun getMarginalTaxRate(annualIncome: Double, province: Province): Double {
+        if (annualIncome <= 0)
+            return 0.0
+        var marginalRate = 0.0;
+
+        for (i in 1 until federalTaxBrackets2023.size) {
+            if (annualIncome < federalTaxBrackets2023[i].first)
+                marginalRate = federalTaxBrackets2023[i - 1].second
+        }
+        return if (province.provinceName == "Quebec")
+            marginalRate - federalTaxReductionForQuebec
+        else
+            marginalRate
+    }
 }

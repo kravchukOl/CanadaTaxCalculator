@@ -13,6 +13,7 @@
     </style>
 
 
+    <!-- CardViews styles -->
     <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_corners_top_30</item>
     </style>

@@ -37,7 +37,6 @@ class IncomeTaxFragment : Fragment() {
 
     }
 
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("Annual Income", binding.editTextAnnualIncome.text.toString())
@@ -79,11 +78,31 @@ class IncomeTaxFragment : Fragment() {
 
     private fun setUI() {
         setSpinnerAdapter()
+        onEnterKeyPressedInit()
 
+        binding.textViewShowOptionsTop.setOnClickListener {
+            when (binding.cardViewOptions.visibility) {
+                View.GONE -> showOptions()
+                else -> hideOptions()
+            }
+        }
+
+        binding.textHideOptions.setOnClickListener() {
+            hideOptions()
+        }
+
+        binding.buttonCalculateTaxes.setOnClickListener {
+            hideOptions()
+            calculateTaxes()
+        }
+    }
+
+    private fun onEnterKeyPressedInit() {
         binding.editTextAnnualIncome.setOnKeyListener(
             object : View.OnKeyListener {
                 override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
                     if (event?.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                        hideOptions()
                         calculateTaxes()
                         return true
                     }
@@ -91,9 +110,14 @@ class IncomeTaxFragment : Fragment() {
                 }
             }
         )
-        binding.buttonCalculateTaxes.setOnClickListener {
-            calculateTaxes()
-        }
+    }
+
+    private fun hideOptions() {
+        binding.cardViewOptions.visibility = View.GONE
+    }
+
+    private fun showOptions() {
+        binding.cardViewOptions.visibility = View.VISIBLE
     }
 
 
