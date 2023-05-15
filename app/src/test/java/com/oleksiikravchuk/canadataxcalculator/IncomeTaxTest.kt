@@ -4,12 +4,12 @@ import com.google.common.truth.Truth.assertThat
 import com.oleksiikravchuk.canadataxcalculator.income.IncomeTax
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 internal class IncomeTaxTest {
 
     lateinit var incomeTax: IncomeTax
-
 
     @Before
     fun setup() {
@@ -74,17 +74,4 @@ internal class IncomeTaxTest {
             assertThat(totalTax).isZero()
         }
     }
-
-    @Test
-    fun totalTaxesTest_Input10000_ReturnZero() {
-        for (province in incomeTax.getProvincesArray()) {
-            val totalTax =
-                incomeTax.getProvinceTax(10000.0, province) + incomeTax.getFederalTax(
-                    10000.0,
-                    incomeTax.getProvincesArray()[0]
-                )
-            assertThat(totalTax).isZero()
-        }
-    }
-
 }

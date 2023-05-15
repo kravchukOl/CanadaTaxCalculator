@@ -143,6 +143,7 @@ class ProvincialTax {
             15000
         ),
     )
+
     private val ontarioSurtaxRates = arrayOf(
         Pair(5315, 0.2),
         Pair(6802, 0.56)
@@ -188,8 +189,10 @@ class ProvincialTax {
         var marginalRate = 0.0;
 
         for (i in 1 until province.provinceTaxRates.size) {
-            if (annualIncome < province.provinceTaxRates[i].first)
+            if (annualIncome < province.provinceTaxRates[i].first) {
                 marginalRate = province.provinceTaxRates[i - 1].second
+                break
+            }
         }
         return marginalRate
     }

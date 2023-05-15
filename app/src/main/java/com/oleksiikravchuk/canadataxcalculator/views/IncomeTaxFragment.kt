@@ -12,12 +12,17 @@ import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
+import com.oleksiikravchuk.canadataxcalculator.income.FederalTax
+import com.oleksiikravchuk.canadataxcalculator.income.ProvincialTax
 
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
 
     private var incomeTax = IncomeTax()
+
+    private var federalTax = FederalTax()
+    private var provincialTax = ProvincialTax()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +61,7 @@ class IncomeTaxFragment : Fragment() {
             )
             outState.putString("Net Income", binding.textViewNetIncome.text.toString())
             outState.putString("Average Tax Rate", binding.textViewAverageTaxRate.text.toString())
+            outState.putString("Marginal Tax Rate", binding.textViewAverageTaxRate.text.toString())
         }
     }
 
@@ -72,7 +78,7 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewCppContribution.text = instanceState.getString("CPP Contribution")
             binding.textViewNetIncome.text = instanceState.getString("Net Income")
             binding.textViewAverageTaxRate.text = instanceState.getString("Average Tax Rate")
-
+            binding.textViewMarginalTaxRate.text = instanceState.getString("Marginal Tax Rate")
         }
     }
 
@@ -129,28 +135,32 @@ class IncomeTaxFragment : Fragment() {
             binding.cardViewSummary.visibility = View.VISIBLE
 
             val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
-            val province = binding.spinnerProvinces.selectedItem as Province
-            val federalTax = incomeTax.getFederalTax(annualIncome, province)
-            val provinceTax = incomeTax.getProvinceTax(annualIncome, province)
+            val provinceData = binding.spinnerProvinces.selectedItem as Province
+            val federal = federalTax.getFederalTax(annualIncome, provinceData)
+            val provincial = provincialTax.getProvinceTax(annualIncome, provinceData)
             val employmentInsuranceDeduction = incomeTax.getEmploymentInsuranceDeduction(
-                annualIncome, province
+                annualIncome, provinceData
             )
             val contributionCPP = incomeTax.getCanadaPensionPlanContribution(
-                annualIncome, province
+                annualIncome, provinceData
             )
 
+            val marginalTaxRate = federalTax.getMarginalTaxRate(annualIncome, provinceData ) +
+                    provincialTax.getMarginalTaxRate(annualIncome, provinceData)
+
+
             binding.textViewFederalTax.text =
-                String.format("%.2f C$", federalTax)
+                String.format("%.2f C$", federal)
 
             binding.textViewProvincialTax.text =
-                String.format("%.2f C$", provinceTax)
+                String.format("%.2f C$", provincial)
 
             binding.textViewTotalIncomeTax.text =
                 String.format(
-                    "%.2f C$", provinceTax + federalTax
+                    "%.2f C$", provincial + federal
                 )
 
-            if (province.provinceName == "Quebec")
+            if (provinceData.provinceName == "Quebec")
                 binding.textViewCppQppContributionText.text = getText(R.string.qpp_contribution)
 
             binding.textViewEmploymentInsuranceDeduction.text =
@@ -168,11 +178,15 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNetIncome.text =
                 String.format(
                     "%.2f C$",
-                    annualIncome - provinceTax - federalTax - contributionCPP - employmentInsuranceDeduction
+                    annualIncome - provincial - federal - contributionCPP - employmentInsuranceDeduction
                 )
 
             binding.textViewAverageTaxRate.text =
-                String.format("%.1f%%", (provinceTax + federalTax) / annualIncome * 100)
+                String.format("%.1f%%", (provincial + federal) / annualIncome * 100)
+
+            binding.textViewMarginalTaxRate.text =
+                String.format("%.1f%%", marginalTaxRate * 100)
+
         }
     }
 

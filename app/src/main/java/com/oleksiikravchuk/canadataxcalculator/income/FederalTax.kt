@@ -37,8 +37,10 @@ class FederalTax {
         var marginalRate = 0.0;
 
         for (i in 1 until federalTaxBrackets2023.size) {
-            if (annualIncome < federalTaxBrackets2023[i].first)
+            if (annualIncome < federalTaxBrackets2023[i].first) {
                 marginalRate = federalTaxBrackets2023[i - 1].second
+                break;
+            }
         }
         return if (province.provinceName == "Quebec")
             marginalRate - federalTaxReductionForQuebec
