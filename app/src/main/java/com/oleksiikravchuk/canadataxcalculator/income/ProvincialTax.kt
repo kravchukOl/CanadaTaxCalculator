@@ -186,11 +186,11 @@ class ProvincialTax {
     fun getMarginalTaxRate(annualIncome: Double, province: Province) : Double{
         if (annualIncome <= 0)
             return 0.0
-        var marginalRate = 0.0;
+        var marginalRate = 0.0
 
         for (i in 1 until province.provinceTaxRates.size) {
+            marginalRate = province.provinceTaxRates[i - 1].second
             if (annualIncome < province.provinceTaxRates[i].first) {
-                marginalRate = province.provinceTaxRates[i - 1].second
                 break
             }
         }
