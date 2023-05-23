@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Canada Tax Calculator</string>
+    <string name="app_name">Canada Tax Planner</string>
     <string name="nav_bar_income_tax">Income Tax</string>
     <string name="gst_hst">GST/HST</string>
     <string name="input_card_province">Province:</string>
@@ -22,4 +22,5 @@
     <string name="current_year">2023</string>
     <string name="self_employed">Self Employed</string>
     <string name="optional">Optional</string>
+    <string name="capital_gains_tax">Capital Gains Tax:</string>
 </resources>

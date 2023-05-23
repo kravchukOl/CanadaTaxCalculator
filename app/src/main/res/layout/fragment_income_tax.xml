@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -107,11 +106,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="28dp"
         android:layout_marginTop="-16dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_view_input_data"
-        android:visibility="gone"
         tools:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,6 +118,7 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp">
+
             <TextView
                 android:id="@+id/textView"
                 style="@style/OptionsTextViewWithDrawable"
@@ -245,8 +245,8 @@
                 android:id="@+id/switch_cpp_deduction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
                 android:checked="true"
+                android:fontFamily="sans-serif-medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/switch_ei_deduction"
                 app:switchPadding="8dp" />
@@ -392,6 +392,27 @@
                         tools:text="3,215.32 $" />
                 </TableRow>
 
+                <TableRow
+                    android:id="@+id/table_row_capital_gains_tax"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/capital_gains_tax"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_capital_gains_tax"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="1,255.11 $" />
+                </TableRow>
+
                 <TableRow>
 
                     <TextView
@@ -410,7 +431,7 @@
                         tools:text="8,123.32 $" />
                 </TableRow>
 
-                <TableRow>
+                <TableRow android:id="@+id/table_row_view_employment_insurance_deduction">
 
                     <TextView
                         android:layout_margin="8dp"

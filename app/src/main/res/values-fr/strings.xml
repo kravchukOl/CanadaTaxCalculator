@@ -23,4 +23,5 @@
     <string name="current_year">2023</string>
     <string name="self_employed">Self Employed</string>
     <string name="optional">Optional</string>
+    <string name="capital_gains_tax">Capital Gains Tax:</string>
 </resources>

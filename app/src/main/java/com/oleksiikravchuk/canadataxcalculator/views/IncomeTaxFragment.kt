@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Switch
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.oleksiikravchuk.canadataxcalculator.income.IncomeTax
@@ -13,6 +14,7 @@ import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.income.FederalTax
+import com.oleksiikravchuk.canadataxcalculator.income.OptionalTaxes
 import com.oleksiikravchuk.canadataxcalculator.income.ProvincialTax
 
 class IncomeTaxFragment : Fragment() {
@@ -23,6 +25,7 @@ class IncomeTaxFragment : Fragment() {
 
     private var federalTax = FederalTax()
     private var provincialTax = ProvincialTax()
+    private var optionalTaxes = OptionalTaxes()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -93,6 +96,10 @@ class IncomeTaxFragment : Fragment() {
             }
         }
 
+//        binding.switchEiDeduction.setOnClickListener {
+//
+//        }
+
         binding.textHideOptions.setOnClickListener() {
             hideOptions()
         }
@@ -101,6 +108,8 @@ class IncomeTaxFragment : Fragment() {
             hideOptions()
             calculateTaxes()
         }
+
+
     }
 
     private fun onEnterKeyPressedInit() {
@@ -145,8 +154,21 @@ class IncomeTaxFragment : Fragment() {
                 annualIncome, provinceData
             )
 
-            val marginalTaxRate = federalTax.getMarginalTaxRate(annualIncome, provinceData ) +
+            var capitalGainsTax = 0.0
+
+            val marginalTaxRate = federalTax.getMarginalTaxRate(annualIncome, provinceData) +
                     provincialTax.getMarginalTaxRate(annualIncome, provinceData)
+
+
+            if (binding.editTextCapitalGains.text?.isNotEmpty() == true) {
+                binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
+                val capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
+                capitalGainsTax = optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
+                binding.textViewCapitalGainsTax.text = String.format("%.2f C$", capitalGainsTax)
+            } else {
+                binding.tableRowCapitalGainsTax.visibility = View.GONE
+            }
+
 
 
             binding.textViewFederalTax.text =
@@ -157,17 +179,19 @@ class IncomeTaxFragment : Fragment() {
 
             binding.textViewTotalIncomeTax.text =
                 String.format(
-                    "%.2f C$", provincial + federal
+                    "%.2f C$", provincial + federal + capitalGainsTax
                 )
 
-            if (provinceData.provinceName == "Quebec")
-                binding.textViewCppQppContributionText.text = getText(R.string.qpp_contribution)
 
             binding.textViewEmploymentInsuranceDeduction.text =
                 String.format(
                     "%.2f C$",
                     employmentInsuranceDeduction
                 )
+
+
+            if (provinceData.provinceName == "Quebec")
+                binding.textViewCppQppContributionText.text = getText(R.string.qpp_contribution)
 
             binding.textViewCppContribution.text =
                 String.format(

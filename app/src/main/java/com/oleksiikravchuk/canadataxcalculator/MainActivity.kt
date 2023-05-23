@@ -2,6 +2,7 @@ package com.oleksiikravchuk.canadataxcalculator
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationBarView
@@ -18,9 +19,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-            setUI()
+        setUI()
     }
 
     private fun setUI() {
@@ -28,21 +30,21 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean  = when (item.itemId) {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.nav_income -> onIncomeTaxClicked()
-        R.id.nav_sales  -> onSalesTaxClicked()
+        R.id.nav_sales -> onSalesTaxClicked()
         else -> false
     }
 
     private fun onSalesTaxClicked(): Boolean {
-        supportFragmentManager.commit{
+        supportFragmentManager.commit {
             replace(R.id.fragment_container_view, SalesTaxFragment())
         }
         return true
     }
 
     private fun onIncomeTaxClicked(): Boolean {
-        supportFragmentManager.commit{
+        supportFragmentManager.commit {
             replace(R.id.fragment_container_view, IncomeTaxFragment())
         }
         return true
