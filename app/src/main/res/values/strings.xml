@@ -10,11 +10,11 @@
     <string name="provincial_tax_text_view">Provincial Tax:</string>
     <string name="total_income_tax_text_view">Total Income Tax:</string>
     <string name="average_tax_rate_text_view">Average Tax Rate:</string>
-    <string name="net_income_text_view">Net Income:</string>
+    <string name="net_income_text_view">Total Net Income:</string>
     <string name="content_description_flag_image">Province flag image</string>
     <string name="ei_deduction">EI Deduction:</string>
     <string name="switch_ei_deduction">EI Deduction</string>
-    <string name="switch_cpp_deduction">CPP/QPP Contribution</string>
+    <string name="switch_cpp_deduction">CPP/QPP Contribution:</string>
     <string name="cpp_contribution">CPP Contribution:</string>
     <string name="qpp_contribution">QPP Contribution:</string>
     <string name="ontario_surtax">Ontario Surtax:</string>

@@ -5,9 +5,10 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.oleksiikravchuk.canadataxcalculator.income.IncomeTax
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
@@ -35,10 +36,13 @@ class IncomeTaxFragment : Fragment() {
         binding = FragmentIncomeTaxBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUI()
+
+        setSpinnerAdapter()
+        initListeners()
+
+        binding.buttonCalculateTaxes.visibility = View.GONE
 
         if (savedInstanceState != null)
             applySavedInstanceStates(savedInstanceState)
@@ -48,6 +52,7 @@ class IncomeTaxFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("Annual Income", binding.editTextAnnualIncome.text.toString())
+
 
         if (binding.tableLayoutSummary.visibility == View.VISIBLE) {
             outState.putInt("Summary Visibility", binding.cardViewSummary.visibility)
@@ -85,9 +90,12 @@ class IncomeTaxFragment : Fragment() {
         }
     }
 
-    private fun setUI() {
-        setSpinnerAdapter()
+    private fun initListeners() {
         onEnterKeyPressedInit()
+
+        binding.editTextAnnualIncome.addTextChangedListener {
+            calculateTaxes()
+        }
 
         binding.textViewShowOptionsTop.setOnClickListener {
             when (binding.cardViewOptions.visibility) {
@@ -96,9 +104,27 @@ class IncomeTaxFragment : Fragment() {
             }
         }
 
-//        binding.switchEiDeduction.setOnClickListener {
-//
-//        }
+        binding.switchEiDeduction.setOnClickListener {
+            it as SwitchMaterial
+
+            if (it.isChecked) {
+                binding.tableRowEmploymentInsuranceDeduction.visibility = View.VISIBLE
+            } else {
+                binding.tableRowEmploymentInsuranceDeduction.visibility = View.GONE
+            }
+            calculateTaxes()
+        }
+
+        binding.switchCppDeduction.setOnClickListener {
+            it as SwitchMaterial
+
+            if (it.isChecked) {
+                binding.tableRowCppQppContribution.visibility = View.VISIBLE
+            } else {
+                binding.tableRowCppQppContribution.visibility = View.GONE
+            }
+            calculateTaxes()
+        }
 
         binding.textHideOptions.setOnClickListener() {
             hideOptions()
@@ -144,17 +170,30 @@ class IncomeTaxFragment : Fragment() {
             binding.cardViewSummary.visibility = View.VISIBLE
 
             val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+            var capitalGains = 0.0
+
             val provinceData = binding.spinnerProvinces.selectedItem as Province
             val federal = federalTax.getFederalTax(annualIncome, provinceData)
             val provincial = provincialTax.getProvinceTax(annualIncome, provinceData)
-            val employmentInsuranceDeduction = incomeTax.getEmploymentInsuranceDeduction(
-                annualIncome, provinceData
-            )
-            val contributionCPP = incomeTax.getCanadaPensionPlanContribution(
-                annualIncome, provinceData
-            )
+
 
             var capitalGainsTax = 0.0
+            var employmentInsuranceDeduction = 0.0
+            var contributionCPP = 0.0
+
+
+            if (binding.switchEiDeduction.isChecked) {
+                employmentInsuranceDeduction = incomeTax.getEmploymentInsuranceDeduction(
+                    annualIncome, provinceData
+                )
+            }
+
+            if (binding.switchCppDeduction.isChecked) {
+                contributionCPP = incomeTax.getCanadaPensionPlanContribution(
+                    annualIncome, provinceData, binding.switchSelfEmployed.isChecked
+                )
+            }
+
 
             val marginalTaxRate = federalTax.getMarginalTaxRate(annualIncome, provinceData) +
                     provincialTax.getMarginalTaxRate(annualIncome, provinceData)
@@ -162,7 +201,7 @@ class IncomeTaxFragment : Fragment() {
 
             if (binding.editTextCapitalGains.text?.isNotEmpty() == true) {
                 binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
-                val capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
+                capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
                 capitalGainsTax = optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
                 binding.textViewCapitalGainsTax.text = String.format("%.2f C$", capitalGainsTax)
             } else {
@@ -202,7 +241,7 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNetIncome.text =
                 String.format(
                     "%.2f C$",
-                    annualIncome - provincial - federal - contributionCPP - employmentInsuranceDeduction
+                    annualIncome - provincial - federal - contributionCPP - employmentInsuranceDeduction + capitalGains - capitalGainsTax
                 )
 
             binding.textViewAverageTaxRate.text =
