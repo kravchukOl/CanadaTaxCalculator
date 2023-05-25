@@ -144,46 +144,81 @@ class ProvincialTax {
         ),
     )
 
-    private val ontarioSurtaxRates = arrayOf(
+    private val ontarioSurtaxRates2023 = arrayOf(
         Pair(5315, 0.2),
         Pair(6802, 0.56)
+    )
+    private val princeEdwardSurtaxRates2023 = arrayOf(
+        Pair(12500, 0.1)
     )
 
     fun getProvincesArray() = provincesAndRates2023
 
     fun getProvinceTax(annualIncome: Double, province: Province): Double {
-        return if (province.provinceName == "Ontario") {
-            val baseProvinceTax = calculateTaxCommonRates(
-                annualIncome,
-                province.provinceTaxRates,
-                province.provinceTaxCredit
-            )
-            baseProvinceTax + getSurtaxForOntario(baseProvinceTax)
-        } else {
-            calculateTaxCommonRates(
-                annualIncome,
-                province.provinceTaxRates,
-                province.provinceTaxCredit
-            )
+        return when (province.provinceName) {
+            "Ontario" -> {
+                val provinceTax = calculateTaxCommonRates(
+                    annualIncome,
+                    province.provinceTaxRates,
+                    province.provinceTaxCredit
+                )
+                provinceTax + getSurtax(provinceTax, ontarioSurtaxRates2023)
+            }
+            "Prince Edward Island" -> {
+                val provinceTax = calculateTaxCommonRates(
+                    annualIncome,
+                    province.provinceTaxRates,
+                    province.provinceTaxCredit
+                )
+                provinceTax + getSurtax(provinceTax, princeEdwardSurtaxRates2023)
+            }
+            else ->
+                calculateTaxCommonRates(
+                    annualIncome,
+                    province.provinceTaxRates,
+                    province.provinceTaxCredit
+                )
         }
     }
 
-    private fun getSurtaxForOntario(baseOntarioProvinceTax: Double): Double {
-        if (baseOntarioProvinceTax <= ontarioSurtaxRates[0].first) {
+    fun getSurtaxForOntario(baseOntarioProvinceTax: Double): Double {
+        if (baseOntarioProvinceTax <= ontarioSurtaxRates2023[0].first) {
             return 0.0
         }
-        return if (baseOntarioProvinceTax <= ontarioSurtaxRates[1].first) {
-            (baseOntarioProvinceTax - ontarioSurtaxRates[0].first) * ontarioSurtaxRates[0].second
+        return if (baseOntarioProvinceTax <= ontarioSurtaxRates2023[1].first) {
+            (baseOntarioProvinceTax - ontarioSurtaxRates2023[0].first) * ontarioSurtaxRates2023[0].second
         } else {
             val firstTier =
-                (ontarioSurtaxRates[1].first - ontarioSurtaxRates[0].first) * ontarioSurtaxRates[0].second
+                (ontarioSurtaxRates2023[1].first - ontarioSurtaxRates2023[0].first) * ontarioSurtaxRates2023[0].second
             val secondTier =
-                (baseOntarioProvinceTax - ontarioSurtaxRates[1].first) * ontarioSurtaxRates[1].second
+                (baseOntarioProvinceTax - ontarioSurtaxRates2023[1].first) * ontarioSurtaxRates2023[1].second
             firstTier + secondTier
         }
     }
 
-    fun getMarginalTaxRate(annualIncome: Double, province: Province) : Double{
+    fun getSurtax(provinceTax: Double, surtaxRates: Array<Pair<Int, Double>>): Double {
+        if (provinceTax <= surtaxRates[0].first)
+            return 0.0
+
+        var surTax = 0.0
+
+        for (i in surtaxRates.indices) {
+            if (i == surtaxRates.size - 1) {
+                surTax += (provinceTax - surtaxRates[i].first) * surtaxRates[i].second
+                break
+            }
+            if (provinceTax <= surtaxRates[i + 1].first) {
+                surTax += (provinceTax - surtaxRates[i].first) * surtaxRates[i].second
+                break
+            } else {
+                surTax += (surtaxRates[i + 1].first - surtaxRates[i].first) * surtaxRates[i].second
+            }
+        }
+        return surTax
+    }
+
+
+    fun getMarginalTaxRate(annualIncome: Double, province: Province): Double {
         if (annualIncome <= 0)
             return 0.0
         var marginalRate = 0.0
