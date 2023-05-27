@@ -334,8 +334,28 @@
                 android:columnCount="2"
                 android:stretchColumns="0,1">
 
-                <TableRow>
+                <TableRow
+                    android:id="@+id/table_row_total_taxable_income"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Total Taxable Income:"
+                        android:textSize="16sp" />
 
+                    <TextView
+                        android:id="@+id/text_view_total_taxable_income"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="99,999.99 $" />
+                </TableRow>
+
+                <TableRow>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_margin="8dp"
@@ -346,7 +366,6 @@
                     <TextView
                         android:id="@+id/text_view_federal_tax"
                         android:layout_width="wrap_content"
-                        android:layout_column="1"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textAlignment="textEnd"

@@ -10,24 +10,25 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.oleksiikravchuk.canadataxcalculator.income.IncomeTax
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
-import com.oleksiikravchuk.canadataxcalculator.income.FederalTax
-import com.oleksiikravchuk.canadataxcalculator.income.OptionalTaxes
-import com.oleksiikravchuk.canadataxcalculator.income.ProvincialTax
+import com.oleksiikravchuk.canadataxcalculator.income.*
 
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
 
-    private var incomeTax = IncomeTax()
+    //private var incomeTax = IncomeTax()
 
-    private var federalTax = FederalTax()
-    private var provincialTax = ProvincialTax()
+    private val federalTax = FederalTax()
+    private val provincialTax = ProvincialTax()
+    private val deductions = Deductions()
     private var optionalTaxes = OptionalTaxes()
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,7 +108,7 @@ class IncomeTaxFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    if(!binding.editTextAnnualIncome.text.isNullOrEmpty())
+                    if (!binding.editTextAnnualIncome.text.isNullOrEmpty())
                         calculateTaxes()
                 }
 
@@ -181,6 +182,19 @@ class IncomeTaxFragment : Fragment() {
         binding.cardViewOptions.visibility = View.VISIBLE
     }
 
+    private fun getTotalTaxableIncome(
+        basicIncome: Double,
+        contributionRRCP: Double = 0.0,
+        capitalGains: Double = 0.0,
+        eligibleDividends: Double = 0.0,
+        ineligibleDividends : Double = 0.0
+    ): Double {
+
+        //al taxableIncome = basicIncome + (capitalGains * 0.5);
+
+
+        return basicIncome + (capitalGains * 0.5) - contributionRRCP
+  0  }
 
     private fun calculateTaxes() {
 
@@ -190,6 +204,7 @@ class IncomeTaxFragment : Fragment() {
             binding.cardViewSummary.visibility = View.VISIBLE
 
             val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+
             var capitalGains = 0.0
 
             val provinceData = binding.spinnerProvinces.selectedItem as Province
@@ -197,19 +212,20 @@ class IncomeTaxFragment : Fragment() {
             val provincial = provincialTax.getProvinceTax(annualIncome, provinceData)
 
 
+            var contributionsRRSP = 0.0
             var capitalGainsTax = 0.0
             var employmentInsuranceDeduction = 0.0
             var contributionCPP = 0.0
 
 
             if (binding.switchEiDeduction.isChecked) {
-                employmentInsuranceDeduction = incomeTax.getEmploymentInsuranceDeduction(
+                employmentInsuranceDeduction = deductions.getEmploymentInsuranceDeduction(
                     annualIncome, provinceData
                 )
             }
 
             if (binding.switchCppDeduction.isChecked) {
-                contributionCPP = incomeTax.getCanadaPensionPlanContribution(
+                contributionCPP = deductions.getCanadaPensionPlanContribution(
                     annualIncome, provinceData, binding.switchSelfEmployed.isChecked
                 )
             }
@@ -274,7 +290,7 @@ class IncomeTaxFragment : Fragment() {
     }
 
     private fun setSpinnerAdapter() {
-        val provincesArray = incomeTax.getIndividualsIncomeTaxRates()
+        val provincesArray = provincialTax.provincesAndRates2023
         binding.spinnerProvinces.adapter = ProvinceArrayAdapter(provincesArray)
     }
 
