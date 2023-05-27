@@ -9,18 +9,22 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.income.*
+import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
 
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
 
-    //private var incomeTax = IncomeTax()
+
+    private lateinit var viewModel: IncomeTaxViewModel
+
 
     private val federalTax = FederalTax()
     private val provincialTax = ProvincialTax()
@@ -42,13 +46,16 @@ class IncomeTaxFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this)[IncomeTaxViewModel::class.java]
+
+
         setSpinnerAdapter()
         initListeners()
 
         binding.buttonCalculateTaxes.visibility = View.GONE
 
-        if (savedInstanceState != null)
-            applySavedInstanceStates(savedInstanceState)
+//        if (savedInstanceState != null)
+//            applySavedInstanceStates(savedInstanceState)
 
     }
 
@@ -75,7 +82,6 @@ class IncomeTaxFragment : Fragment() {
             outState.putString("Marginal Tax Rate", binding.textViewAverageTaxRate.text.toString())
         }
     }
-
     private fun applySavedInstanceStates(instanceState: Bundle) {
         binding.editTextAnnualIncome.setText(instanceState.getString("Annual Income"))
 
@@ -155,8 +161,6 @@ class IncomeTaxFragment : Fragment() {
             hideOptions()
             calculateTaxes()
         }
-
-
     }
 
     private fun onEnterKeyPressedInit() {
@@ -182,19 +186,6 @@ class IncomeTaxFragment : Fragment() {
         binding.cardViewOptions.visibility = View.VISIBLE
     }
 
-    private fun getTotalTaxableIncome(
-        basicIncome: Double,
-        contributionRRCP: Double = 0.0,
-        capitalGains: Double = 0.0,
-        eligibleDividends: Double = 0.0,
-        ineligibleDividends : Double = 0.0
-    ): Double {
-
-        //al taxableIncome = basicIncome + (capitalGains * 0.5);
-
-
-        return basicIncome + (capitalGains * 0.5) - contributionRRCP
-  0  }
 
     private fun calculateTaxes() {
 
@@ -203,13 +194,13 @@ class IncomeTaxFragment : Fragment() {
         } else {
             binding.cardViewSummary.visibility = View.VISIBLE
 
-            val annualIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+            val taxableIncome = binding.editTextAnnualIncome.text.toString().toDouble()
 
             var capitalGains = 0.0
 
             val provinceData = binding.spinnerProvinces.selectedItem as Province
-            val federal = federalTax.getFederalTax(annualIncome, provinceData)
-            val provincial = provincialTax.getProvinceTax(annualIncome, provinceData)
+            val federal = federalTax.getFederalTax(taxableIncome, provinceData)
+            val provincial = provincialTax.getProvinceTax(taxableIncome, provinceData)
 
 
             var contributionsRRSP = 0.0
@@ -220,19 +211,19 @@ class IncomeTaxFragment : Fragment() {
 
             if (binding.switchEiDeduction.isChecked) {
                 employmentInsuranceDeduction = deductions.getEmploymentInsuranceDeduction(
-                    annualIncome, provinceData
+                    taxableIncome, provinceData
                 )
             }
 
             if (binding.switchCppDeduction.isChecked) {
                 contributionCPP = deductions.getCanadaPensionPlanContribution(
-                    annualIncome, provinceData, binding.switchSelfEmployed.isChecked
+                    taxableIncome, provinceData, binding.switchSelfEmployed.isChecked
                 )
             }
 
 
-            val marginalTaxRate = federalTax.getMarginalTaxRate(annualIncome, provinceData) +
-                    provincialTax.getMarginalTaxRate(annualIncome, provinceData)
+            val marginalTaxRate = federalTax.getMarginalTaxRate(taxableIncome, provinceData) +
+                    provincialTax.getMarginalTaxRate(taxableIncome, provinceData)
 
 
             if (binding.editTextCapitalGains.text?.isNotEmpty() == true) {
@@ -277,11 +268,11 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNetIncome.text =
                 String.format(
                     "%.2f C$",
-                    annualIncome - provincial - federal - contributionCPP - employmentInsuranceDeduction + capitalGains - capitalGainsTax
+                    taxableIncome - provincial - federal - contributionCPP - employmentInsuranceDeduction + capitalGains - capitalGainsTax
                 )
 
             binding.textViewAverageTaxRate.text =
-                String.format("%.1f%%", (provincial + federal) / annualIncome * 100)
+                String.format("%.1f%%", (provincial + federal) / taxableIncome * 100)
 
             binding.textViewMarginalTaxRate.text =
                 String.format("%.1f%%", marginalTaxRate * 100)

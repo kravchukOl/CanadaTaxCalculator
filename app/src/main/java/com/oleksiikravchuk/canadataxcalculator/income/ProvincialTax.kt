@@ -4,7 +4,7 @@ import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 
 class ProvincialTax {
-    public val provincesAndRates2023 = arrayOf(
+    val provincesAndRates2023 = arrayOf(
         Province(
             "Alberta", R.drawable.flag_of_alberta,
             arrayOf(
@@ -144,11 +144,11 @@ class ProvincialTax {
         ),
     )
 
-    private val ontarioSurtaxRates2023 = arrayOf(
+    val ontarioSurtaxRates2023 = arrayOf(
         Pair(5315, 0.2),
         Pair(6802, 0.56)
     )
-    private val princeEdwardSurtaxRates2023 = arrayOf(
+    val princeEdwardSurtaxRates2023 = arrayOf(
         Pair(12500, 0.1)
     )
 
@@ -216,6 +216,7 @@ class ProvincialTax {
         }
         return surTax
     }
+
 
     fun getMarginalTaxRate(annualIncome: Double, province: Province): Double {
         if (annualIncome <= 0)
