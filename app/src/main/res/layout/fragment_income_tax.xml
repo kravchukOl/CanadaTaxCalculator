@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F6F6"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_input_data"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginTop="24dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_background"
+            android:padding="12dp">
+
+            <Spinner
+                android:id="@+id/spinner_provinces"
+                style="@style/Widget.AppCompat.Spinner.DropDown"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck"
+                tools:listitem="@layout/item_province" />
+
+            <TextView
+                android:id="@+id/text_view_annual_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/input_card_annual_income"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/text_input_layout_annual_income"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_annual_income"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:hint="@string/input_card_currency_cad"
+                app:layout_constraintBottom_toTopOf="@id/text_view_year"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_view_annual_income"
+                app:layout_constraintTop_toBottomOf="@id/spinner_provinces">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edit_text_annual_income"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/text_view_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/current_year"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_show_options_top"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_show_options_top"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:clickable="true"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/show_all_options"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:drawableStartCompat="@drawable/ic_baseline_arrow_drop_down_circle_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_options"
+        style="@style/CardViewStyleCornerRadiusBottom16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginTop="-16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view_input_data"
+        tools:visibility="gone">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/OptionsTextViewWithDrawable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="RRSP Contribution"
+                android:textAlignment="textStart"
+                app:layout_constraintBottom_toBottomOf="@id/edit_text_rrsp"
+                app:layout_constraintEnd_toStartOf="@+id/edit_text_rrsp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edit_text_rrsp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_rrsp"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:hint="@string/optional"
+                android:inputType="numberDecimal"
+                android:maxWidth="150dp"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <TextView
+                style="@style/OptionsTextViewWithDrawable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Capital Gains"
+                app:layout_constraintBottom_toBottomOf="@id/edit_text_capital_gains"
+                app:layout_constraintEnd_toStartOf="@+id/edit_text_capital_gains"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edit_text_capital_gains" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_capital_gains"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:hint="@string/optional"
+                android:inputType="numberDecimal"
+                android:maxWidth="150dp"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_text_rrsp" />
+
+            <TextView
+                style="@style/OptionsTextViewWithDrawable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Eligible Dividends"
+                app:layout_constraintBottom_toBottomOf="@id/edit_text_eligible_dividends"
+                app:layout_constraintEnd_toStartOf="@+id/edit_text_eligible_dividends"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edit_text_eligible_dividends" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_eligible_dividends"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:hint="@string/optional"
+                android:inputType="numberDecimal"
+                android:maxWidth="150dp"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_text_capital_gains" />
+
+            <TextView
+                style="@style/OptionsTextViewWithDrawable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:text="Ineligible Dividends"
+                app:layout_constraintBottom_toBottomOf="@id/text_input_layout_ineligible_dividends"
+                app:layout_constraintEnd_toStartOf="@+id/text_input_layout_ineligible_dividends"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_input_layout_ineligible_dividends" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_layout_ineligible_dividends"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:hint="@string/optional"
+                android:inputType="numberDecimal"
+                android:maxWidth="150dp"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_text_eligible_dividends" />
+
+
+            <TextView
+                style="@style/OptionsTextViewWithDrawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ei_deduction"
+                app:layout_constraintBaseline_toBaselineOf="@id/switch_ei_deduction"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_ei_deduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_input_layout_ineligible_dividends"
+                app:switchPadding="8dp" />
+
+            <TextView
+                style="@style/OptionsTextViewWithDrawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/switch_cpp_deduction"
+                app:layout_constraintBaseline_toBaselineOf="@id/switch_cpp_deduction"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_cpp_deduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switch_ei_deduction"
+                app:switchPadding="8dp" />
+
+            <TextView
+                style="@style/OptionsTextViewWithDrawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/self_employed"
+                android:textSize="16sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/switch_self_employed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_self_employed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switch_cpp_deduction"
+                app:layout_constraintBottom_toTopOf="@id/text_hide_options"
+                app:switchPadding="8dp" />
+
+            <TextView
+                android:id="@+id/text_hide_options"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:clickable="true"
+                android:drawablePadding="4dp"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="Hide All Options"
+                android:textAlignment="center"
+                android:textColor="#303030"
+                app:drawableStartCompat="@drawable/ic_baseline_arrow_drop_up_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/button_calculate_taxes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/button_calculate_taxes"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view_options" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_summary"
+        style="@style/CustomCardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_calculate_taxes"
+        tools:visibility="visible">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/table_layout_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:stretchColumns="0,1">
+
+                <TableRow
+                    android:id="@+id/table_row_total_taxable_income"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Total Taxable Income:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_total_taxable_income"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="99,999.99 $" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/federal_tax_text_view"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_federal_tax"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="11,124.32 $" />
+                </TableRow>
+
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/provincial_tax_text_view"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_provincial_tax"
+                        android:layout_column="1"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="8,123.32 $" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/table_row_ontario_surtax"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/ontario_surtax"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_ontario_surtax"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="3,215.32 $" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/table_row_capital_gains_tax"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/capital_gains_tax"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_capital_gains_tax"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="1,255.11 $" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/total_income_tax_text_view"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_total_income_tax"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-black"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/red600"
+                        android:textSize="16sp"
+                        tools:text="8,123.32 $" />
+                </TableRow>
+
+                <TableRow android:id="@+id/table_row_employment_insurance_deduction">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/ei_deduction"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_employment_insurance_deduction"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="1,002.45 $" />
+                </TableRow>
+
+                <TableRow android:id="@+id/table_row_cpp_qpp_contribution">
+
+                    <TextView
+                        android:id="@+id/text_view_cpp_qpp_contribution_text"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/cpp_contribution"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_cpp_contribution"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="3,500 $" />
+                </TableRow>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_columnWeight="0.5"
+                    app:dividerThickness="2dp" />
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/net_income_text_view"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_net_income"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-black"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/green700"
+                        android:textSize="16sp"
+                        tools:text="8,123.32 $" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/average_tax_rate_text_view"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_average_tax_rate"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="24.5%" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Marginal Tax rate"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_marginal_tax_rate"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="54.5%" />
+                </TableRow>
+
+
+                <com.google.android.material.divider.MaterialDivider
+                    app:dividerThickness="2dp" />
+            </TableLayout>
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>
+
