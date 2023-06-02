@@ -22,7 +22,7 @@ class IncomeTaxViewModel : ViewModel() {
     var eligibleDividends: Double = 0.0
     var nonEligibleDividends: Double = 0.0
 
-    var isSelfEmployed: Boolean = true
+    var isSelfEmployed: Boolean = false
     var isEiIncluded = true
     var isCppIncluded = true
 

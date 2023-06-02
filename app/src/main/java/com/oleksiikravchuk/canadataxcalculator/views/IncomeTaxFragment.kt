@@ -18,19 +18,16 @@ import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.income.*
+import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023
+import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023.provincesAndRates2023
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
 
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
-
     private lateinit var viewModel: IncomeTaxViewModel
 
-
-    private val federalTax = FederalTax()
     private val provincialTax = ProvincialTax()
-    private val deductions = Deductions()
-    private var optionalTaxes = OptionalTaxes()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +79,8 @@ class IncomeTaxFragment : Fragment() {
         val totalTaxableIncome: LiveData<Double> = viewModel.totalTaxableIncome
         totalTaxableIncome.observe(viewLifecycleOwner) { income ->
             binding.textViewTotalTaxableIncome.text = String.format("%.2f C$", income)
-            binding.tableRowTotalTaxableIncome.visibility = View.VISIBLE
+            if (totalTaxableIncome.value != binding.editTextAnnualIncome.text.toString().toDouble())
+                binding.tableRowTotalTaxableIncome.visibility = View.VISIBLE
         }
 
         val federalTax: LiveData<Double> = viewModel.federalTax
@@ -149,17 +147,29 @@ class IncomeTaxFragment : Fragment() {
         onEnterKeyPressedInit()
 
         binding.editTextAnnualIncome.addTextChangedListener {
-            viewModel.basicIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+            if (it.isNullOrEmpty()) {
+                viewModel.basicIncome = 0.0
+            } else {
+                viewModel.basicIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+            }
             calculateTaxes()
         }
 
         binding.editTextRrcp.addTextChangedListener {
-            viewModel.contributionRRCP = binding.editTextRrcp.text.toString().toDouble()
+            if (it.isNullOrEmpty()) {
+                viewModel.contributionRRCP = 0.0
+            } else {
+                viewModel.contributionRRCP = binding.editTextRrcp.text.toString().toDouble()
+            }
             calculateTaxes()
         }
 
         binding.editTextCapitalGains.addTextChangedListener {
-            viewModel.capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
+            if( it.isNullOrEmpty()) {
+                viewModel.capitalGains = 0.0
+            } else {
+                viewModel.capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
+            }
             calculateTaxes()
         }
 
