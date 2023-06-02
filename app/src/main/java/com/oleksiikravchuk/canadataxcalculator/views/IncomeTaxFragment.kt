@@ -1,7 +1,6 @@
 package com.oleksiikravchuk.canadataxcalculator.views
 
 import android.os.Bundle
-import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +17,6 @@ import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.income.*
-import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023
-import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023.provincesAndRates2023
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
 
 class IncomeTaxFragment : Fragment() {
@@ -52,19 +49,16 @@ class IncomeTaxFragment : Fragment() {
     }
 
     private fun restoreInput() {
-        val spinnerPosition =
-            provincialTax.provincesAndRates2023.indexOf(viewModel.selectedProvince)
-        binding.spinnerProvinces.setSelection(spinnerPosition)
         if (viewModel.basicIncome > 0)
             binding.editTextAnnualIncome.setText(viewModel.basicIncome.toString())
-        if (viewModel.contributionRRCP > 0)
-            binding.editTextRrcp.setText(viewModel.contributionRRCP.toString())
+        if (viewModel.contributionRRSP > 0)
+            binding.editTextRrcp.setText(viewModel.contributionRRSP.toString())
         if (viewModel.capitalGains > 0)
             binding.editTextCapitalGains.setText(viewModel.capitalGains.toString())
         if (viewModel.eligibleDividends > 0)
             binding.editTextEligibleDividends.setText(viewModel.eligibleDividends.toString())
         if (viewModel.nonEligibleDividends > 0)
-            binding.textInputLayoutNonEligibleDividends.setText(viewModel.nonEligibleDividends.toString())
+            binding.editTextNonEligibleDividends.setText(viewModel.nonEligibleDividends.toString())
 
         binding.switchEiDeduction.isChecked = viewModel.isEiIncluded
         binding.switchCppDeduction.isChecked = viewModel.isCppIncluded
@@ -108,6 +102,19 @@ class IncomeTaxFragment : Fragment() {
             binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
             binding.textViewCapitalGainsTax.text = String.format("%.2f C$", tax)
         }
+
+        val eligibleDividendTax: LiveData<Double> = viewModel.eligibleDividendsTax
+        eligibleDividendTax.observe(viewLifecycleOwner) { tax ->
+            binding.tableRowEligibleTax.visibility = View.VISIBLE
+            binding.textViewEligibleDivTax.text = String.format("%.2f C$", tax)
+        }
+
+        val nonEligibleDividendTax: LiveData<Double> = viewModel.nonEligibleDividendsTax
+        nonEligibleDividendTax.observe(viewLifecycleOwner) { tax ->
+            binding.tableRowNonEligibleTax.visibility = View.VISIBLE
+            binding.textViewNonEligibleDivTax.text = String.format("%.2f C$", tax)
+        }
+
 
         val totalIncomeTax: LiveData<Double> = viewModel.totalIncomeTax
         totalIncomeTax.observe(viewLifecycleOwner) { tax ->
@@ -157,18 +164,38 @@ class IncomeTaxFragment : Fragment() {
 
         binding.editTextRrcp.addTextChangedListener {
             if (it.isNullOrEmpty()) {
-                viewModel.contributionRRCP = 0.0
+                viewModel.contributionRRSP = 0.0
             } else {
-                viewModel.contributionRRCP = binding.editTextRrcp.text.toString().toDouble()
+                viewModel.contributionRRSP = binding.editTextRrcp.text.toString().toDouble()
             }
             calculateTaxes()
         }
 
         binding.editTextCapitalGains.addTextChangedListener {
-            if( it.isNullOrEmpty()) {
+            if (it.isNullOrEmpty()) {
                 viewModel.capitalGains = 0.0
             } else {
                 viewModel.capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
+            }
+            calculateTaxes()
+        }
+
+        binding.editTextEligibleDividends.addTextChangedListener {
+            if (it.isNullOrEmpty()) {
+                viewModel.eligibleDividends = 0.0
+            } else {
+                viewModel.eligibleDividends =
+                    binding.editTextEligibleDividends.text.toString().toDouble()
+            }
+            calculateTaxes()
+        }
+
+        binding.editTextNonEligibleDividends.addTextChangedListener {
+            if (it.isNullOrEmpty()) {
+                viewModel.nonEligibleDividends = 0.0
+            } else {
+                viewModel.nonEligibleDividends =
+                    binding.editTextNonEligibleDividends.text.toString().toDouble()
             }
             calculateTaxes()
         }
@@ -210,6 +237,12 @@ class IncomeTaxFragment : Fragment() {
         binding.switchCppDeduction.setOnClickListener {
             it as SwitchMaterial
             viewModel.isCppIncluded = it.isChecked
+            calculateTaxes()
+        }
+
+        binding.switchSelfEmployed.setOnClickListener {
+            it as SwitchMaterial
+            viewModel.isSelfEmployed = it.isChecked
             calculateTaxes()
         }
 
@@ -265,6 +298,8 @@ class IncomeTaxFragment : Fragment() {
         binding.tableRowSurtax.visibility = View.GONE
         binding.tableRowEmploymentInsuranceDeduction.visibility = View.GONE
         binding.tableRowTotalTaxableIncome.visibility = View.GONE
+        binding.tableRowEligibleTax.visibility = View.GONE
+        binding.tableRowNonEligibleTax.visibility = View.GONE
     }
 
     private fun setSpinnerAdapter() {

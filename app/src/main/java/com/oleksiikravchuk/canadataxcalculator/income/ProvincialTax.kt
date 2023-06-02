@@ -14,7 +14,9 @@ class ProvincialTax {
                 Pair(227668, 0.14),
                 Pair(341502, 0.15)
             ),
-            21003
+            21003,
+            0.0812,
+            0.0218
         ),
         Province(
             "British Columbia", R.drawable.flag_of_british_columbia,
@@ -27,7 +29,9 @@ class ProvincialTax {
                 Pair(172602, 0.168),
                 Pair(240716, 0.205),
             ),
-            11981
+            11981,
+            0.12,
+            0.0196
         ),
         Province(
             "Manitoba", R.drawable.flag_of_manitoba,
@@ -36,7 +40,9 @@ class ProvincialTax {
                 Pair(36842, 0.1275),
                 Pair(79625, 0.174),
             ),
-            15000
+            15000,
+            0.08,
+            0.007837
         ),
         Province(
             "New Brunswick", R.drawable.flag_of_new_brunswick,
@@ -46,7 +52,9 @@ class ProvincialTax {
                 Pair(95431, 0.16),
                 Pair(176756, 0.195),
             ),
-            12458
+            12458,
+            0.14,
+            0.0275
         ),
         Province(
             "Newfoundland and Labrador", R.drawable.flag_of_newfoundland_and_labrador,
@@ -60,7 +68,9 @@ class ProvincialTax {
                 Pair(529500, 0.213),
                 Pair(1059000, 0.218),
             ),
-            10382
+            10382,
+            0.063,
+            0.032
         ),
         Province(
             "Nova Scotia", R.drawable.flag_of_nova_scotia,
@@ -71,7 +81,9 @@ class ProvincialTax {
                 Pair(93000, 0.175),
                 Pair(150000, 0.21)
             ),
-            8481
+            8481,
+            0.0885,
+            0.0299
         ),
         Province(
             "Northwest Territories", R.drawable.flag_of_the_northwest_territories,
@@ -81,7 +93,9 @@ class ProvincialTax {
                 Pair(96655, 0.122),
                 Pair(157139, 0.1405),
             ),
-            16593
+            16593,
+            0.115,
+            0.06
         ),
         Province(
             "Nunavut", R.drawable.flag_of_nunavut,
@@ -91,7 +105,9 @@ class ProvincialTax {
                 Pair(101754, 0.09),
                 Pair(165429, 0.115)
             ),
-            17925
+            17925,
+            0.0551,
+            0.0261
         ),
         Province(
             "Ontario", R.drawable.flag_of_ontario,
@@ -102,7 +118,9 @@ class ProvincialTax {
                 Pair(150000, 0.1216),
                 Pair(220000, 0.1316)
             ),
-            11865
+            11865,
+            0.1,
+            0.02863
         ),
         Province(
             "Prince Edward Island", R.drawable.flag_of_prince_edward_island,
@@ -111,7 +129,9 @@ class ProvincialTax {
                 Pair(31984, 0.138),
                 Pair(63969, 0.167),
             ),
-            12000
+            12000,
+            0.105,
+            0.013
         ),
         Province(
             // Quebec income tax rates
@@ -121,7 +141,9 @@ class ProvincialTax {
                 Pair(98540, 0.24),
                 Pair(119910, 0.2575),
             ),
-            17183
+            17183,
+            0.117,
+            0.0342
         ),
         Province(
             "Saskatchewan", R.drawable.flag_of_saskatchewan,
@@ -130,7 +152,9 @@ class ProvincialTax {
                 Pair(49720, 0.125),
                 Pair(142058, 0.145),
             ),
-            17661
+            17661,
+            0.11,
+            0.02105
         ),
         Province(
             "Yukon", R.drawable.flag_of_yukon, arrayOf(
@@ -140,7 +164,9 @@ class ProvincialTax {
                 Pair(165430, 0.128),
                 Pair(500000, 0.15)
             ),
-            15000
+            15000,
+            0.1202,
+            0.0067
         ),
     )
 

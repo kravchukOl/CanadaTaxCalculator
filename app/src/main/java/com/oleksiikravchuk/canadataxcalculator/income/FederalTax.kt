@@ -12,7 +12,7 @@ class FederalTax {
     )
     private val personaFederalTaxCredit2023: Int = 15000
 
-    private val federalTaxReductionForQuebec = 0.165
+    private val federalTaxReductionForQuebec :Double = 0.165
 
     fun getFederalTax(annualIncome: Double, province: Province): Double {
         return if (province.provinceName == "Quebec") {
@@ -44,7 +44,7 @@ class FederalTax {
             }
         }
         return if (province.provinceName == "Quebec")
-            marginalRate - federalTaxReductionForQuebec
+            marginalRate - marginalRate * federalTaxReductionForQuebec
         else
             marginalRate
     }

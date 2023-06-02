@@ -196,13 +196,13 @@
                 android:layout_height="wrap_content"
                 android:maxWidth="200dp"
                 android:text="@string/non_eligible_dividends"
-                app:layout_constraintBottom_toBottomOf="@id/text_input_layout_non_eligible_dividends"
-                app:layout_constraintEnd_toStartOf="@+id/text_input_layout_non_eligible_dividends"
+                app:layout_constraintBottom_toBottomOf="@id/edit_text_non_eligible_dividends"
+                app:layout_constraintEnd_toStartOf="@+id/edit_text_non_eligible_dividends"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/text_input_layout_non_eligible_dividends" />
+                app:layout_constraintTop_toTopOf="@id/edit_text_non_eligible_dividends" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_layout_non_eligible_dividends"
+                android:id="@+id/edit_text_non_eligible_dividends"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:hint="@string/optional"
@@ -230,7 +230,7 @@
                 android:checked="true"
                 android:fontFamily="sans-serif-medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_input_layout_non_eligible_dividends"
+                app:layout_constraintTop_toBottomOf="@id/edit_text_non_eligible_dividends"
                 app:switchPadding="8dp" />
 
             <TextView
@@ -341,7 +341,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_margin="8dp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="sans-serif-black"
                         android:text="@string/total_taxable_income"
                         android:textSize="16sp" />
 
@@ -435,8 +435,49 @@
                         tools:text="1,255.11 $" />
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:id="@+id/table_row_eligible_tax"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/eligible_dividends_tax"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_eligible_div_tax"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="1,366.22 $" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/table_row_non_eligible_tax"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/non_eligible_dividends_tax"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_non_eligible_div_tax"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="1,477.33 $" />
+                </TableRow>
+
+                <TableRow>
                     <TextView
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"

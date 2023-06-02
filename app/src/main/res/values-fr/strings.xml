@@ -32,4 +32,6 @@
     <string name="total_taxable_income">Total Taxable Income:</string>
     <string name="marginal_tax_rate">Marginal Tax rate</string>
     <string name="enter_annual_income">Enter Annual Income</string>
+    <string name="eligible_dividends_tax">Eligible Dividends Tax:</string>
+    <string name="non_eligible_dividends_tax">Non-Eligible Dividends Tax:</string>
 </resources>

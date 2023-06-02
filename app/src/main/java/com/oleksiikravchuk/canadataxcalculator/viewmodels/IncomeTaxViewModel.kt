@@ -17,7 +17,7 @@ class IncomeTaxViewModel : ViewModel() {
 
     var selectedProvince = provincial.provincesAndRates2023[0];
     var basicIncome: Double = 0.0
-    var contributionRRCP: Double = 0.0
+    var contributionRRSP: Double = 0.0
     var capitalGains: Double = 0.0
     var eligibleDividends: Double = 0.0
     var nonEligibleDividends: Double = 0.0
@@ -37,6 +37,7 @@ class IncomeTaxViewModel : ViewModel() {
     val provinceSurtax: MutableLiveData<Double> = MutableLiveData()
     val capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
     val totalIncomeTax: MutableLiveData<Double> = MutableLiveData()
+
     val eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
     val nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
 
@@ -63,21 +64,41 @@ class IncomeTaxViewModel : ViewModel() {
         if (surtax > 0.0)
             this.provinceSurtax.value = surtax
 
-        val marginalTaxRate = federal.getMarginalTaxRate(
+        var marginalTaxRate = federal.getMarginalTaxRate(
             totalTaxableIncome,
             selectedProvince
-        ) + provincial.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
+        )
+        marginalTaxRate += provincial.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
         this.marginalTaxRate.value = marginalTaxRate * 100
 
         this.averageTaxRate.value = (provincialTax + federalTax) / totalTaxableIncome * 100
 
-        if (capitalGains > 0) {
+        if (this.capitalGains > 0) {
             this.capitalGainsTax.value =
                 optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
         }
 
+        if (this.eligibleDividends > 0) {
+            val dividendIncome = this.optionalTaxes.getEligibleDividendsTaxableIncome(
+                this.eligibleDividends,
+                this.selectedProvince
+            )
+            eligibleDividendsTax.value =
+                this.optionalTaxes.getDividendsTax(dividendIncome, marginalTaxRate)
+        }
+
+        if (this.nonEligibleDividends > 0) {
+            val dividendIncome = this.optionalTaxes.getNonEligibleDividendsTaxableIncome(
+                this.nonEligibleDividends,
+                this.selectedProvince
+            )
+            this.nonEligibleDividendsTax.value =
+                this.optionalTaxes.getDividendsTax(dividendIncome, marginalTaxRate)
+        }
+
         val totalIncomeTax = federalTax + provincialTax
         this.totalIncomeTax.value = totalIncomeTax
+
 
         var deductionEI = 0.0
         if (this.isEiIncluded) {
@@ -100,7 +121,20 @@ class IncomeTaxViewModel : ViewModel() {
     }
 
     private fun getTotalTaxableIncome(): Double {
-        val income = basicIncome + (capitalGains * 0.5) - contributionRRCP
+        var income =
+            this.basicIncome + this.optionalTaxes.getCapitalGainsTaxableIncome(this.capitalGains)
+
+        income += this.optionalTaxes.getEligibleDividendsTaxableIncome(
+            this.eligibleDividends,
+            this.selectedProvince
+        )
+
+        income += this.optionalTaxes.getNonEligibleDividendsTaxableIncome(
+            this.nonEligibleDividends,
+            this.selectedProvince
+        )
+
+        income -= contributionRRSP
         return if (income < 0)
             0.0
         else
