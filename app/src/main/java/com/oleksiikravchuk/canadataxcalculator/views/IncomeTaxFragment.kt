@@ -1,6 +1,7 @@
 package com.oleksiikravchuk.canadataxcalculator.views
 
 import android.os.Bundle
+import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.oleksiikravchuk.canadataxcalculator.models.Province
@@ -22,7 +24,6 @@ class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
 
-
     private lateinit var viewModel: IncomeTaxViewModel
 
 
@@ -30,9 +31,6 @@ class IncomeTaxFragment : Fragment() {
     private val provincialTax = ProvincialTax()
     private val deductions = Deductions()
     private var optionalTaxes = OptionalTaxes()
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,54 +46,102 @@ class IncomeTaxFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[IncomeTaxViewModel::class.java]
 
-
         setSpinnerAdapter()
+        restoreInput()
+        initObservers()
         initListeners()
 
         binding.buttonCalculateTaxes.visibility = View.GONE
-
-//        if (savedInstanceState != null)
-//            applySavedInstanceStates(savedInstanceState)
-
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("Annual Income", binding.editTextAnnualIncome.text.toString())
+    private fun restoreInput() {
+        val spinnerPosition =
+            provincialTax.provincesAndRates2023.indexOf(viewModel.selectedProvince)
+        binding.spinnerProvinces.setSelection(spinnerPosition)
+        if (viewModel.basicIncome > 0)
+            binding.editTextAnnualIncome.setText(viewModel.basicIncome.toString())
+        if (viewModel.contributionRRCP > 0)
+            binding.editTextRrcp.setText(viewModel.contributionRRCP.toString())
+        if (viewModel.capitalGains > 0)
+            binding.editTextCapitalGains.setText(viewModel.capitalGains.toString())
+        if (viewModel.eligibleDividends > 0)
+            binding.editTextEligibleDividends.setText(viewModel.eligibleDividends.toString())
+        if (viewModel.nonEligibleDividends > 0)
+            binding.textInputLayoutNonEligibleDividends.setText(viewModel.nonEligibleDividends.toString())
+
+        binding.switchEiDeduction.isChecked = viewModel.isEiIncluded
+        binding.switchCppDeduction.isChecked = viewModel.isCppIncluded
+        binding.switchSelfEmployed.isChecked = viewModel.isSelfEmployed
+
+        if (viewModel.containsData)
+            viewModel.calculate()
+    }
 
 
-        if (binding.tableLayoutSummary.visibility == View.VISIBLE) {
-            outState.putInt("Summary Visibility", binding.cardViewSummary.visibility)
-            outState.putString("Federal Tax", binding.textViewFederalTax.text.toString())
-            outState.putString("Provincial Tax", binding.textViewProvincialTax.text.toString())
-            outState.putString("Total Tax", binding.textViewTotalIncomeTax.text.toString())
-            outState.putString(
-                "EI Deduction",
-                binding.textViewEmploymentInsuranceDeduction.text.toString()
-            )
-            outState.putString(
-                "CPP Contribution",
-                binding.textViewCppContribution.text.toString()
-            )
-            outState.putString("Net Income", binding.textViewNetIncome.text.toString())
-            outState.putString("Average Tax Rate", binding.textViewAverageTaxRate.text.toString())
-            outState.putString("Marginal Tax Rate", binding.textViewAverageTaxRate.text.toString())
+    private fun initObservers() {
+        val totalTaxableIncome: LiveData<Double> = viewModel.totalTaxableIncome
+        totalTaxableIncome.observe(viewLifecycleOwner) { income ->
+            binding.textViewTotalTaxableIncome.text = String.format("%.2f C$", income)
+            binding.tableRowTotalTaxableIncome.visibility = View.VISIBLE
         }
-    }
-    private fun applySavedInstanceStates(instanceState: Bundle) {
-        binding.editTextAnnualIncome.setText(instanceState.getString("Annual Income"))
 
-        if (instanceState.getInt("Summary Visibility") == View.VISIBLE) {
-            binding.tableLayoutSummary.visibility = View.VISIBLE
-            binding.textViewFederalTax.text = instanceState.getString("Federal Tax")
-            binding.textViewProvincialTax.text = instanceState.getString("Provincial Tax")
-            binding.textViewNetIncome.text = instanceState.getString("Total Tax")
-            binding.textViewEmploymentInsuranceDeduction.text =
-                instanceState.getString("EI Deduction")
-            binding.textViewCppContribution.text = instanceState.getString("CPP Contribution")
-            binding.textViewNetIncome.text = instanceState.getString("Net Income")
-            binding.textViewAverageTaxRate.text = instanceState.getString("Average Tax Rate")
-            binding.textViewMarginalTaxRate.text = instanceState.getString("Marginal Tax Rate")
+        val federalTax: LiveData<Double> = viewModel.federalTax
+        federalTax.observe(viewLifecycleOwner) { tax ->
+            binding.textViewFederalTax.text = String.format("%.2f C$", tax)
+        }
+
+        val provincialTax: LiveData<Double> = viewModel.provincialTax
+        provincialTax.observe(viewLifecycleOwner) { tax ->
+            binding.textViewProvincialTax.text = String.format("%.2f C$", tax)
+        }
+
+        val surtax: LiveData<Double> = viewModel.provinceSurtax
+        surtax.observe(viewLifecycleOwner) { tax ->
+            binding.textViewSurtaxText.text = String.format(
+                getString(R.string.province_surtax),
+                viewModel.selectedProvince.provinceName
+            )
+            binding.tableRowSurtax.visibility = View.VISIBLE
+            binding.textViewSurtax.text = String.format("%.2f C$", tax)
+        }
+
+        val capitalGainsTax: LiveData<Double> = viewModel.capitalGainsTax
+        capitalGainsTax.observe(viewLifecycleOwner) { tax ->
+            binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
+            binding.textViewCapitalGainsTax.text = String.format("%.2f C$", tax)
+        }
+
+        val totalIncomeTax: LiveData<Double> = viewModel.totalIncomeTax
+        totalIncomeTax.observe(viewLifecycleOwner) { tax ->
+            binding.textViewTotalIncomeTax.text = String.format("%.2f C$", tax)
+        }
+
+        val deductionEI: LiveData<Double> = viewModel.deductionEI
+        deductionEI.observe(viewLifecycleOwner) { deduction ->
+            binding.tableRowEmploymentInsuranceDeduction.visibility = View.VISIBLE
+            binding.textViewEmploymentInsuranceDeduction.text = String.format("%.2f C$", deduction)
+        }
+
+        val contributionCPP: LiveData<Double> = viewModel.contributionCPP
+        contributionCPP.observe(viewLifecycleOwner) { contribution ->
+            binding.tableRowCppQppContribution.visibility = View.VISIBLE
+            binding.textViewCppContribution.text =
+                String.format("%.2f C$", contribution)
+        }
+
+        val totalNetIncome: LiveData<Double> = viewModel.totalNetIncome
+        totalNetIncome.observe(viewLifecycleOwner) { income ->
+            binding.textViewNetIncome.text = String.format("%.2f C$", income)
+        }
+
+        val averageTaxRate: LiveData<Double> = viewModel.averageTaxRate
+        averageTaxRate.observe(viewLifecycleOwner) { rate ->
+            binding.textViewAverageTaxRate.text = String.format("%.1f%%", rate)
+        }
+
+        val marginalTaxRate: LiveData<Double> = viewModel.marginalTaxRate
+        marginalTaxRate.observe(viewLifecycleOwner) { rate ->
+            binding.textViewMarginalTaxRate.text = String.format("%.1f%%", rate)
         }
     }
 
@@ -103,8 +149,20 @@ class IncomeTaxFragment : Fragment() {
         onEnterKeyPressedInit()
 
         binding.editTextAnnualIncome.addTextChangedListener {
+            viewModel.basicIncome = binding.editTextAnnualIncome.text.toString().toDouble()
             calculateTaxes()
         }
+
+        binding.editTextRrcp.addTextChangedListener {
+            viewModel.contributionRRCP = binding.editTextRrcp.text.toString().toDouble()
+            calculateTaxes()
+        }
+
+        binding.editTextCapitalGains.addTextChangedListener {
+            viewModel.capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
+            calculateTaxes()
+        }
+
 
         binding.spinnerProvinces.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -114,13 +172,15 @@ class IncomeTaxFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    if (!binding.editTextAnnualIncome.text.isNullOrEmpty())
+                    if (!binding.editTextAnnualIncome.text.isNullOrEmpty()) {
+                        viewModel.selectedProvince =
+                            binding.spinnerProvinces.selectedItem as Province
                         calculateTaxes()
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
-
             }
 
 
@@ -133,27 +193,17 @@ class IncomeTaxFragment : Fragment() {
 
         binding.switchEiDeduction.setOnClickListener {
             it as SwitchMaterial
-
-            if (it.isChecked) {
-                binding.tableRowEmploymentInsuranceDeduction.visibility = View.VISIBLE
-            } else {
-                binding.tableRowEmploymentInsuranceDeduction.visibility = View.GONE
-            }
+            viewModel.isEiIncluded = it.isChecked
             calculateTaxes()
         }
 
         binding.switchCppDeduction.setOnClickListener {
             it as SwitchMaterial
-
-            if (it.isChecked) {
-                binding.tableRowCppQppContribution.visibility = View.VISIBLE
-            } else {
-                binding.tableRowCppQppContribution.visibility = View.GONE
-            }
+            viewModel.isCppIncluded = it.isChecked
             calculateTaxes()
         }
 
-        binding.textHideOptions.setOnClickListener() {
+        binding.textHideOptions.setOnClickListener {
             hideOptions()
         }
 
@@ -169,7 +219,8 @@ class IncomeTaxFragment : Fragment() {
                 override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
                     if (event?.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                         hideOptions()
-                        calculateTaxes()
+                        //calculateTaxes()
+                        viewModel.calculate()
                         return true
                     }
                     return false
@@ -186,98 +237,24 @@ class IncomeTaxFragment : Fragment() {
         binding.cardViewOptions.visibility = View.VISIBLE
     }
 
-
     private fun calculateTaxes() {
 
         if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
-            Toast.makeText(context, "Enter Annual Income", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.enter_annual_income), Toast.LENGTH_LONG)
+                .show()
         } else {
             binding.cardViewSummary.visibility = View.VISIBLE
-
-            val taxableIncome = binding.editTextAnnualIncome.text.toString().toDouble()
-
-            var capitalGains = 0.0
-
-            val provinceData = binding.spinnerProvinces.selectedItem as Province
-            val federal = federalTax.getFederalTax(taxableIncome, provinceData)
-            val provincial = provincialTax.getProvinceTax(taxableIncome, provinceData)
-
-
-            var contributionsRRSP = 0.0
-            var capitalGainsTax = 0.0
-            var employmentInsuranceDeduction = 0.0
-            var contributionCPP = 0.0
-
-
-            if (binding.switchEiDeduction.isChecked) {
-                employmentInsuranceDeduction = deductions.getEmploymentInsuranceDeduction(
-                    taxableIncome, provinceData
-                )
-            }
-
-            if (binding.switchCppDeduction.isChecked) {
-                contributionCPP = deductions.getCanadaPensionPlanContribution(
-                    taxableIncome, provinceData, binding.switchSelfEmployed.isChecked
-                )
-            }
-
-
-            val marginalTaxRate = federalTax.getMarginalTaxRate(taxableIncome, provinceData) +
-                    provincialTax.getMarginalTaxRate(taxableIncome, provinceData)
-
-
-            if (binding.editTextCapitalGains.text?.isNotEmpty() == true) {
-                binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
-                capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
-                capitalGainsTax = optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
-                binding.textViewCapitalGainsTax.text = String.format("%.2f C$", capitalGainsTax)
-            } else {
-                binding.tableRowCapitalGainsTax.visibility = View.GONE
-            }
-
-
-
-            binding.textViewFederalTax.text =
-                String.format("%.2f C$", federal)
-
-            binding.textViewProvincialTax.text =
-                String.format("%.2f C$", provincial)
-
-            binding.textViewTotalIncomeTax.text =
-                String.format(
-                    "%.2f C$", provincial + federal + capitalGainsTax
-                )
-
-
-            binding.textViewEmploymentInsuranceDeduction.text =
-                String.format(
-                    "%.2f C$",
-                    employmentInsuranceDeduction
-                )
-
-
-            if (provinceData.provinceName == "Quebec")
-                binding.textViewCppQppContributionText.text = getText(R.string.qpp_contribution)
-
-            binding.textViewCppContribution.text =
-                String.format(
-                    "%.2f C$",
-                    contributionCPP
-                )
-
-            binding.textViewNetIncome.text =
-                String.format(
-                    "%.2f C$",
-                    taxableIncome - provincial - federal - contributionCPP - employmentInsuranceDeduction + capitalGains - capitalGainsTax
-                )
-
-            binding.textViewAverageTaxRate.text =
-                String.format("%.1f%%", (provincial + federal) / taxableIncome * 100)
-
-            binding.textViewMarginalTaxRate.text =
-                String.format("%.1f%%", marginalTaxRate * 100)
-
+            disableOptionalRows()
+            viewModel.calculate()
         }
+    }
+
+    private fun disableOptionalRows() {
+        binding.tableRowCppQppContribution.visibility = View.GONE
+        binding.tableRowCapitalGainsTax.visibility = View.GONE
+        binding.tableRowSurtax.visibility = View.GONE
+        binding.tableRowEmploymentInsuranceDeduction.visibility = View.GONE
+        binding.tableRowTotalTaxableIncome.visibility = View.GONE
     }
 
     private fun setSpinnerAdapter() {

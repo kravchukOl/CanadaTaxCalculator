@@ -125,15 +125,15 @@
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="RRSP Contribution"
+                android:text="@string/rrsp_contribution"
                 android:textAlignment="textStart"
-                app:layout_constraintBottom_toBottomOf="@id/edit_text_rrsp"
-                app:layout_constraintEnd_toStartOf="@+id/edit_text_rrsp"
+                app:layout_constraintBottom_toBottomOf="@id/edit_text_rrcp"
+                app:layout_constraintEnd_toStartOf="@+id/edit_text_rrcp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/edit_text_rrsp" />
+                app:layout_constraintTop_toTopOf="@id/edit_text_rrcp" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_rrsp"
+                android:id="@+id/edit_text_rrcp"
                 android:layout_width="120dp"
                 android:layout_height="48dp"
                 android:hint="@string/optional"
@@ -150,7 +150,7 @@
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Capital Gains"
+                android:text="@string/capital_gains"
                 app:layout_constraintBottom_toBottomOf="@id/edit_text_capital_gains"
                 app:layout_constraintEnd_toStartOf="@+id/edit_text_capital_gains"
                 app:layout_constraintStart_toStartOf="parent"
@@ -166,13 +166,13 @@
                 android:textAlignment="center"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_text_rrsp" />
+                app:layout_constraintTop_toBottomOf="@id/edit_text_rrcp" />
 
             <TextView
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Eligible Dividends"
+                android:text="@string/eligible_dividends"
                 app:layout_constraintBottom_toBottomOf="@id/edit_text_eligible_dividends"
                 app:layout_constraintEnd_toStartOf="@+id/edit_text_eligible_dividends"
                 app:layout_constraintStart_toStartOf="parent"
@@ -195,14 +195,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:maxWidth="200dp"
-                android:text="Ineligible Dividends"
-                app:layout_constraintBottom_toBottomOf="@id/text_input_layout_ineligible_dividends"
-                app:layout_constraintEnd_toStartOf="@+id/text_input_layout_ineligible_dividends"
+                android:text="@string/non_eligible_dividends"
+                app:layout_constraintBottom_toBottomOf="@id/text_input_layout_non_eligible_dividends"
+                app:layout_constraintEnd_toStartOf="@+id/text_input_layout_non_eligible_dividends"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/text_input_layout_ineligible_dividends" />
+                app:layout_constraintTop_toTopOf="@id/text_input_layout_non_eligible_dividends" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_layout_ineligible_dividends"
+                android:id="@+id/text_input_layout_non_eligible_dividends"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:hint="@string/optional"
@@ -230,7 +230,7 @@
                 android:checked="true"
                 android:fontFamily="sans-serif-medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_input_layout_ineligible_dividends"
+                app:layout_constraintTop_toBottomOf="@id/text_input_layout_non_eligible_dividends"
                 app:switchPadding="8dp" />
 
             <TextView
@@ -282,7 +282,7 @@
                 android:focusable="true"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="Hide All Options"
+                android:text="@string/hide_all_options"
                 android:textAlignment="center"
                 android:textColor="#303030"
                 app:drawableStartCompat="@drawable/ic_baseline_arrow_drop_up_24"
@@ -342,7 +342,7 @@
                         android:layout_width="wrap_content"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Total Taxable Income:"
+                        android:text="@string/total_taxable_income"
                         android:textSize="16sp" />
 
                     <TextView
@@ -393,18 +393,19 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/table_row_ontario_surtax"
+                    android:id="@+id/table_row_surtax"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <TextView
+                        android:id="@+id/text_view_surtax_text"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="@string/ontario_surtax"
+                        android:text="@string/province_surtax"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/text_view_ontario_surtax"
+                        android:id="@+id/text_view_surtax"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
@@ -531,7 +532,7 @@
                     <TextView
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Marginal Tax rate"
+                        android:text="@string/marginal_tax_rate"
                         android:textSize="16sp" />
 
                     <TextView

@@ -24,6 +24,8 @@ class ProvinceArrayAdapter(private val dataArray: Array<Province>)
         return position.toLong()
     }
 
+    fun getPosition(province: Province) =  dataArray.indexOf(province)
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View
         val itemHolder: ItemHolder
@@ -39,9 +41,6 @@ class ProvinceArrayAdapter(private val dataArray: Array<Province>)
         itemHolder.provinceNameTextView.text = dataArray[position].provinceName
         itemHolder.provinceFlagImageView.setImageResource(dataArray[position].imageId)
 
-        //val id = context.resources.getIdentifier(dataSource.get(position).url, "drawable", context.packageName)
-        //vh.img.setBackgroundResource(id)
-
         return view
     }
 
@@ -49,9 +48,5 @@ class ProvinceArrayAdapter(private val dataArray: Array<Province>)
         val provinceNameTextView : TextView = row.findViewById(R.id.text_view_province_name)
         val provinceFlagImageView : ImageView = row.findViewById(R.id.image_view_flag)
 
-//        init {
-//            provinceNameTextView =
-//            provinceFlagImageView =
-//        }
     }
 }

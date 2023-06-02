@@ -18,10 +18,18 @@
     <string name="switch_cpp_deduction">CPP/QPP Contribution:</string>
     <string name="cpp_contribution">CPP Contribution:</string>
     <string name="qpp_contribution">QPP Contribution:</string>
-    <string name="ontario_surtax">Ontario Surtax:</string>
+    <string name="province_surtax">%1$s Surtax:</string>
     <string name="show_all_options">Show All Options</string>
     <string name="current_year">2023</string>
     <string name="self_employed">Self Employed</string>
     <string name="optional">Optional</string>
     <string name="capital_gains_tax">Capital Gains Tax:</string>
+    <string name="rrsp_contribution">RRSP Contribution</string>
+    <string name="capital_gains">Capital Gains</string>
+    <string name="eligible_dividends">Eligible Dividends</string>
+    <string name="non_eligible_dividends">Non-eligible Dividends</string>
+    <string name="hide_all_options">Hide All Options</string>
+    <string name="total_taxable_income">Total Taxable Income:</string>
+    <string name="marginal_tax_rate">Marginal Tax rate</string>
+    <string name="enter_annual_income">Enter Annual Income</string>
 </resources>

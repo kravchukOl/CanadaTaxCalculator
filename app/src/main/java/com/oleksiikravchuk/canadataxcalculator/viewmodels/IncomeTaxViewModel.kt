@@ -15,36 +15,41 @@ class IncomeTaxViewModel : ViewModel() {
     private val deductions = Deductions()
     private var optionalTaxes = OptionalTaxes()
 
-    private var selectedProvince = provincial.provincesAndRates2023[0];
-    private var basicIncome: Double = 0.0
-    private var contributionRRCP: Double = 0.0
-    private var capitalGains: Double = 0.0
-    private var eligibleDividends: Double = 0.0
-    private var nonEligibleDividends: Double = 0.0
+    var selectedProvince = provincial.provincesAndRates2023[0];
+    var basicIncome: Double = 0.0
+    var contributionRRCP: Double = 0.0
+    var capitalGains: Double = 0.0
+    var eligibleDividends: Double = 0.0
+    var nonEligibleDividends: Double = 0.0
 
-    private var isSelfEmployed: Boolean = true
-    private var isEiIncluded = true
-    private var isCppIncluded = true
+    var isSelfEmployed: Boolean = true
+    var isEiIncluded = true
+    var isCppIncluded = true
 
-    private var totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
-    private var totalNetIncome: MutableLiveData<Double> = MutableLiveData()
+    var containsData: Boolean = false
+        private set
 
-    private var federalTax: MutableLiveData<Double> = MutableLiveData()
-    private var provincialTax: MutableLiveData<Double> = MutableLiveData()
-    private var provinceSurtax: MutableLiveData<Double> = MutableLiveData()
-    private var capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
-    private var totalIncomeTax: MutableLiveData<Double> = MutableLiveData()
-    private var eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
-    private var nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
+    val totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
+    val totalNetIncome: MutableLiveData<Double> = MutableLiveData()
 
-    private var deductionEI: MutableLiveData<Double> = MutableLiveData()
-    private var contributionCPP: MutableLiveData<Double> = MutableLiveData()
+    val federalTax: MutableLiveData<Double> = MutableLiveData()
+    val provincialTax: MutableLiveData<Double> = MutableLiveData()
+    val provinceSurtax: MutableLiveData<Double> = MutableLiveData()
+    val capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
+    val totalIncomeTax: MutableLiveData<Double> = MutableLiveData()
+    val eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
+    val nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
 
-    private var marginalTaxRate: MutableLiveData<Double> = MutableLiveData()
-    private var averageTaxRate: MutableLiveData<Double> = MutableLiveData()
+    val deductionEI: MutableLiveData<Double> = MutableLiveData()
+    val contributionCPP: MutableLiveData<Double> = MutableLiveData()
+
+    val marginalTaxRate: MutableLiveData<Double> = MutableLiveData()
+    val averageTaxRate: MutableLiveData<Double> = MutableLiveData()
 
 
     fun calculate() {
+        this.containsData = true
+
         val totalTaxableIncome = getTotalTaxableIncome()
         this.totalTaxableIncome.value = totalTaxableIncome
 
@@ -62,7 +67,7 @@ class IncomeTaxViewModel : ViewModel() {
             totalTaxableIncome,
             selectedProvince
         ) + provincial.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
-        this.marginalTaxRate.value = marginalTaxRate
+        this.marginalTaxRate.value = marginalTaxRate * 100
 
         this.averageTaxRate.value = (provincialTax + federalTax) / totalTaxableIncome * 100
 
@@ -90,13 +95,16 @@ class IncomeTaxViewModel : ViewModel() {
             )
             this.contributionCPP.value = contributionCpp
         }
-
         totalNetIncome.value =
             totalTaxableIncome - federalTax - provincialTax - contributionCpp - deductionEI
     }
 
     private fun getTotalTaxableIncome(): Double {
-        return basicIncome + (capitalGains * 0.5) - contributionRRCP
+        val income = basicIncome + (capitalGains * 0.5) - contributionRRCP
+        return if (income < 0)
+            0.0
+        else
+            income
     }
 
     private fun getSurtax(provinceTax: Double, selectedProvince: Province): Double =

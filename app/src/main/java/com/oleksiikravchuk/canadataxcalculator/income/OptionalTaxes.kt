@@ -10,10 +10,13 @@ class OptionalTaxes {
         return (capitalGains * inclusionRate) * marginalRate
     }
 
-//    fun getEligibleDevidendsTax() : Double{
-//
-//    }
+    fun getEligibleDividends() : Double {
+        return 0.0
+    }
 
+    fun getNonEligibleDividends() : Double {
+        return 0.0
+    }
 
 
 }
