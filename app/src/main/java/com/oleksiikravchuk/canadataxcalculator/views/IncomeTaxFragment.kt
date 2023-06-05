@@ -135,6 +135,12 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNetIncome.text = String.format("%.2f$", income)
         }
 
+        val rrspRefund : LiveData<Double> = viewModel.rrspRefound
+        rrspRefund.observe(viewLifecycleOwner) { refund ->
+            binding.tableRowRrspRefund.visibility = View.VISIBLE
+            binding.textViewRrspRefund.text = String.format("%.2f$", refund)
+        }
+
         val averageTaxRate: LiveData<Double> = viewModel.averageTaxRate
         averageTaxRate.observe(viewLifecycleOwner) { rate ->
             binding.textViewAverageTaxRate.text = String.format("%.1f%%", rate)
@@ -296,6 +302,7 @@ class IncomeTaxFragment : Fragment() {
         binding.tableRowTotalTaxableIncome.visibility = View.GONE
         binding.tableRowEligibleTax.visibility = View.GONE
         binding.tableRowNonEligibleTax.visibility = View.GONE
+        binding.tableRowRrspRefund.visibility = View.GONE
     }
 
     private fun setSpinnerAdapter() {

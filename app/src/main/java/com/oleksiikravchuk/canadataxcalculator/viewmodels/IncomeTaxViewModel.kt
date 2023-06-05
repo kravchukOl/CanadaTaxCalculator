@@ -15,7 +15,7 @@ class IncomeTaxViewModel : ViewModel() {
     private val deductions = Deductions()
     private var optionalTaxes = OptionalTaxes()
 
-    var selectedProvince = provincial.provincesAndRates2023[0];
+    var selectedProvince = provincial.provincesAndRates2023[0]
     var basicIncome: Double = 0.0
     var contributionRRSP: Double = 0.0
     var capitalGains: Double = 0.0
@@ -121,10 +121,11 @@ class IncomeTaxViewModel : ViewModel() {
         totalNetIncome.value =
             totalTaxableIncome - totalIncomeTax - contributionCpp - deductionEI
 
-//        if (contributionRRSP > 0) {
-//
-//        }
+        if (contributionRRSP > 0) {
+            rrspRefound.value = contributionRRSP * marginalTaxRate
+        }
     }
+
 
     private fun getTotalTaxableIncome(): Double {
         var income = this.basicIncome
