@@ -268,9 +268,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
+                app:layout_constraintBottom_toTopOf="@id/text_hide_options"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/switch_cpp_deduction"
-                app:layout_constraintBottom_toTopOf="@id/text_hide_options"
                 app:switchPadding="8dp" />
 
             <TextView
@@ -286,9 +286,9 @@
                 android:textAlignment="center"
                 android:textColor="#303030"
                 app:drawableStartCompat="@drawable/ic_baseline_arrow_drop_up_24"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -338,6 +338,7 @@
                     android:id="@+id/table_row_total_taxable_income"
                     android:visibility="gone"
                     tools:visibility="visible">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_margin="8dp"
@@ -356,6 +357,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_margin="8dp"
@@ -478,6 +480,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"
@@ -529,10 +532,6 @@
                         tools:text="3,500 $" />
                 </TableRow>
 
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_columnWeight="0.5"
-                    app:dividerThickness="2dp" />
-
                 <TableRow>
 
                     <TextView
@@ -550,6 +549,31 @@
                         android:textSize="16sp"
                         tools:text="8,123.32 $" />
                 </TableRow>
+
+                <TableRow
+                    android:id="@+id/table_row_rrsp_refund"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/rrsp_refund"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_rrsp_refund"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/green700"
+                        android:textSize="16sp"
+                        tools:text="3,321.12 $" />
+                </TableRow>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_columnWeight="0.5"
+                    app:dividerThickness="2dp" />
 
                 <TableRow>
 
@@ -586,8 +610,7 @@
                 </TableRow>
 
 
-                <com.google.android.material.divider.MaterialDivider
-                    app:dividerThickness="2dp" />
+                <com.google.android.material.divider.MaterialDivider app:dividerThickness="2dp" />
             </TableLayout>
 
         </ScrollView>

@@ -10,14 +10,14 @@
     <string name="provincial_tax_text_view">Provincial Tax:</string>
     <string name="total_income_tax_text_view">Total Income Tax:</string>
     <string name="average_tax_rate_text_view">Average Tax Rate:</string>
-    <string name="net_income_text_view">Total Net Income:</string>
+    <string name="net_income_text_view">After Tax Income:</string>
     <string name="content_description_flag_image">Province flag image</string>
     <string name="ei_deduction">EI Deduction:</string>
     <string name="switch_ei_deduction">EI Deduction</string>
     <string name="switch_cpp_deduction">CPP/QPP Contribution:</string>
     <string name="cpp_contribution">CPP Contribution:</string>
     <string name="qpp_contribution">QPP Contribution:</string>
-    <string name="province_surtax">%1$s Surtax:</string>
+    <string name="province_surtax">Surtax:</string>
     <string name="show_all_options">Show All Options</string>
     <string name="current_year">2023</string>
     <string name="self_employed">Self Employed</string>
@@ -33,4 +33,5 @@
     <string name="enter_annual_income">Enter Annual Income</string>
     <string name="eligible_dividends_tax">Eligible Dividends Tax:</string>
     <string name="non_eligible_dividends_tax">Non-Eligible Dividends Tax:</string>
+    <string name="rrsp_refund">RRSP Refund:</string>
 </resources>

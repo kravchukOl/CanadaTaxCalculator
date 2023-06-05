@@ -10,7 +10,7 @@ object RatesAndAmounts2023 {
         Pair(0, 0.15),
         Pair(53359, 0.205),
         Pair(106717, 0.26),
-        Pair(165430, 0.29),
+        Pair(165430, 0.2932),
         Pair(235675, 0.33)
     )
     const val personaFederalTaxCredit2023: Int = 15000

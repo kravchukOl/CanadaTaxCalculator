@@ -72,71 +72,67 @@ class IncomeTaxFragment : Fragment() {
     private fun initObservers() {
         val totalTaxableIncome: LiveData<Double> = viewModel.totalTaxableIncome
         totalTaxableIncome.observe(viewLifecycleOwner) { income ->
-            binding.textViewTotalTaxableIncome.text = String.format("%.2f C$", income)
+            binding.textViewTotalTaxableIncome.text = String.format("%.2f$", income)
             if (totalTaxableIncome.value != binding.editTextAnnualIncome.text.toString().toDouble())
                 binding.tableRowTotalTaxableIncome.visibility = View.VISIBLE
         }
 
         val federalTax: LiveData<Double> = viewModel.federalTax
         federalTax.observe(viewLifecycleOwner) { tax ->
-            binding.textViewFederalTax.text = String.format("%.2f C$", tax)
+            binding.textViewFederalTax.text = String.format("%.2f$", tax)
         }
 
         val provincialTax: LiveData<Double> = viewModel.provincialTax
         provincialTax.observe(viewLifecycleOwner) { tax ->
-            binding.textViewProvincialTax.text = String.format("%.2f C$", tax)
+            binding.textViewProvincialTax.text = String.format("%.2f$", tax)
         }
 
         val surtax: LiveData<Double> = viewModel.provinceSurtax
         surtax.observe(viewLifecycleOwner) { tax ->
-            binding.textViewSurtaxText.text = String.format(
-                getString(R.string.province_surtax),
-                viewModel.selectedProvince.provinceName
-            )
             binding.tableRowSurtax.visibility = View.VISIBLE
-            binding.textViewSurtax.text = String.format("%.2f C$", tax)
+            binding.textViewSurtax.text = String.format("%.2f$", tax)
         }
 
         val capitalGainsTax: LiveData<Double> = viewModel.capitalGainsTax
         capitalGainsTax.observe(viewLifecycleOwner) { tax ->
             binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
-            binding.textViewCapitalGainsTax.text = String.format("%.2f C$", tax)
+            binding.textViewCapitalGainsTax.text = String.format("%.2f$", tax)
         }
 
         val eligibleDividendTax: LiveData<Double> = viewModel.eligibleDividendsTax
         eligibleDividendTax.observe(viewLifecycleOwner) { tax ->
             binding.tableRowEligibleTax.visibility = View.VISIBLE
-            binding.textViewEligibleDivTax.text = String.format("%.2f C$", tax)
+            binding.textViewEligibleDivTax.text = String.format("%.2f$", tax)
         }
 
         val nonEligibleDividendTax: LiveData<Double> = viewModel.nonEligibleDividendsTax
         nonEligibleDividendTax.observe(viewLifecycleOwner) { tax ->
             binding.tableRowNonEligibleTax.visibility = View.VISIBLE
-            binding.textViewNonEligibleDivTax.text = String.format("%.2f C$", tax)
+            binding.textViewNonEligibleDivTax.text = String.format("%.2f$", tax)
         }
 
 
         val totalIncomeTax: LiveData<Double> = viewModel.totalIncomeTax
         totalIncomeTax.observe(viewLifecycleOwner) { tax ->
-            binding.textViewTotalIncomeTax.text = String.format("%.2f C$", tax)
+            binding.textViewTotalIncomeTax.text = String.format("%.2f$", tax)
         }
 
         val deductionEI: LiveData<Double> = viewModel.deductionEI
         deductionEI.observe(viewLifecycleOwner) { deduction ->
             binding.tableRowEmploymentInsuranceDeduction.visibility = View.VISIBLE
-            binding.textViewEmploymentInsuranceDeduction.text = String.format("%.2f C$", deduction)
+            binding.textViewEmploymentInsuranceDeduction.text = String.format("%.2f$", deduction)
         }
 
         val contributionCPP: LiveData<Double> = viewModel.contributionCPP
         contributionCPP.observe(viewLifecycleOwner) { contribution ->
             binding.tableRowCppQppContribution.visibility = View.VISIBLE
             binding.textViewCppContribution.text =
-                String.format("%.2f C$", contribution)
+                String.format("%.2f$", contribution)
         }
 
         val totalNetIncome: LiveData<Double> = viewModel.totalNetIncome
         totalNetIncome.observe(viewLifecycleOwner) { income ->
-            binding.textViewNetIncome.text = String.format("%.2f C$", income)
+            binding.textViewNetIncome.text = String.format("%.2f$", income)
         }
 
         val averageTaxRate: LiveData<Double> = viewModel.averageTaxRate

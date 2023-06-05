@@ -4,15 +4,15 @@ import com.oleksiikravchuk.canadataxcalculator.models.Province
 
 class OptionalTaxes {
 
+    // Capital Gain Rates:
     private val inclusionRate = 0.5
 
     // Dividends Rates:
-
     val eligibleGrossUpRate = 1.38
     val nonEligibleGrossUpRate = 1.15
 
     val federalEligibleTaxCreditRate = 0.150198
-    val federalNonEligibleTaxCreditRate = 0.90301
+    val federalNonEligibleTaxCreditRate = 0.090301
 
     fun getCapitalGainsTax(capitalGains: Double, marginalRate: Double): Double {
         return if (capitalGains <= 0)
@@ -28,27 +28,49 @@ class OptionalTaxes {
             capitalGains * inclusionRate
     }
 
-    fun getEligibleDividendsTaxableIncome(actualDividends: Double, province: Province): Double {
-        if (actualDividends <= 0) {
-            return 0.0
+    fun getEligibleDivsGrossUpIncome(amount: Double): Double {
+        return if (amount <= 0) {
+            0.0
+        } else {
+            amount * this.eligibleGrossUpRate
         }
-        var income = actualDividends * this.eligibleGrossUpRate
-        income -= income * federalEligibleTaxCreditRate
-        income -= income * province.eligibleTaxCreditRate
-        return income
     }
 
-    fun getNonEligibleDividendsTaxableIncome(actualDividends: Double, province: Province): Double {
-        if (actualDividends <= 0) {
-            return 0.0
+    fun getNonEligibleDivsGrossUpIncome(amount: Double): Double {
+        return if (amount <= 0) {
+            0.0
+        } else {
+            amount * this.nonEligibleGrossUpRate
         }
-        var income = actualDividends * this.nonEligibleGrossUpRate
-        income -= income * federalNonEligibleTaxCreditRate
-        income -= income * province.nonEligibleTaxCreditRate
-        return income
     }
 
-    fun getDividendsTax(taxableDividends: Double, marginalRate: Double) = taxableDividends * marginalRate
+    fun getTaxCreditOnNonEligibleDivs(amount: Double, province: Province): Double {
+        val federalCredit =
+            getNonEligibleDivsGrossUpIncome(amount) * this.federalNonEligibleTaxCreditRate
+        val provincialCredit =
+            getNonEligibleDivsGrossUpIncome(amount) * province.nonEligibleTaxCreditRate
 
+        return federalCredit + provincialCredit
+    }
 
+    fun getTaxCreditOnEligibleDivs(amount: Double, province: Province): Double {
+        val provincialCredit =
+            getEligibleDivsGrossUpIncome(amount) * this.federalEligibleTaxCreditRate
+        val federalCredit =
+            getEligibleDivsGrossUpIncome(amount) * province.eligibleTaxCreditRate
+
+        return federalCredit + provincialCredit
+    }
+
+    fun getEligibleDivsTax(amount: Double, province: Province, marginalRate: Double): Double {
+        val grossUpIncome = getEligibleDivsGrossUpIncome(amount)
+        val credit = getTaxCreditOnEligibleDivs(amount, province)
+        return grossUpIncome * marginalRate - credit
+    }
+
+    fun getNonEligibleDivsTax(amount: Double, province: Province, marginalRate: Double): Double {
+        val grossUpIncome = getNonEligibleDivsGrossUpIncome(amount)
+        val credit = getTaxCreditOnNonEligibleDivs(amount, province)
+        return grossUpIncome * marginalRate - credit
+    }
 }
