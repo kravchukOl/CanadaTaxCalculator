@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_layout_income_tax"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F6F6"
+    android:background="#E3F2FD"
     android:orientation="vertical">
 
 
@@ -112,19 +113,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_view_input_data"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/text_view_self_employed_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/text_view_rrsp_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/rrsp_contribution"
                 android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="@id/edit_text_rrcp"
@@ -147,9 +151,12 @@
             </com.google.android.material.textfield.TextInputEditText>
 
             <TextView
+                android:id="@+id/text_view_capital_gains_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/capital_gains"
                 app:layout_constraintBottom_toBottomOf="@id/edit_text_capital_gains"
                 app:layout_constraintEnd_toStartOf="@+id/edit_text_capital_gains"
@@ -169,9 +176,12 @@
                 app:layout_constraintTop_toBottomOf="@id/edit_text_rrcp" />
 
             <TextView
+                android:id="@+id/text_view_eligible_div_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/eligible_dividends"
                 app:layout_constraintBottom_toBottomOf="@id/edit_text_eligible_dividends"
                 app:layout_constraintEnd_toStartOf="@+id/edit_text_eligible_dividends"
@@ -191,9 +201,12 @@
                 app:layout_constraintTop_toBottomOf="@id/edit_text_capital_gains" />
 
             <TextView
+                android:id="@+id/text_view_non_eligible_div_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:maxWidth="200dp"
                 android:text="@string/non_eligible_dividends"
                 app:layout_constraintBottom_toBottomOf="@id/edit_text_non_eligible_dividends"
@@ -215,9 +228,12 @@
 
 
             <TextView
+                android:id="@+id/text_view_employment_insurance_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/ei_deduction"
                 app:layout_constraintBaseline_toBaselineOf="@id/switch_ei_deduction"
                 app:layout_constraintStart_toStartOf="parent"
@@ -234,9 +250,12 @@
                 app:switchPadding="8dp" />
 
             <TextView
+                android:id="@+id/text_view_cpp_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/switch_cpp_deduction"
                 app:layout_constraintBaseline_toBaselineOf="@id/switch_cpp_deduction"
                 app:layout_constraintStart_toStartOf="parent"
@@ -257,10 +276,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/self_employed"
-                android:textSize="16sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/switch_self_employed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -313,6 +330,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

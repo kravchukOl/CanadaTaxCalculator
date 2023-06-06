@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
@@ -67,7 +68,6 @@ class IncomeTaxFragment : Fragment() {
         if (viewModel.containsData)
             viewModel.calculate()
     }
-
 
     private fun initObservers() {
         val totalTaxableIncome: LiveData<Double> = viewModel.totalTaxableIncome
@@ -135,7 +135,7 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNetIncome.text = String.format("%.2f$", income)
         }
 
-        val rrspRefund : LiveData<Double> = viewModel.rrspRefound
+        val rrspRefund: LiveData<Double> = viewModel.rrspRefound
         rrspRefund.observe(viewLifecycleOwner) { refund ->
             binding.tableRowRrspRefund.visibility = View.VISIBLE
             binding.textViewRrspRefund.text = String.format("%.2f$", refund)
@@ -256,6 +256,30 @@ class IncomeTaxFragment : Fragment() {
             hideOptions()
             calculateTaxes()
         }
+
+        binding.textViewRrspInfo.setOnClickListener {
+            showEntryInfoSnackBar(EntryInfo.RRSP)
+        }
+        binding.textViewCapitalGainsInfo.setOnClickListener {
+            showEntryInfoSnackBar(EntryInfo.CapitalGains)
+        }
+        binding.textViewEligibleDivInfo.setOnClickListener {
+            showEntryInfoSnackBar(EntryInfo.EligibleDividends)
+        }
+        binding.textViewNonEligibleDivInfo.setOnClickListener {
+            showEntryInfoSnackBar(EntryInfo.NonEligibleDividends)
+        }
+        binding.textViewEmploymentInsuranceInfo.setOnClickListener {
+            showEntryInfoSnackBar(EntryInfo.EiDeduction)
+        }
+
+        binding.textViewCppInfo.setOnClickListener {
+            showEntryInfoSnackBar(EntryInfo.CppContribution)
+        }
+
+        binding.textViewSelfEmployedInfo.setOnClickListener{
+            showEntryInfoSnackBar(EntryInfo.SelfEmployed)
+        }
     }
 
     private fun onEnterKeyPressedInit() {
@@ -310,5 +334,59 @@ class IncomeTaxFragment : Fragment() {
         binding.spinnerProvinces.adapter = ProvinceArrayAdapter(provincesArray)
     }
 
+    private fun showEntryInfoSnackBar(entryInfo: EntryInfo) {
+        when (entryInfo) {
+            EntryInfo.RRSP -> Snackbar.make(
+                binding.linearLayoutIncomeTax,
+                getText(R.string.rrsp_info),
+                Snackbar.LENGTH_INDEFINITE
+            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
 
+            EntryInfo.CapitalGains -> Snackbar.make(
+                binding.linearLayoutIncomeTax,
+                getText(R.string.capital_gains_info),
+                Snackbar.LENGTH_INDEFINITE
+            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+
+            EntryInfo.EligibleDividends -> Snackbar.make(
+                binding.linearLayoutIncomeTax,
+                getText(R.string.eligible_dividends_info),
+                Snackbar.LENGTH_INDEFINITE
+            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+
+            EntryInfo.NonEligibleDividends -> Snackbar.make(
+                binding.linearLayoutIncomeTax,
+                getText(R.string.non_eligible_dividends_info),
+                Snackbar.LENGTH_INDEFINITE
+            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+
+            EntryInfo.EiDeduction -> Snackbar.make(
+                binding.linearLayoutIncomeTax,
+                getText(R.string.ei_deduction_info),
+                Snackbar.LENGTH_INDEFINITE
+            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+
+            EntryInfo.CppContribution -> Snackbar.make(
+                binding.linearLayoutIncomeTax,
+                getText(R.string.cpp_info),
+                Snackbar.LENGTH_INDEFINITE
+            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+
+            EntryInfo.SelfEmployed -> Snackbar.make(
+                binding.linearLayoutIncomeTax,
+                getText(R.string.self_employed_info),
+                Snackbar.LENGTH_INDEFINITE
+            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+        }
+    }
+
+    enum class EntryInfo {
+        RRSP,
+        CapitalGains,
+        EligibleDividends,
+        NonEligibleDividends,
+        EiDeduction,
+        CppContribution,
+        SelfEmployed
+    }
 }
