@@ -1,10 +1,14 @@
 package com.oleksiikravchuk.canadataxcalculator.views
 
+import android.content.Context
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -224,7 +228,7 @@ class IncomeTaxFragment : Fragment() {
 
 
         binding.textViewShowOptionsTop.setOnClickListener {
-            when (binding.cardViewOptions.visibility) {
+            when (binding.constraintLayoutOptions.visibility) {
                 View.GONE -> showOptions()
                 else -> hideOptions()
             }
@@ -258,26 +262,31 @@ class IncomeTaxFragment : Fragment() {
         }
 
         binding.textViewRrspInfo.setOnClickListener {
+            closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.RRSP)
         }
         binding.textViewCapitalGainsInfo.setOnClickListener {
+            closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.CapitalGains)
         }
         binding.textViewEligibleDivInfo.setOnClickListener {
+            closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.EligibleDividends)
         }
         binding.textViewNonEligibleDivInfo.setOnClickListener {
+            closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.NonEligibleDividends)
         }
         binding.textViewEmploymentInsuranceInfo.setOnClickListener {
+            closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.EiDeduction)
         }
-
         binding.textViewCppInfo.setOnClickListener {
+            closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.CppContribution)
         }
-
-        binding.textViewSelfEmployedInfo.setOnClickListener{
+        binding.textViewSelfEmployedInfo.setOnClickListener {
+            closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.SelfEmployed)
         }
     }
@@ -299,15 +308,16 @@ class IncomeTaxFragment : Fragment() {
     }
 
     private fun hideOptions() {
-        binding.cardViewOptions.visibility = View.GONE
+        TransitionManager.beginDelayedTransition(binding.cardViewOptions, AutoTransition())
+        binding.constraintLayoutOptions.visibility = View.GONE
     }
 
     private fun showOptions() {
+        TransitionManager.beginDelayedTransition(binding.cardViewOptions, AutoTransition())
         binding.cardViewOptions.visibility = View.VISIBLE
     }
 
     private fun calculateTaxes() {
-
         if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
             Toast.makeText(context, getString(R.string.enter_annual_income), Toast.LENGTH_LONG)
                 .show()
@@ -340,43 +350,51 @@ class IncomeTaxFragment : Fragment() {
                 binding.linearLayoutIncomeTax,
                 getText(R.string.rrsp_info),
                 Snackbar.LENGTH_INDEFINITE
-            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+            ).setTextMaxLines(10).setAction("Dismiss") {}.show()
 
             EntryInfo.CapitalGains -> Snackbar.make(
                 binding.linearLayoutIncomeTax,
                 getText(R.string.capital_gains_info),
                 Snackbar.LENGTH_INDEFINITE
-            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+            ).setTextMaxLines(10).setAction("Dismiss") {}.show()
 
             EntryInfo.EligibleDividends -> Snackbar.make(
                 binding.linearLayoutIncomeTax,
                 getText(R.string.eligible_dividends_info),
                 Snackbar.LENGTH_INDEFINITE
-            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+            ).setTextMaxLines(10).setAction("Dismiss") {}.show()
 
             EntryInfo.NonEligibleDividends -> Snackbar.make(
                 binding.linearLayoutIncomeTax,
                 getText(R.string.non_eligible_dividends_info),
                 Snackbar.LENGTH_INDEFINITE
-            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+            ).setTextMaxLines(10).setAction("Dismiss") {}.show()
 
             EntryInfo.EiDeduction -> Snackbar.make(
                 binding.linearLayoutIncomeTax,
                 getText(R.string.ei_deduction_info),
                 Snackbar.LENGTH_INDEFINITE
-            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+            ).setTextMaxLines(10).setAction("Dismiss") {}.show()
 
             EntryInfo.CppContribution -> Snackbar.make(
                 binding.linearLayoutIncomeTax,
                 getText(R.string.cpp_info),
                 Snackbar.LENGTH_INDEFINITE
-            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+            ).setTextMaxLines(10).setAction("Dismiss") {}.show()
 
             EntryInfo.SelfEmployed -> Snackbar.make(
                 binding.linearLayoutIncomeTax,
                 getText(R.string.self_employed_info),
                 Snackbar.LENGTH_INDEFINITE
-            ).setTextMaxLines(10).setAction("Dismiss", {}).show()
+            ).setTextMaxLines(10).setAction("Dismiss") {}.show()
+        }
+    }
+
+    private fun closeSoftKeyboard() {
+        val focusView = activity?.currentFocus
+        focusView?.let { view ->
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 

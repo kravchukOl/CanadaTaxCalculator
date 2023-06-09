@@ -3,7 +3,7 @@
     <string name="nav_bar_income_tax">Income Tax</string>
     <string name="gst_hst">GST/HST</string>
     <string name="input_card_province">Province:</string>
-    <string name="input_card_annual_income">Taxable Income:</string>
+    <string name="input_card_annual_income">Annual Income:</string>
     <string name="input_card_currency_cad">CA$</string>
     <string name="button_calculate_taxes">Calculate taxes</string>
     <string name="federal_tax_text_view">Federal Tax:</string>
@@ -36,8 +36,8 @@
     <string name="rrsp_refund">RRSP Refund:</string>
     <string name="rrsp_info">RRSP (Registered Retirement Savings Plan) - A government-registered retirement savings account in Canada that allows individuals to save money for retirement on a tax-deferred basis. Contributions to an RRSP can be deducted from taxable income, enabling individuals to reduce their annual tax bill.</string>
     <string name="capital_gains_info">Capital Gains - Capital gains refer to the profits earned from the sale or disposition of assets such as stocks, real estate, or investments. They are typically subject to specific taxation known as "capital gains tax".</string>
-    <string name="eligible_dividends_info">Eligible Dividends - Eligible dividends are payments distributed to shareholders by a corporation that qualify for favorable tax treatment. They are typically subject to a lower tax rate compared to other types of income, such as interest or non-eligible dividends.</string>
-    <string name="non_eligible_dividends_info">Non-Eligible Dividends - Non-eligible dividends are payments distributed to shareholders by a corporation that do not qualify for the same favorable tax treatment as eligible dividends. They are typically subject to a higher tax rate compared to eligible dividends and other types of income.</string>
+    <string name="eligible_dividends_info">Eligible dividends are payments distributed to shareholders by a corporation that qualify for favorable tax treatment. They are typically subject to a lower tax rate compared to other types of income, such as interest or non-eligible dividends.</string>
+    <string name="non_eligible_dividends_info">Non-eligible dividends are payments distributed to shareholders by a corporation that do not qualify for the same favorable tax treatment as eligible dividends. They are typically subject to a higher tax rate compared to eligible dividends and other types of income.</string>
     <string name="ei_deduction_info">The EI (Employment Insurance) deduction refers to the amount withheld from an employee\'s paycheck to contribute to the Employment Insurance program. The deduction is a percentage of the employee\'s insurable earnings and helps fund benefits such as unemployment, sickness, maternity, and parental leave.</string>
     <string name="cpp_info">CPP (Canada Pension Plan) / QPP (Quebec Pension Plan) - CPP and QPP are government-administered pension programs in Canada that provide income replacement and retirement benefits to eligible individuals. The programs are funded through contributions made by employees, employers, and self-employed individuals during their working years. The amount of pension benefits received is based on the individual\'s contributions and years of participation in the plan.</string>
     <string name="self_employed_info">Self-Employed - In the context of CPP/QPP, being self-employed refers to individuals who work for themselves and do not have an employer deducting CPP/QPP contributions from their earnings. Self-employed individuals are responsible for making their own contributions to the CPP or QPP based on their self-employment income. They are required to contribute both the employee and employer portions of the CPP/QPP contributions.</string>

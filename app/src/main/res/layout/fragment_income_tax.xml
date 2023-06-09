@@ -64,6 +64,7 @@
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edit_text_annual_income"
+                    app:backgroundTint = "@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
@@ -108,19 +109,20 @@
         android:layout_marginHorizontal="28dp"
         android:layout_marginTop="-16dp"
         android:layout_marginBottom="16dp"
-        android:visibility="gone"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_input_data"
-        tools:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@id/card_view_input_data">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/text_view_self_employed_info"
+            android:id="@+id/constraint_layout_options"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
-            android:paddingTop="16dp">
+            android:paddingTop="16dp"
+            android:animateLayoutChanges="true"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/text_view_rrsp_info"
@@ -272,6 +274,7 @@
                 app:switchPadding="8dp" />
 
             <TextView
+                android:id="@+id/text_view_self_employed_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
