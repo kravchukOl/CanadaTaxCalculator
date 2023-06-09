@@ -45,10 +45,11 @@ class IncomeTaxFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[IncomeTaxViewModel::class.java]
 
-        setSpinnerAdapter()
         restoreInput()
+        setSpinnerAdapter()
         initObservers()
         initListeners()
+
 
         binding.buttonCalculateTaxes.visibility = View.GONE
     }
@@ -218,7 +219,9 @@ class IncomeTaxFragment : Fragment() {
                     if (!binding.editTextAnnualIncome.text.isNullOrEmpty()) {
                         viewModel.selectedProvince =
                             binding.spinnerProvinces.selectedItem as Province
-                        calculateTaxes()
+                        if(viewModel.containsData) {
+                            calculateTaxes()
+                        }
                     }
                 }
 
@@ -314,12 +317,12 @@ class IncomeTaxFragment : Fragment() {
 
     private fun showOptions() {
         TransitionManager.beginDelayedTransition(binding.cardViewOptions, AutoTransition())
-        binding.cardViewOptions.visibility = View.VISIBLE
+        binding.constraintLayoutOptions.visibility = View.VISIBLE
     }
 
     private fun calculateTaxes() {
         if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
-            Toast.makeText(context, getString(R.string.enter_annual_income), Toast.LENGTH_LONG)
+            Toast.makeText(context, getString(R.string.enter_annual_income), Toast.LENGTH_SHORT)
                 .show()
         } else {
             binding.cardViewSummary.visibility = View.VISIBLE
