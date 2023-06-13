@@ -32,16 +32,9 @@ class IncomeTaxViewModel : ViewModel() {
 
     val mainIncomeTaxUiState: MutableLiveData<MainIncomeTaxUiState> = MutableLiveData()
 
-    val totalActualIncome: MutableLiveData<Double> = MutableLiveData()
-    val totalNetIncome: MutableLiveData<Double> = MutableLiveData()
-    val totalIncomeTax: MutableLiveData<Double> = MutableLiveData()
-    val federalTax: MutableLiveData<Double> = MutableLiveData()
-    val provincialTax: MutableLiveData<Double> = MutableLiveData()
-    val marginalTaxRate: MutableLiveData<Double> = MutableLiveData()
-    val averageTaxRate: MutableLiveData<Double> = MutableLiveData()
-
     //val optionalIncomeTaxUiState: MutableLiveData<OptionalIncomeTaxUiState> = MutableLiveData()
 
+    val totalActualIncome: MutableLiveData<Double> = MutableLiveData()
     val totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
     val provinceSurtax: MutableLiveData<Double> = MutableLiveData()
     val capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
@@ -62,10 +55,8 @@ class IncomeTaxViewModel : ViewModel() {
         this.totalActualIncome.value = getTotalActualIncome()
 
         val federalTax = federal.getFederalTax(totalTaxableIncome, this.selectedProvince)
-        this.federalTax.value = federalTax
 
         val provincialTax = provincial.getProvinceTax(totalTaxableIncome, this.selectedProvince)
-        this.provincialTax.value = provincialTax
 
         val surtax = getSurtax(provincialTax, selectedProvince)
         if (surtax > 0.0) {
@@ -74,18 +65,12 @@ class IncomeTaxViewModel : ViewModel() {
         }
 
         val totalIncomeTax = federalTax + provincialTax - dividendCredits()
-        this.totalIncomeTax.value = totalIncomeTax
 
-        var marginalTaxRate = federal.getMarginalTaxRate(
-            totalTaxableIncome,
-            selectedProvince
-        )
+        var marginalTaxRate = federal.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
         marginalTaxRate += provincial.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
-        this.marginalTaxRate.value = marginalTaxRate * 100
+        marginalTaxRate *= 100
 
         val averageTaxRate = totalIncomeTax / getTotalActualIncome() * 100
-        this.averageTaxRate.value = averageTaxRate
-
 
         if (this.capitalGains > 0) {
             this.capitalGainsTax.value =
@@ -129,7 +114,7 @@ class IncomeTaxViewModel : ViewModel() {
             this.contributionCPP.value = contributionCpp
         }
         val totalNetIncome = totalTaxableIncome - totalIncomeTax - contributionCpp - deductionEI
-        this.totalNetIncome.value = totalNetIncome
+
 
 
         if (contributionRRSP > 0) {

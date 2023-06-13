@@ -83,8 +83,8 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewProvincialTax.text = String.format("%.2f$", uiState.provincialTax)
             binding.textViewTotalIncomeTax.text = String.format("%.2f$", uiState.totalIncomeTax)
             binding.textViewNetIncome.text = String.format("%.2f$", uiState.totalNetIncome)
-            binding.textViewAverageTaxRate.text = String.format("%.2f$", uiState.averageTaxRate)
-            binding.textViewMarginalTaxRate.text = String.format("%.2f$", uiState.marginalTaxRate)
+            binding.textViewAverageTaxRate.text = String.format("%.1f%%", uiState.averageTaxRate)
+            binding.textViewMarginalTaxRate.text = String.format("%.1f%%", uiState.marginalTaxRate)
         }
 
         val totalTaxableIncome: LiveData<Double> = viewModel.totalTaxableIncome
@@ -93,16 +93,6 @@ class IncomeTaxFragment : Fragment() {
             if (totalTaxableIncome.value != binding.editTextAnnualIncome.text.toString().toDouble())
                 binding.tableRowTotalTaxableIncome.visibility = View.VISIBLE
         }
-//
-//        val federalTax: LiveData<Double> = viewModel.federalTax
-//        federalTax.observe(viewLifecycleOwner) { tax ->
-//            binding.textViewFederalTax.text = String.format("%.2f$", tax)
-//        }
-//
-//        val provincialTax: LiveData<Double> = viewModel.provincialTax
-//        provincialTax.observe(viewLifecycleOwner) { tax ->
-//            binding.textViewProvincialTax.text = String.format("%.2f$", tax)
-//        }
 
         val surtax: LiveData<Double> = viewModel.provinceSurtax
         surtax.observe(viewLifecycleOwner) { tax ->
@@ -128,12 +118,6 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNonEligibleDivTax.text = String.format("%.2f$", tax)
         }
 
-
-//        val totalIncomeTax: LiveData<Double> = viewModel.totalIncomeTax
-//        totalIncomeTax.observe(viewLifecycleOwner) { tax ->
-//            binding.textViewTotalIncomeTax.text = String.format("%.2f$", tax)
-//        }
-
         val deductionEI: LiveData<Double> = viewModel.deductionEI
         deductionEI.observe(viewLifecycleOwner) { deduction ->
             binding.tableRowEmploymentInsuranceDeduction.visibility = View.VISIBLE
@@ -147,26 +131,11 @@ class IncomeTaxFragment : Fragment() {
                 String.format("%.2f$", contribution)
         }
 
-//        val totalNetIncome: LiveData<Double> = viewModel.totalNetIncome
-//        totalNetIncome.observe(viewLifecycleOwner) { income ->
-//            binding.textViewNetIncome.text = String.format("%.2f$", income)
-//        }
-
         val rrspRefund: LiveData<Double> = viewModel.rrspRefund
         rrspRefund.observe(viewLifecycleOwner) { refund ->
             binding.tableRowRrspRefund.visibility = View.VISIBLE
             binding.textViewRrspRefund.text = String.format("%.2f$", refund)
         }
-
-//        val averageTaxRate: LiveData<Double> = viewModel.averageTaxRate
-//        averageTaxRate.observe(viewLifecycleOwner) { rate ->
-//            binding.textViewAverageTaxRate.text = String.format("%.1f%%", rate)
-//        }
-//
-//        val marginalTaxRate: LiveData<Double> = viewModel.marginalTaxRate
-//        marginalTaxRate.observe(viewLifecycleOwner) { rate ->
-//            binding.textViewMarginalTaxRate.text = String.format("%.1f%%", rate)
-//        }
     }
 
     private fun initListeners() {
