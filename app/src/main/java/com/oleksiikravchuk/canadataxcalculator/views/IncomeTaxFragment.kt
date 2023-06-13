@@ -23,6 +23,7 @@ import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.income.*
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
+import com.oleksiikravchuk.canadataxcalculator.viewmodels.MainIncomeTaxUiState
 
 class IncomeTaxFragment : Fragment() {
 
@@ -75,22 +76,33 @@ class IncomeTaxFragment : Fragment() {
     }
 
     private fun initObservers() {
+
+        val mainUiState: LiveData<MainIncomeTaxUiState> = viewModel.mainIncomeTaxUiState
+        mainUiState.observe(viewLifecycleOwner) { uiState ->
+            binding.textViewFederalTax.text = String.format("%.2f$", uiState.federalTax)
+            binding.textViewProvincialTax.text = String.format("%.2f$", uiState.provincialTax)
+            binding.textViewTotalIncomeTax.text = String.format("%.2f$", uiState.totalIncomeTax)
+            binding.textViewNetIncome.text = String.format("%.2f$", uiState.totalNetIncome)
+            binding.textViewAverageTaxRate.text = String.format("%.2f$", uiState.averageTaxRate)
+            binding.textViewMarginalTaxRate.text = String.format("%.2f$", uiState.marginalTaxRate)
+        }
+
         val totalTaxableIncome: LiveData<Double> = viewModel.totalTaxableIncome
         totalTaxableIncome.observe(viewLifecycleOwner) { income ->
             binding.textViewTotalTaxableIncome.text = String.format("%.2f$", income)
             if (totalTaxableIncome.value != binding.editTextAnnualIncome.text.toString().toDouble())
                 binding.tableRowTotalTaxableIncome.visibility = View.VISIBLE
         }
-
-        val federalTax: LiveData<Double> = viewModel.federalTax
-        federalTax.observe(viewLifecycleOwner) { tax ->
-            binding.textViewFederalTax.text = String.format("%.2f$", tax)
-        }
-
-        val provincialTax: LiveData<Double> = viewModel.provincialTax
-        provincialTax.observe(viewLifecycleOwner) { tax ->
-            binding.textViewProvincialTax.text = String.format("%.2f$", tax)
-        }
+//
+//        val federalTax: LiveData<Double> = viewModel.federalTax
+//        federalTax.observe(viewLifecycleOwner) { tax ->
+//            binding.textViewFederalTax.text = String.format("%.2f$", tax)
+//        }
+//
+//        val provincialTax: LiveData<Double> = viewModel.provincialTax
+//        provincialTax.observe(viewLifecycleOwner) { tax ->
+//            binding.textViewProvincialTax.text = String.format("%.2f$", tax)
+//        }
 
         val surtax: LiveData<Double> = viewModel.provinceSurtax
         surtax.observe(viewLifecycleOwner) { tax ->
@@ -117,10 +129,10 @@ class IncomeTaxFragment : Fragment() {
         }
 
 
-        val totalIncomeTax: LiveData<Double> = viewModel.totalIncomeTax
-        totalIncomeTax.observe(viewLifecycleOwner) { tax ->
-            binding.textViewTotalIncomeTax.text = String.format("%.2f$", tax)
-        }
+//        val totalIncomeTax: LiveData<Double> = viewModel.totalIncomeTax
+//        totalIncomeTax.observe(viewLifecycleOwner) { tax ->
+//            binding.textViewTotalIncomeTax.text = String.format("%.2f$", tax)
+//        }
 
         val deductionEI: LiveData<Double> = viewModel.deductionEI
         deductionEI.observe(viewLifecycleOwner) { deduction ->
@@ -135,26 +147,26 @@ class IncomeTaxFragment : Fragment() {
                 String.format("%.2f$", contribution)
         }
 
-        val totalNetIncome: LiveData<Double> = viewModel.totalNetIncome
-        totalNetIncome.observe(viewLifecycleOwner) { income ->
-            binding.textViewNetIncome.text = String.format("%.2f$", income)
-        }
+//        val totalNetIncome: LiveData<Double> = viewModel.totalNetIncome
+//        totalNetIncome.observe(viewLifecycleOwner) { income ->
+//            binding.textViewNetIncome.text = String.format("%.2f$", income)
+//        }
 
-        val rrspRefund: LiveData<Double> = viewModel.rrspRefound
+        val rrspRefund: LiveData<Double> = viewModel.rrspRefund
         rrspRefund.observe(viewLifecycleOwner) { refund ->
             binding.tableRowRrspRefund.visibility = View.VISIBLE
             binding.textViewRrspRefund.text = String.format("%.2f$", refund)
         }
 
-        val averageTaxRate: LiveData<Double> = viewModel.averageTaxRate
-        averageTaxRate.observe(viewLifecycleOwner) { rate ->
-            binding.textViewAverageTaxRate.text = String.format("%.1f%%", rate)
-        }
-
-        val marginalTaxRate: LiveData<Double> = viewModel.marginalTaxRate
-        marginalTaxRate.observe(viewLifecycleOwner) { rate ->
-            binding.textViewMarginalTaxRate.text = String.format("%.1f%%", rate)
-        }
+//        val averageTaxRate: LiveData<Double> = viewModel.averageTaxRate
+//        averageTaxRate.observe(viewLifecycleOwner) { rate ->
+//            binding.textViewAverageTaxRate.text = String.format("%.1f%%", rate)
+//        }
+//
+//        val marginalTaxRate: LiveData<Double> = viewModel.marginalTaxRate
+//        marginalTaxRate.observe(viewLifecycleOwner) { rate ->
+//            binding.textViewMarginalTaxRate.text = String.format("%.1f%%", rate)
+//        }
     }
 
     private fun initListeners() {
@@ -206,8 +218,6 @@ class IncomeTaxFragment : Fragment() {
             }
             calculateTaxes()
         }
-
-
         binding.spinnerProvinces.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -219,7 +229,7 @@ class IncomeTaxFragment : Fragment() {
                     if (!binding.editTextAnnualIncome.text.isNullOrEmpty()) {
                         viewModel.selectedProvince =
                             binding.spinnerProvinces.selectedItem as Province
-                        if(viewModel.containsData) {
+                        if (viewModel.containsData) {
                             calculateTaxes()
                         }
                     }
@@ -228,8 +238,6 @@ class IncomeTaxFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
-
-
         binding.textViewShowOptionsTop.setOnClickListener {
             when (binding.constraintLayoutOptions.visibility) {
                 View.GONE -> showOptions()

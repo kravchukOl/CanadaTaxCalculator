@@ -29,29 +29,33 @@ class IncomeTaxViewModel : ViewModel() {
     var containsData: Boolean = false
         private set
 
-    val totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
+
+    val mainIncomeTaxUiState: MutableLiveData<MainIncomeTaxUiState> = MutableLiveData()
+
     val totalActualIncome: MutableLiveData<Double> = MutableLiveData()
     val totalNetIncome: MutableLiveData<Double> = MutableLiveData()
-
+    val totalIncomeTax: MutableLiveData<Double> = MutableLiveData()
     val federalTax: MutableLiveData<Double> = MutableLiveData()
     val provincialTax: MutableLiveData<Double> = MutableLiveData()
-    val provinceSurtax: MutableLiveData<Double> = MutableLiveData()
-    val capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
-    val totalIncomeTax: MutableLiveData<Double> = MutableLiveData()
-    val rrspRefound: MutableLiveData<Double> = MutableLiveData()
-
-    val eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
-    val nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
-
-    val deductionEI: MutableLiveData<Double> = MutableLiveData()
-    val contributionCPP: MutableLiveData<Double> = MutableLiveData()
-
     val marginalTaxRate: MutableLiveData<Double> = MutableLiveData()
     val averageTaxRate: MutableLiveData<Double> = MutableLiveData()
+
+    //val optionalIncomeTaxUiState: MutableLiveData<OptionalIncomeTaxUiState> = MutableLiveData()
+
+    val totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
+    val provinceSurtax: MutableLiveData<Double> = MutableLiveData()
+    val capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
+    val rrspRefund: MutableLiveData<Double> = MutableLiveData()
+    val eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
+    val nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
+    val deductionEI: MutableLiveData<Double> = MutableLiveData()
+    val contributionCPP: MutableLiveData<Double> = MutableLiveData()
 
 
     fun calculate() {
         this.containsData = true
+
+        val optionalIncomeTaxUiState = OptionalIncomeTaxUiState()
 
         val totalTaxableIncome = getTotalTaxableIncome()
         this.totalTaxableIncome.value = totalTaxableIncome
@@ -64,8 +68,10 @@ class IncomeTaxViewModel : ViewModel() {
         this.provincialTax.value = provincialTax
 
         val surtax = getSurtax(provincialTax, selectedProvince)
-        if (surtax > 0.0)
+        if (surtax > 0.0) {
             this.provinceSurtax.value = surtax
+            optionalIncomeTaxUiState.surtax = surtax
+        }
 
         val totalIncomeTax = federalTax + provincialTax - dividendCredits()
         this.totalIncomeTax.value = totalIncomeTax
@@ -77,10 +83,14 @@ class IncomeTaxViewModel : ViewModel() {
         marginalTaxRate += provincial.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
         this.marginalTaxRate.value = marginalTaxRate * 100
 
-        this.averageTaxRate.value = totalIncomeTax / getTotalActualIncome() * 100
+        val averageTaxRate = totalIncomeTax / getTotalActualIncome() * 100
+        this.averageTaxRate.value = averageTaxRate
+
 
         if (this.capitalGains > 0) {
             this.capitalGainsTax.value =
+                this.optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
+            optionalIncomeTaxUiState.capitalGainsTax =
                 optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
         }
 
@@ -118,12 +128,23 @@ class IncomeTaxViewModel : ViewModel() {
             )
             this.contributionCPP.value = contributionCpp
         }
-        totalNetIncome.value =
-            totalTaxableIncome - totalIncomeTax - contributionCpp - deductionEI
+        val totalNetIncome = totalTaxableIncome - totalIncomeTax - contributionCpp - deductionEI
+        this.totalNetIncome.value = totalNetIncome
+
 
         if (contributionRRSP > 0) {
-            rrspRefound.value = contributionRRSP * marginalTaxRate
+            rrspRefund.value = contributionRRSP * marginalTaxRate
         }
+
+        mainIncomeTaxUiState.value = MainIncomeTaxUiState(
+            totalNetIncome,
+            totalIncomeTax,
+            federalTax,
+            provincialTax,
+            marginalTaxRate,
+            averageTaxRate
+        )
+
     }
 
 
