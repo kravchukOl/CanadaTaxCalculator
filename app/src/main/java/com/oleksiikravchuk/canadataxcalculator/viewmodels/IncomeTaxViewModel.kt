@@ -29,10 +29,8 @@ class IncomeTaxViewModel : ViewModel() {
     var containsData: Boolean = false
         private set
 
-
     val mainIncomeTaxUiState: MutableLiveData<MainIncomeTaxUiState> = MutableLiveData()
 
-    //val optionalIncomeTaxUiState: MutableLiveData<OptionalIncomeTaxUiState> = MutableLiveData()
 
     val totalActualIncome: MutableLiveData<Double> = MutableLiveData()
     val totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
@@ -48,8 +46,6 @@ class IncomeTaxViewModel : ViewModel() {
     fun calculate() {
         this.containsData = true
 
-        val optionalIncomeTaxUiState = OptionalIncomeTaxUiState()
-
         val totalTaxableIncome = getTotalTaxableIncome()
         this.totalTaxableIncome.value = totalTaxableIncome
         this.totalActualIncome.value = getTotalActualIncome()
@@ -61,7 +57,6 @@ class IncomeTaxViewModel : ViewModel() {
         val surtax = getSurtax(provincialTax, selectedProvince)
         if (surtax > 0.0) {
             this.provinceSurtax.value = surtax
-            optionalIncomeTaxUiState.surtax = surtax
         }
 
         val totalIncomeTax = federalTax + provincialTax - dividendCredits()
@@ -75,8 +70,6 @@ class IncomeTaxViewModel : ViewModel() {
         if (this.capitalGains > 0) {
             this.capitalGainsTax.value =
                 this.optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
-            optionalIncomeTaxUiState.capitalGainsTax =
-                optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
         }
 
         if (this.eligibleDividends > 0) {

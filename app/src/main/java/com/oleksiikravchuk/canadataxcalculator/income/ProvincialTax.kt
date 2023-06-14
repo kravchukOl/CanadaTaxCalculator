@@ -16,7 +16,8 @@ class ProvincialTax {
             ),
             21003,
             0.0812,
-            0.0218
+            0.0218,
+            arrayOf(Pair(Province.SaleTaxesType.GST, 0.05))
         ),
         Province(
             "British Columbia", R.drawable.flag_of_british_columbia,
@@ -31,7 +32,11 @@ class ProvincialTax {
             ),
             11981,
             0.12,
-            0.0196
+            0.0196,
+            arrayOf(
+                Pair(Province.SaleTaxesType.GST, 0.05),
+                Pair(Province.SaleTaxesType.PST, 0.07)
+            )
         ),
         Province(
             "Manitoba", R.drawable.flag_of_manitoba,
@@ -42,7 +47,11 @@ class ProvincialTax {
             ),
             15000,
             0.08,
-            0.007837
+            0.007837,
+            arrayOf(
+                Pair(Province.SaleTaxesType.GST, 0.05),
+                Pair(Province.SaleTaxesType.PST, 0.07)
+            )
         ),
         Province(
             "New Brunswick", R.drawable.flag_of_new_brunswick,
@@ -54,7 +63,8 @@ class ProvincialTax {
             ),
             12458,
             0.14,
-            0.0275
+            0.0275,
+            arrayOf(Pair(Province.SaleTaxesType.HST, 0.15))
         ),
         Province(
             "Newfoundland and Labrador", R.drawable.flag_of_newfoundland_and_labrador,
@@ -70,7 +80,8 @@ class ProvincialTax {
             ),
             10382,
             0.063,
-            0.032
+            0.032,
+            arrayOf(Pair(Province.SaleTaxesType.HST, 0.15))
         ),
         Province(
             "Nova Scotia", R.drawable.flag_of_nova_scotia,
@@ -83,7 +94,8 @@ class ProvincialTax {
             ),
             8481,
             0.0885,
-            0.0299
+            0.0299,
+            arrayOf(Pair(Province.SaleTaxesType.HST, 0.15))
         ),
         Province(
             "Northwest Territories", R.drawable.flag_of_the_northwest_territories,
@@ -95,7 +107,8 @@ class ProvincialTax {
             ),
             16593,
             0.115,
-            0.06
+            0.06,
+            arrayOf(Pair(Province.SaleTaxesType.GST, 0.05))
         ),
         Province(
             "Nunavut", R.drawable.flag_of_nunavut,
@@ -107,7 +120,8 @@ class ProvincialTax {
             ),
             17925,
             0.0551,
-            0.0261
+            0.0261,
+            arrayOf(Pair(Province.SaleTaxesType.GST, 0.05))
         ),
         Province(
             "Ontario", R.drawable.flag_of_ontario,
@@ -120,7 +134,8 @@ class ProvincialTax {
             ),
             11865,
             0.1,
-            0.02863
+            0.02863,
+            arrayOf(Pair(Province.SaleTaxesType.HST, 0.13))
         ),
         Province(
             "Prince Edward Island", R.drawable.flag_of_prince_edward_island,
@@ -131,11 +146,13 @@ class ProvincialTax {
             ),
             12000,
             0.105,
-            0.013
+            0.013,
+            arrayOf(Pair(Province.SaleTaxesType.HST, 0.15))
         ),
         Province(
             // Quebec income tax rates
-            "Quebec", R.drawable.flag_of_quebec, arrayOf(
+            "Quebec", R.drawable.flag_of_quebec,
+            arrayOf(
                 Pair(0, 0.14),
                 Pair(49275, 0.19),
                 Pair(98540, 0.24),
@@ -143,7 +160,11 @@ class ProvincialTax {
             ),
             17183,
             0.117,
-            0.0342
+            0.0342,
+            arrayOf(
+                Pair(Province.SaleTaxesType.GST, 0.05),
+                Pair(Province.SaleTaxesType.PST, 0.0975)
+            )
         ),
         Province(
             "Saskatchewan", R.drawable.flag_of_saskatchewan,
@@ -154,7 +175,11 @@ class ProvincialTax {
             ),
             17661,
             0.11,
-            0.02105
+            0.02105,
+            arrayOf(
+                Pair(Province.SaleTaxesType.GST, 0.05),
+                Pair(Province.SaleTaxesType.PST, 0.06)
+            )
         ),
         Province(
             "Yukon", R.drawable.flag_of_yukon, arrayOf(
@@ -166,7 +191,8 @@ class ProvincialTax {
             ),
             15000,
             0.1202,
-            0.0067
+            0.0067,
+            arrayOf(Pair(Province.SaleTaxesType.GST, 0.05))
         ),
     )
 

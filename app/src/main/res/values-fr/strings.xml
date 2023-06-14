@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Calculateur d\'impôt canadien</string>
     <string name="nav_bar_income_tax">Income Tax</string>
-    <string name="gst_hst">GST/HST</string>
+    <string name="sales_tax">GST/HST</string>
     <string name="input_card_province">Province:</string>
     <string name="input_card_currency_cad">CA$</string>
     <string name="button_calculate_taxes">Calculate taxes</string>

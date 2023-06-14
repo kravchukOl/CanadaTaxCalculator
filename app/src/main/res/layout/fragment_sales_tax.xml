@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="165dp"
-        android:layout_marginBottom="-80dp"
+        android:layout_marginBottom="-116dp"
         android:background="#272CA5">
 
         <TextView
@@ -28,20 +28,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/spinner_provinces"
-            style="@style/Widget.AppCompat.Spinner.DropDown"
-            android:background="#60FFFFFF"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:minHeight="48dp"
-            android:layout_margin="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_app_name"
-            tools:ignore="TouchTargetSizeCheck"
-            tools:listitem="@layout/item_province" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
@@ -63,6 +49,18 @@
             android:background="#8386e2"
             android:padding="12dp">
 
+            <Spinner
+                android:id="@+id/spinner_provinces"
+                style="@style/Widget.AppCompat.Spinner.DropDown"
+                android:background="#60FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minHeight="48dp"
+                android:layout_margin="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck"
+                tools:listitem="@layout/item_province" />
 
             <TextView
                 android:id="@+id/text_view_annual_income"
@@ -85,7 +83,7 @@
                 android:hint="@string/input_card_currency_cad"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/text_view_annual_income"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/spinner_provinces">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edit_text_annual_income"
@@ -138,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="GST:  10.25"
+                android:text="HST:  10.25"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
                 app:layout_constraintTop_toBottomOf="@id/divider_amount_taxes" />
@@ -148,17 +146,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="PST:  10.25"
+                android:text="GST:  10.25"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
-                app:layout_constraintTop_toBottomOf="@id/text_view_gst_value" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_gst_value"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/text_view_hst_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="HST:  10.25"
+                android:text="PST:  10.25"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
                 app:layout_constraintTop_toBottomOf="@id/text_view_pst_value" />
