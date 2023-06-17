@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentSalesTaxBinding
+import com.oleksiikravchuk.canadataxcalculator.viewmodels.SalesTaxViewModel
 
 class SalesTaxFragment : Fragment() {
 
     lateinit var binding: FragmentSalesTaxBinding
+    lateinit var viewModel : SalesTaxViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,5 +25,9 @@ class SalesTaxFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this)[SalesTaxViewModel::class.java]
+
+
     }
 }

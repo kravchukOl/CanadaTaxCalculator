@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="HST:  10.25"
+                android:text="HST: 10.25"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
                 app:layout_constraintTop_toBottomOf="@id/divider_amount_taxes" />
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="PST:  10.25"
+                android:text="PST: 10.25"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
                 app:layout_constraintTop_toBottomOf="@id/text_view_pst_value" />
@@ -165,11 +165,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total: 324.75 C$"
+                android:layout_marginStart="12dp"
                 android:fontFamily="sans-serif-medium"
-                android:textSize="28sp"
+                android:text="Total: 324.75 C$"
+                android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/divider_amount_taxes"
+                app:layout_constraintEnd_toEndOf="@+id/text_input_layout_discount"
+                app:layout_constraintStart_toStartOf="@+id/text_input_layout_discount"
                 app:layout_constraintTop_toBottomOf="@id/divider_amount_taxes" />
 
 

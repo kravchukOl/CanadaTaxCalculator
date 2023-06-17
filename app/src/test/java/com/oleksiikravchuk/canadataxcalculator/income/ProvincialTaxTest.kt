@@ -2,7 +2,6 @@ package com.oleksiikravchuk.canadataxcalculator.income
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
-
 import org.junit.Test
 
 class ProvincialTaxTest {
