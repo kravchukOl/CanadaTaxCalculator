@@ -21,7 +21,7 @@ import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
-import com.oleksiikravchuk.canadataxcalculator.income.*
+import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.MainIncomeTaxUiState
 
@@ -29,8 +29,6 @@ class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
     private lateinit var viewModel: IncomeTaxViewModel
-
-    private val provincialTax = ProvincialTax()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -320,7 +318,7 @@ class IncomeTaxFragment : Fragment() {
     }
 
     private fun setSpinnerAdapter() {
-        val provincesArray = provincialTax.provincesAndRates2023
+        val provincesArray = RatesAndAmounts2023.provincesAndRates2023
         binding.spinnerProvinces.adapter = ProvinceArrayAdapter(provincesArray)
     }
 

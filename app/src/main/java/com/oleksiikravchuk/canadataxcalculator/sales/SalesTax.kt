@@ -1,7 +1,6 @@
 package com.oleksiikravchuk.canadataxcalculator.sales
 
 import com.oleksiikravchuk.canadataxcalculator.models.Province
-import java.lang.Math.round
 import kotlin.math.floor
 
 object SalesTax {
@@ -9,8 +8,8 @@ object SalesTax {
     fun getSalesTaxList(
         baseAmount: Double,
         province: Province
-    ): List<Pair<Province.SaleTaxesType, Double>> {
-        val taxesList = mutableListOf<Pair<Province.SaleTaxesType, Double>>()
+    ): List<Pair<SaleTaxesType, Double>> {
+        val taxesList = mutableListOf<Pair<SaleTaxesType, Double>>()
         for (item in province.salesTaxRates) {
             taxesList.add(Pair(item.first, roundToCents( baseAmount * item.second )))
         }
@@ -27,5 +26,11 @@ object SalesTax {
     }
 
     private fun roundToCents( amount : Double ) = floor(amount * 100 + 0.5) / 100
+
+    enum class SaleTaxesType {
+        HST,
+        GST,
+        PST
+    }
 
 }
