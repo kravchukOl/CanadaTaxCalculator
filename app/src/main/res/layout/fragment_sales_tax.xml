@@ -52,9 +52,9 @@
             <Spinner
                 android:id="@+id/spinner_provinces"
                 style="@style/Widget.AppCompat.Spinner.DropDown"
-                android:background="@color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
+                android:background="@color/transparent"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toBottomOf="@id/spinner_provinces">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edit_text_annual_income"
+                    android:id="@+id/edit_text_price_before_tax"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="numberDecimal"
@@ -117,8 +117,10 @@
                 app:layout_constraintTop_toBottomOf="@id/text_input_layout_price_before_tax">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_discount"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -130,48 +132,43 @@
                 app:layout_constraintTop_toBottomOf="@id/text_input_layout_discount" />
 
             <TextView
-                android:id="@+id/text_view_gst_value"
+                android:id="@+id/text_view_gst_hst_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="HST: 10.25"
+                android:text="@string/gst_value"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
-                app:layout_constraintTop_toBottomOf="@id/divider_amount_taxes" />
+                app:layout_constraintTop_toBottomOf="@id/divider_amount_taxes"
+                tools:text="HST: 10.12" />
+
 
             <TextView
                 android:id="@+id/text_view_pst_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="GST:  10.25"
+                android:text="@string/pst_value"
                 android:textSize="18sp"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
-                app:layout_constraintTop_toBottomOf="@id/text_view_gst_value"
-                android:visibility="gone"/>
+                app:layout_constraintTop_toBottomOf="@id/text_view_gst_hst_value"
+                tools:text="PST: 11.05" />
 
             <TextView
-                android:id="@+id/text_view_hst_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="PST: 10.25"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/divider_amount_taxes"
-                app:layout_constraintTop_toBottomOf="@id/text_view_pst_value" />
-
-            <TextView
+                android:id="@+id/text_view_total_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Total: 324.75 C$"
+                android:text="@string/sales_total_amount"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/text_input_layout_discount"
                 app:layout_constraintStart_toStartOf="@+id/text_input_layout_discount"
-                app:layout_constraintTop_toBottomOf="@id/divider_amount_taxes" />
+                app:layout_constraintTop_toBottomOf="@id/divider_amount_taxes"
+                tools:text="Total: 324.75 C$" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

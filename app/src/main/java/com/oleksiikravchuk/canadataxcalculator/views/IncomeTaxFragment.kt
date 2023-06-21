@@ -143,7 +143,7 @@ class IncomeTaxFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 viewModel.basicIncome = 0.0
             } else {
-                viewModel.basicIncome = binding.editTextAnnualIncome.text.toString().toDouble()
+                viewModel.basicIncome = it.toString().toDouble()
             }
             calculateTaxes()
         }
@@ -152,7 +152,7 @@ class IncomeTaxFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 viewModel.contributionRRSP = 0.0
             } else {
-                viewModel.contributionRRSP = binding.editTextRrcp.text.toString().toDouble()
+                viewModel.contributionRRSP = it.toString().toDouble()
             }
             calculateTaxes()
         }
@@ -161,7 +161,7 @@ class IncomeTaxFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 viewModel.capitalGains = 0.0
             } else {
-                viewModel.capitalGains = binding.editTextCapitalGains.text.toString().toDouble()
+                viewModel.capitalGains = it.toString().toDouble()
             }
             calculateTaxes()
         }
@@ -170,8 +170,7 @@ class IncomeTaxFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 viewModel.eligibleDividends = 0.0
             } else {
-                viewModel.eligibleDividends =
-                    binding.editTextEligibleDividends.text.toString().toDouble()
+                viewModel.eligibleDividends = it.toString().toDouble()
             }
             calculateTaxes()
         }
@@ -180,8 +179,7 @@ class IncomeTaxFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 viewModel.nonEligibleDividends = 0.0
             } else {
-                viewModel.nonEligibleDividends =
-                    binding.editTextNonEligibleDividends.text.toString().toDouble()
+                viewModel.nonEligibleDividends =  it.toString().toDouble()
             }
             calculateTaxes()
         }

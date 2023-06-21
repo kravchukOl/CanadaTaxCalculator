@@ -4,7 +4,7 @@
     <string name="nav_bar_income_tax">Income Tax</string>
     <string name="sales_tax">GST/HST</string>
     <string name="input_card_province">Province:</string>
-    <string name="input_card_currency_cad">CA$</string>
+    <string name="input_card_currency_cad">C$</string>
     <string name="button_calculate_taxes">Calculate taxes</string>
     <string name="federal_tax_text_view">Federal Tax:</string>
     <string name="provincial_tax_text_view">Provincial Tax:</string>
@@ -42,4 +42,8 @@
     <string name="cpp_info">RPC (Régime de pensions du Canada) / RQAP (Régime de rentes du Québec) - Le RPC et le RQAP sont des régimes de pensions administrés par le gouvernement au Canada qui fournissent des prestations de remplacement de revenu et de retraite aux personnes admissibles. Les régimes sont financés par les contributions versées par les employés, les employeurs et les travailleurs autonomes au cours de leur vie active. Le montant des prestations de pension reçues est basé sur les contributions de l\'individu et les années de participation au régime.</string>
     <string name="self_employed_info">Travailleur autonome - Dans le contexte du RPC/RQAP, être travailleur autonome fait référence aux personnes qui travaillent pour elles-mêmes et n\'ont pas d\'employeur qui déduit les cotisations au RPC/RQAP de leurs revenus. Les travailleurs autonomes sont responsables de verser leurs propres cotisations au RPC ou au RQAP en fonction de leurs revenus provenant de leur travail autonome. Ils doivent cotiser à la fois la part employé et la part employeur des cotisations au RPC/RQAP.</string>
     <string name="input_card_annual_income">Other Income:</string>
+    <string name="sales_total_amount">Total: %s C$</string>
+    <string name="gst_value">GST: %s C$</string>
+    <string name="pst_value">PST:  %s C$</string>
+    <string name="hst_value">HST: %s C$</string>
 </resources>

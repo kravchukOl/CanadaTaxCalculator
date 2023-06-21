@@ -15,7 +15,7 @@ class IncomeTaxViewModel : ViewModel() {
     private val deductions = Deductions()
     private var optionalTaxes = OptionalTaxes()
 
-    var selectedProvince = provincial.provincesAndRates2023[0]
+    lateinit var selectedProvince : Province
     var basicIncome: Double = 0.0
     var contributionRRSP: Double = 0.0
     var capitalGains: Double = 0.0
