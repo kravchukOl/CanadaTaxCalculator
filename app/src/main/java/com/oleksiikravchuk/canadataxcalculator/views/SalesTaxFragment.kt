@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -21,14 +22,14 @@ import com.oleksiikravchuk.canadataxcalculator.viewmodels.SalesTaxViewModel
 class SalesTaxFragment : Fragment() {
 
     lateinit var binding: FragmentSalesTaxBinding
-    lateinit var viewModel : SalesTaxViewModel
+    lateinit var viewModel: SalesTaxViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSalesTaxBinding.inflate(inflater, container,  false)
+        binding = FragmentSalesTaxBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,33 +39,54 @@ class SalesTaxFragment : Fragment() {
         viewModel = ViewModelProvider(this)[SalesTaxViewModel::class.java]
 
         setSpinnerAdapter()
+        fetchUiState(viewModel.saleItemUiState.value)
         initListeners()
         initObservers()
     }
 
-    private fun initObservers() {
-        val itemUiState : LiveData<SaleItemUiState> = viewModel.saleItemUiState
-        itemUiState.observe(viewLifecycleOwner) { uiState ->
-            binding.textViewTotalAmount.text = getString(R.string.sales_total_amount, uiState.total.toString())
+    private fun fetchUiState(uiState: SaleItemUiState?) {
+        if (uiState == null) {
+            binding.textViewGstHstValue.text = getString(R.string.hst_value, "0.00")
+            binding.textViewTotalAmount.text = getString(R.string.sales_total_amount, "0.00")
+            return
+        }
 
-            for(tax in uiState.taxesList){
-                when (tax.first) {
-                    SalesTax.SaleTaxesType.GST -> {
-                        binding.textViewGstHstValue.visibility = View.VISIBLE
-                        binding.textViewGstHstValue.text = getString(R.string.gst_value, tax.second.toString())
-                        binding.textViewPstValue.visibility = View.INVISIBLE
-                    }
-                    SalesTax.SaleTaxesType.HST -> {
-                        binding.textViewGstHstValue.visibility = View.VISIBLE
-                        binding.textViewGstHstValue.text = getString(R.string.hst_value, tax.second.toString())
-                        binding.textViewPstValue.visibility = View.INVISIBLE
-                    }
-                    SalesTax.SaleTaxesType.PST -> {
-                        binding.textViewPstValue.visibility = View.VISIBLE
-                        binding.textViewPstValue.text = getString(R.string.pst_value, tax.second.toString())
-                    }
+        binding.textViewTotalAmount.text =
+            getString(R.string.sales_total_amount, String.format("%.2f", uiState.total))
+
+        for (tax in uiState.taxesList) {
+            when (tax.first) {
+                SalesTax.SaleTaxesType.GST -> {
+                    binding.textViewGstHstValue.visibility = View.VISIBLE
+                    binding.textViewGstHstValue.text = getString(
+                        R.string.gst_value,
+                        String.format("%.2f", tax.second)
+                    )
+                    binding.textViewPstValue.visibility = View.INVISIBLE
+                }
+                SalesTax.SaleTaxesType.HST -> {
+                    binding.textViewGstHstValue.visibility = View.VISIBLE
+                    binding.textViewGstHstValue.text = getString(
+                        R.string.hst_value,
+                        String.format("%.2f", tax.second)
+                    )
+                    binding.textViewPstValue.visibility = View.INVISIBLE
+                }
+                SalesTax.SaleTaxesType.PST -> {
+                    binding.textViewPstValue.visibility = View.VISIBLE
+                    binding.textViewPstValue.text = getString(
+                        R.string.pst_value,
+                        String.format("%.2f", tax.second)
+                    )
                 }
             }
+        }
+    }
+
+    private fun initObservers() {
+        val itemUiState: LiveData<SaleItemUiState> = viewModel.saleItemUiState
+        itemUiState.observe(viewLifecycleOwner) { uiState ->
+            fetchUiState(uiState)
         }
     }
 
@@ -74,17 +96,24 @@ class SalesTaxFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.editTextPriceBeforeTax.addTextChangedListener{
-            if(it.isNullOrEmpty())
+        binding.editTextPriceBeforeTax.addTextChangedListener {
+            if (it.isNullOrEmpty())
                 viewModel.basePrice = 0.0
             else
                 viewModel.basePrice = it.toString().toDouble()
         }
-        binding.editTextDiscount.addTextChangedListener{
-            if(it.isNullOrEmpty())
+        binding.editTextDiscount.addTextChangedListener {
+            if (it.isNullOrEmpty())
                 viewModel.discount = 0.0
-            else
+            else if (it.toString().toDouble() >= 100) {
+                Toast.makeText(
+                    this.context,
+                    getString(R.string.discount_validation_message),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 viewModel.discount = it.toString().toDouble()
+            }
         }
 
         binding.spinnerProvinces.onItemSelectedListener =

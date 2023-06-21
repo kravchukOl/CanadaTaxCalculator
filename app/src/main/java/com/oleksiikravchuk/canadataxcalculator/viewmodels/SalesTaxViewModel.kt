@@ -10,7 +10,7 @@ class SalesTaxViewModel : ViewModel() {
     var basePrice = 0.0
         set(value) {
             field = value
-            if (value > 0) {
+            if (field >= 0) {
                 calculateTaxes()
             }
         }
@@ -18,7 +18,7 @@ class SalesTaxViewModel : ViewModel() {
     var discount = 0.0
         set(value) {
             field = value
-            if (field > 0) {
+            if (field >= 0) {
                 calculateTaxes()
             }
         }
@@ -26,7 +26,6 @@ class SalesTaxViewModel : ViewModel() {
     lateinit var selectedProvince: Province
 
     val saleItemUiState: MutableLiveData<SaleItemUiState> = MutableLiveData()
-
 
     private fun calculateTaxes() {
         val subTotal = basePrice - (basePrice * discount / 100)

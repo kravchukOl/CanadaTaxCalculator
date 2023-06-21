@@ -179,7 +179,7 @@ class IncomeTaxFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 viewModel.nonEligibleDividends = 0.0
             } else {
-                viewModel.nonEligibleDividends =  it.toString().toDouble()
+                viewModel.nonEligibleDividends = it.toString().toDouble()
             }
             calculateTaxes()
         }
@@ -191,9 +191,9 @@ class IncomeTaxFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
+                    viewModel.selectedProvince =
+                        binding.spinnerProvinces.selectedItem as Province
                     if (!binding.editTextAnnualIncome.text.isNullOrEmpty()) {
-                        viewModel.selectedProvince =
-                            binding.spinnerProvinces.selectedItem as Province
                         if (viewModel.containsData) {
                             calculateTaxes()
                         }
