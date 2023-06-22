@@ -48,9 +48,7 @@ class IncomeTaxFragment : Fragment() {
         setSpinnerAdapter()
         initObservers()
         initListeners()
-
-
-        binding.buttonCalculateTaxes.visibility = View.GONE
+        // binding.buttonCalculateTaxes.visibility = View.GONE
     }
 
     private fun restoreInput() {
@@ -232,24 +230,24 @@ class IncomeTaxFragment : Fragment() {
             hideOptions()
         }
 
-        binding.buttonCalculateTaxes.setOnClickListener {
-            hideOptions()
-            calculateTaxes()
-        }
+//        binding.buttonCalculateTaxes.setOnClickListener {
+//            hideOptions()
+//            calculateTaxes()
+//        }
 
-        binding.textViewRrspInfo.setOnClickListener {
+        binding.buttonRrspContribution .setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.RRSP)
         }
-        binding.textViewCapitalGainsInfo.setOnClickListener {
+        binding.buttonCapitalGains.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.CapitalGains)
         }
-        binding.textViewEligibleDivInfo.setOnClickListener {
+        binding.buttonEligibleDividends.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.EligibleDividends)
         }
-        binding.textViewNonEligibleDivInfo.setOnClickListener {
+        binding.buttonNonEligibleDividends.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.NonEligibleDividends)
         }
