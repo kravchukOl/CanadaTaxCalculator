@@ -47,4 +47,5 @@
     <string name="pst_value">PST:  %s C$</string>
     <string name="hst_value">HST: %s C$</string>
     <string name="discount_validation_message">Provide valid discount rate in % (1...100)</string>
+    <string name="qst_value">QST: %s C$</string>
 </resources>

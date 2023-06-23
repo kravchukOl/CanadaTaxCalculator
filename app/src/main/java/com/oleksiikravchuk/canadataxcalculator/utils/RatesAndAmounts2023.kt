@@ -164,7 +164,6 @@ object RatesAndAmounts2023 {
             arrayOf(Pair(SalesTax.SaleTaxesType.HST, 0.15))
         ),
         Province(
-            // Quebec income tax rates
             "Quebec", R.drawable.flag_of_quebec,
             arrayOf(
                 Pair(0, 0.14),
@@ -177,7 +176,7 @@ object RatesAndAmounts2023 {
             0.0342,
             arrayOf(
                 Pair(SalesTax.SaleTaxesType.GST, 0.05),
-                Pair(SalesTax.SaleTaxesType.PST, 0.0975)
+                Pair(SalesTax.SaleTaxesType.QST, 0.0985)
             )
         ),
         Province(

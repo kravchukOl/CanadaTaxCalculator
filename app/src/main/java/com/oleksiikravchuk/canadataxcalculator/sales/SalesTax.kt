@@ -30,7 +30,8 @@ object SalesTax {
     enum class SaleTaxesType {
         HST,
         GST,
-        PST
+        PST,
+        QST
     }
 
 }

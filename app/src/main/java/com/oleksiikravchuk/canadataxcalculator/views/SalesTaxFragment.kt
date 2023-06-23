@@ -79,6 +79,10 @@ class SalesTaxFragment : Fragment() {
                         String.format("%.2f", tax.second)
                     )
                 }
+                SalesTax.SaleTaxesType.QST -> {
+                    binding.textViewPstValue.visibility = View.VISIBLE
+                    binding.textViewPstValue.text = getString(R.string.qst_value, String.format("%.2f", tax.second))
+                }
             }
         }
     }
