@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
@@ -39,12 +38,12 @@ class SalesTaxFragment : Fragment() {
         viewModel = ViewModelProvider(this)[SalesTaxViewModel::class.java]
 
         setSpinnerAdapter()
-        fetchUiState(viewModel.saleItemUiState.value)
+        renderUiState(viewModel.saleItemUiState.value)
         initListeners()
         initObservers()
     }
 
-    private fun fetchUiState(uiState: SaleItemUiState?) {
+    private fun renderUiState(uiState: SaleItemUiState?) {
         if (uiState == null) {
             binding.textViewGstHstValue.text = getString(R.string.hst_value, "0.00")
             binding.textViewTotalAmount.text = getString(R.string.sales_total_amount, "0.00")
@@ -88,9 +87,8 @@ class SalesTaxFragment : Fragment() {
     }
 
     private fun initObservers() {
-        val itemUiState: LiveData<SaleItemUiState> = viewModel.saleItemUiState
-        itemUiState.observe(viewLifecycleOwner) { uiState ->
-            fetchUiState(uiState)
+        viewModel.saleItemUiState.observe(viewLifecycleOwner) { uiState ->
+            renderUiState(uiState)
         }
     }
 
