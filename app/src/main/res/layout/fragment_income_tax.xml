@@ -148,27 +148,14 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/text_view_rrsp_info"-->
-            <!--                style="@style/OptionsTextViewWithDrawable"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:clickable="true"-->
-            <!--                android:focusable="true"-->
-            <!--                android:text="@string/rrsp_contribution"-->
-            <!--                android:textAlignment="textStart"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/edit_text_rrcp"-->
-            <!--                app:layout_constraintEnd_toStartOf="@+id/edit_text_rrcp"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/edit_text_rrcp" />-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_rrcp_contribution"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/rrsp_contribution"
                 android:layout_marginEnd="16dp"
+                android:hint="@string/rrsp_contribution"
                 app:layout_constraintEnd_toStartOf="@id/button_rrsp_contribution"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -195,20 +182,6 @@
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_rrcp_contribution"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/input_layout_rrcp_contribution" />
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/text_view_capital_gains_info"-->
-            <!--                style="@style/OptionsTextViewWithDrawable"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:clickable="true"-->
-            <!--                android:focusable="true"-->
-            <!--                android:text="@string/capital_gains"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/edit_text_capital_gains"-->
-            <!--                app:layout_constraintEnd_toStartOf="@+id/edit_text_capital_gains"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/edit_text_capital_gains" />-->
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_capital_gains"
@@ -243,18 +216,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/input_layout_capital_gains" />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/text_view_eligible_div_info"-->
-            <!--                style="@style/OptionsTextViewWithDrawable"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:clickable="true"-->
-            <!--                android:focusable="true"-->
-            <!--                android:text="@string/eligible_dividends"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@id/edit_text_eligible_dividends"-->
-            <!--                app:layout_constraintEnd_toStartOf="@+id/edit_text_eligible_dividends"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="@id/edit_text_eligible_dividends" />-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_eligible_dividends"
@@ -263,9 +224,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:hint="@string/eligible_dividends"
-                app:layout_constraintTop_toBottomOf="@id/input_layout_capital_gains"
+                app:layout_constraintEnd_toStartOf="@id/button_eligible_dividends"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/button_eligible_dividends">
+                app:layout_constraintTop_toBottomOf="@id/input_layout_capital_gains">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_eligible_dividends"
@@ -288,29 +249,15 @@
                 app:layout_constraintTop_toTopOf="@id/input_layout_eligible_dividends" />
 
 
-<!--            <TextView-->
-<!--                android:id="@+id/text_view_non_eligible_div_info"-->
-<!--                style="@style/OptionsTextViewWithDrawable"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:clickable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:maxWidth="200dp"-->
-<!--                android:text="@string/non_eligible_dividends"-->
-<!--                app:layout_constraintBottom_toBottomOf="@id/edit_text_non_eligible_dividends"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/edit_text_non_eligible_dividends"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="@id/edit_text_non_eligible_dividends" />-->
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_non_eligible_dividends"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/non_eligible_dividends"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                app:layout_constraintTop_toBottomOf="@id/input_layout_eligible_dividends"
                 app:layout_constraintEnd_toStartOf="@id/button_non_eligible_dividends"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/input_layout_eligible_dividends">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_non_eligible_dividends"
@@ -417,19 +364,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-<!--    <Button-->
-<!--        android:id="@+id/button_calculate_taxes"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginHorizontal="28dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:text="@string/button_calculate_taxes"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.583"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/card_view_options" />-->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_summary"

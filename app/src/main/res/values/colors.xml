@@ -11,4 +11,6 @@
     <color name="green700">#388E3C</color>
     <color name="red600">#E53935</color>
     <color name="primary_blue">#343BEA</color>
+    <color name="secondary_blue">#435EC3</color>
+    <color name="variant_blue">#2140B6</color>
 </resources>
