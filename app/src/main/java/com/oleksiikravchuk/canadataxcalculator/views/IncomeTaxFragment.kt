@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -23,7 +23,6 @@ import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
-import com.oleksiikravchuk.canadataxcalculator.viewmodels.MainIncomeTaxUiState
 
 class IncomeTaxFragment : Fragment() {
 
@@ -48,7 +47,6 @@ class IncomeTaxFragment : Fragment() {
         setSpinnerAdapter()
         initObservers()
         initListeners()
-        // binding.buttonCalculateTaxes.visibility = View.GONE
     }
 
     private fun restoreInput() {
@@ -73,8 +71,7 @@ class IncomeTaxFragment : Fragment() {
 
     private fun initObservers() {
 
-        val mainUiState: LiveData<MainIncomeTaxUiState> = viewModel.mainIncomeTaxUiState
-        mainUiState.observe(viewLifecycleOwner) { uiState ->
+        viewModel.mainIncomeTaxUiStates.observe(viewLifecycleOwner) { uiState ->
             binding.textViewFederalTax.text = String.format("%.2f$", uiState.federalTax)
             binding.textViewProvincialTax.text = String.format("%.2f$", uiState.provincialTax)
             binding.textViewTotalIncomeTax.text = String.format("%.2f$", uiState.totalIncomeTax)
@@ -83,52 +80,44 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewMarginalTaxRate.text = String.format("%.1f%%", uiState.marginalTaxRate)
         }
 
-        val totalTaxableIncome: LiveData<Double> = viewModel.totalTaxableIncome
-        totalTaxableIncome.observe(viewLifecycleOwner) { income ->
+        viewModel.totalTaxableIncome.observe(viewLifecycleOwner) { income ->
             binding.textViewTotalTaxableIncome.text = String.format("%.2f$", income)
-            if (totalTaxableIncome.value != binding.editTextAnnualIncome.text.toString().toDouble())
+            if (income != binding.editTextAnnualIncome.text.toString().toDouble())
                 binding.tableRowTotalTaxableIncome.visibility = View.VISIBLE
         }
 
-        val surtax: LiveData<Double> = viewModel.provinceSurtax
-        surtax.observe(viewLifecycleOwner) { tax ->
+        viewModel.provinceSurtax.observe(viewLifecycleOwner) { tax ->
             binding.tableRowSurtax.visibility = View.VISIBLE
             binding.textViewSurtax.text = String.format("%.2f$", tax)
         }
 
-        val capitalGainsTax: LiveData<Double> = viewModel.capitalGainsTax
-        capitalGainsTax.observe(viewLifecycleOwner) { tax ->
+        viewModel.capitalGainsTax.observe(viewLifecycleOwner) { tax ->
             binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
             binding.textViewCapitalGainsTax.text = String.format("%.2f$", tax)
         }
 
-        val eligibleDividendTax: LiveData<Double> = viewModel.eligibleDividendsTax
-        eligibleDividendTax.observe(viewLifecycleOwner) { tax ->
+        viewModel.eligibleDividendsTax.observe(viewLifecycleOwner) { tax ->
             binding.tableRowEligibleTax.visibility = View.VISIBLE
             binding.textViewEligibleDivTax.text = String.format("%.2f$", tax)
         }
 
-        val nonEligibleDividendTax: LiveData<Double> = viewModel.nonEligibleDividendsTax
-        nonEligibleDividendTax.observe(viewLifecycleOwner) { tax ->
+        viewModel.nonEligibleDividendsTax.observe(viewLifecycleOwner) { tax ->
             binding.tableRowNonEligibleTax.visibility = View.VISIBLE
             binding.textViewNonEligibleDivTax.text = String.format("%.2f$", tax)
         }
 
-        val deductionEI: LiveData<Double> = viewModel.deductionEI
-        deductionEI.observe(viewLifecycleOwner) { deduction ->
+        viewModel.deductionEI.observe(viewLifecycleOwner) { deduction ->
             binding.tableRowEmploymentInsuranceDeduction.visibility = View.VISIBLE
             binding.textViewEmploymentInsuranceDeduction.text = String.format("%.2f$", deduction)
         }
 
-        val contributionCPP: LiveData<Double> = viewModel.contributionCPP
-        contributionCPP.observe(viewLifecycleOwner) { contribution ->
+        viewModel.contributionCPP.observe(viewLifecycleOwner) { contribution ->
             binding.tableRowCppQppContribution.visibility = View.VISIBLE
             binding.textViewCppContribution.text =
                 String.format("%.2f$", contribution)
         }
 
-        val rrspRefund: LiveData<Double> = viewModel.rrspRefund
-        rrspRefund.observe(viewLifecycleOwner) { refund ->
+        viewModel.rrspRefund.observe(viewLifecycleOwner) { refund ->
             binding.tableRowRrspRefund.visibility = View.VISIBLE
             binding.textViewRrspRefund.text = String.format("%.2f$", refund)
         }
@@ -230,15 +219,17 @@ class IncomeTaxFragment : Fragment() {
             hideOptions()
         }
 
-//        binding.buttonCalculateTaxes.setOnClickListener {
-//            hideOptions()
-//            calculateTaxes()
-//        }
-
-        binding.buttonRrspContribution .setOnClickListener {
+        binding.buttonRrspContribution.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.RRSP)
         }
+
+//        binding.buttonRrspContribution.setOnFocusChangeListener { v, hasFocus ->
+//            if(hasFocus) {
+//                (v as ImageButton).setImageResource()
+//            }
+//        }
+
         binding.buttonCapitalGains.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.CapitalGains)
@@ -271,7 +262,6 @@ class IncomeTaxFragment : Fragment() {
                 override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
                     if (event?.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                         hideOptions()
-                        //calculateTaxes()
                         viewModel.calculate()
                         return true
                     }

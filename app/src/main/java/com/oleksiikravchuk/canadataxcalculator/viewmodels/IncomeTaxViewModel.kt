@@ -1,5 +1,6 @@
 package com.oleksiikravchuk.canadataxcalculator.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oleksiikravchuk.canadataxcalculator.income.Deductions
@@ -15,7 +16,7 @@ class IncomeTaxViewModel : ViewModel() {
     private val deductions = Deductions()
     private var optionalTaxes = OptionalTaxes()
 
-    lateinit var selectedProvince : Province
+    lateinit var selectedProvince: Province
     var basicIncome: Double = 0.0
     var contributionRRSP: Double = 0.0
     var capitalGains: Double = 0.0
@@ -29,26 +30,55 @@ class IncomeTaxViewModel : ViewModel() {
     var containsData: Boolean = false
         private set
 
-    val mainIncomeTaxUiState: MutableLiveData<MainIncomeTaxUiState> = MutableLiveData()
 
+    private val _mainIncomeTaxUiState: MutableLiveData<MainIncomeTaxUiState> = MutableLiveData()
+    val mainIncomeTaxUiStates: LiveData<MainIncomeTaxUiState>
+        get() = _mainIncomeTaxUiState
 
-    val totalActualIncome: MutableLiveData<Double> = MutableLiveData()
-    val totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
-    val provinceSurtax: MutableLiveData<Double> = MutableLiveData()
-    val capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
-    val rrspRefund: MutableLiveData<Double> = MutableLiveData()
-    val eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
-    val nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
-    val deductionEI: MutableLiveData<Double> = MutableLiveData()
-    val contributionCPP: MutableLiveData<Double> = MutableLiveData()
+    private val _totalActualIncome: MutableLiveData<Double> = MutableLiveData()
+    val totalActualIncome: LiveData<Double>
+        get() = _totalActualIncome
+
+    private val _totalTaxableIncome: MutableLiveData<Double> = MutableLiveData()
+    val totalTaxableIncome: LiveData<Double>
+        get() = _totalTaxableIncome
+
+    private val _provinceSurtax: MutableLiveData<Double> = MutableLiveData()
+    val provinceSurtax: LiveData<Double>
+        get() = _provinceSurtax
+
+    private val _capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
+    val capitalGainsTax: LiveData<Double>
+        get() = _capitalGainsTax
+
+    private val _rrspRefund: MutableLiveData<Double> = MutableLiveData()
+    val  rrspRefund: LiveData<Double>
+        get() = _rrspRefund
+
+    private val _eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
+    val  eligibleDividendsTax: LiveData<Double>
+        get() = _eligibleDividendsTax
+
+    private val _nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
+    val  nonEligibleDividendsTax : LiveData<Double>
+        get() = _nonEligibleDividendsTax
+
+    private val _deductionEI: MutableLiveData<Double> = MutableLiveData()
+    val  deductionEI : LiveData<Double>
+        get() = _deductionEI
+
+    private val _contributionCPP: MutableLiveData<Double> = MutableLiveData()
+    val contributionCPP : LiveData<Double>
+        get() = _contributionCPP
+
 
 
     fun calculate() {
         this.containsData = true
 
         val totalTaxableIncome = getTotalTaxableIncome()
-        this.totalTaxableIncome.value = totalTaxableIncome
-        this.totalActualIncome.value = getTotalActualIncome()
+        this._totalTaxableIncome.value = totalTaxableIncome
+        this._totalActualIncome.value = getTotalActualIncome()
 
         val federalTax = federal.getFederalTax(totalTaxableIncome, this.selectedProvince)
 
@@ -56,7 +86,7 @@ class IncomeTaxViewModel : ViewModel() {
 
         val surtax = getSurtax(provincialTax, selectedProvince)
         if (surtax > 0.0) {
-            this.provinceSurtax.value = surtax
+            this._provinceSurtax.value = surtax
         }
 
         val totalIncomeTax = federalTax + provincialTax - dividendCredits()
@@ -68,12 +98,12 @@ class IncomeTaxViewModel : ViewModel() {
         val averageTaxRate = totalIncomeTax / getTotalActualIncome() * 100
 
         if (this.capitalGains > 0) {
-            this.capitalGainsTax.value =
+            this._capitalGainsTax.value =
                 this.optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
         }
 
         if (this.eligibleDividends > 0) {
-            eligibleDividendsTax.value =
+            _eligibleDividendsTax.value =
                 this.optionalTaxes.getEligibleDivsTax(
                     eligibleDividends,
                     selectedProvince,
@@ -82,7 +112,7 @@ class IncomeTaxViewModel : ViewModel() {
         }
 
         if (this.nonEligibleDividends > 0) {
-            this.nonEligibleDividendsTax.value =
+            this._nonEligibleDividendsTax.value =
                 this.optionalTaxes.getNonEligibleDivsTax(
                     nonEligibleDividends,
                     selectedProvince,
@@ -94,7 +124,7 @@ class IncomeTaxViewModel : ViewModel() {
         if (this.isEiIncluded) {
             deductionEI =
                 deductions.getEmploymentInsuranceDeduction(totalTaxableIncome, selectedProvince)
-            this.deductionEI.value = deductionEI
+            this._deductionEI.value = deductionEI
         }
 
         var contributionCpp = 0.0
@@ -104,17 +134,17 @@ class IncomeTaxViewModel : ViewModel() {
                 this.selectedProvince,
                 this.isSelfEmployed
             )
-            this.contributionCPP.value = contributionCpp
+            this._contributionCPP.value = contributionCpp
         }
         val totalNetIncome = totalTaxableIncome - totalIncomeTax - contributionCpp - deductionEI
 
 
 
         if (contributionRRSP > 0) {
-            rrspRefund.value = contributionRRSP * marginalTaxRate
+            _rrspRefund.value = contributionRRSP * marginalTaxRate
         }
 
-        mainIncomeTaxUiState.value = MainIncomeTaxUiState(
+        _mainIncomeTaxUiState.value = MainIncomeTaxUiState(
             totalNetIncome,
             totalIncomeTax,
             federalTax,

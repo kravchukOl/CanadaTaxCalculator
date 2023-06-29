@@ -5,7 +5,7 @@
     android:id="@+id/linear_layout_income_tax"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3F2FD"
+    android:background="@color/light_blue_surface"
     android:orientation="vertical">
 
 
@@ -175,6 +175,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
+                android:padding="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/button_rrsp_contribution"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -208,9 +210,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
+                android:padding="8dp"
                 android:id="@+id/button_capital_gains"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/image_button_background"
                 android:src="@drawable/ic_question_mark_24"
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_capital_gains"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -243,6 +247,8 @@
                 android:id="@+id/button_eligible_dividends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/image_button_background"
+                android:padding="8dp"
                 android:src="@drawable/ic_question_mark_24"
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_eligible_dividends"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -274,6 +280,8 @@
                 android:id="@+id/button_non_eligible_dividends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/image_button_background"
+                android:padding="8dp"
                 android:src="@drawable/ic_question_mark_24"
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_non_eligible_dividends"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -23,6 +23,8 @@ class SalesTaxFragment : Fragment() {
     lateinit var binding: FragmentSalesTaxBinding
     lateinit var viewModel: SalesTaxViewModel
 
+    ;
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,6 +49,8 @@ class SalesTaxFragment : Fragment() {
         if (uiState == null) {
             binding.textViewGstHstValue.text = getString(R.string.hst_value, "0.00")
             binding.textViewTotalAmount.text = getString(R.string.sales_total_amount, "0.00")
+            binding.textViewCartTotalAmount.text = getString(R.string.cart_total_value, "0.00")
+            binding.textViewCartTaxes.text = getString(R.string.cart_taxes_value, "0.00")
             return
         }
 
