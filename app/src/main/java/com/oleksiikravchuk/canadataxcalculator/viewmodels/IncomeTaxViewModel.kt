@@ -93,9 +93,8 @@ class IncomeTaxViewModel : ViewModel() {
 
         var marginalTaxRate = federal.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
         marginalTaxRate += provincial.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
-        marginalTaxRate *= 100
 
-        val averageTaxRate = totalIncomeTax / getTotalActualIncome() * 100
+        val averageTaxRate = totalIncomeTax / getTotalActualIncome()
 
         if (this.capitalGains > 0) {
             this._capitalGainsTax.value =
@@ -149,10 +148,9 @@ class IncomeTaxViewModel : ViewModel() {
             totalIncomeTax,
             federalTax,
             provincialTax,
-            marginalTaxRate,
-            averageTaxRate
+            marginalTaxRate * 100,
+            averageTaxRate * 100
         )
-
     }
 
 

@@ -8,11 +8,13 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentSalesTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.models.Province
+import com.oleksiikravchuk.canadataxcalculator.sales.CartItem
 import com.oleksiikravchuk.canadataxcalculator.sales.SalesTax
 import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.SaleItemUiState
@@ -23,7 +25,6 @@ class SalesTaxFragment : Fragment() {
     lateinit var binding: FragmentSalesTaxBinding
     lateinit var viewModel: SalesTaxViewModel
 
-    ;
 
     override fun onCreateView(
         inflater: LayoutInflater,

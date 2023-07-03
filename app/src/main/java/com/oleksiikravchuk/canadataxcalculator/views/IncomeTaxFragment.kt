@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -27,7 +27,7 @@ import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
-    private lateinit var viewModel: IncomeTaxViewModel
+    private val  viewModel: IncomeTaxViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class IncomeTaxFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[IncomeTaxViewModel::class.java]
+//        viewModel = ViewModelProvider(this)[IncomeTaxViewModel::class.java]
 
         restoreInput()
         setSpinnerAdapter()

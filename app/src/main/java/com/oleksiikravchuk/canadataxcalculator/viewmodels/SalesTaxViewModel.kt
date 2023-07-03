@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oleksiikravchuk.canadataxcalculator.models.Province
+import com.oleksiikravchuk.canadataxcalculator.sales.CartItem
 import com.oleksiikravchuk.canadataxcalculator.sales.SalesTax
 
 class SalesTaxViewModel : ViewModel() {
@@ -27,9 +28,16 @@ class SalesTaxViewModel : ViewModel() {
     lateinit var selectedProvince: Province
 
     private val _saleItemUiState: MutableLiveData<SaleItemUiState> = MutableLiveData()
-
     val saleItemUiState: LiveData<SaleItemUiState>
         get() = _saleItemUiState
+
+    private val cartList = mutableListOf<CartItem>()
+
+//    val cartListUiState : LiveData<List<CartItem>>
+//        get() {
+//
+//        }
+
 
     private fun calculateTaxes() {
         val subTotal = basePrice - (basePrice * discount / 100)
