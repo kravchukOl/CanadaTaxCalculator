@@ -14,4 +14,6 @@
     <color name="secondary_blue">#435EC3</color>
     <color name="variant_blue">#2140B6</color>
     <color name="light_blue_surface">#E3F2FD</color>
+    <color name="green_text_color">#2E7D32</color>
+    <color name="red_text_color">#D32F2F</color>
 </resources>

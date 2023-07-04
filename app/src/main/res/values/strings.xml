@@ -8,7 +8,7 @@
     <string name="button_calculate_taxes">Calculate taxes</string>
     <string name="federal_tax_text_view">Federal Tax:</string>
     <string name="provincial_tax_text_view">Provincial Tax:</string>
-    <string name="total_income_tax_text_view">Total Income Tax:</string>
+    <string name="total_income_tax_text_view">Income Tax:</string>
     <string name="average_tax_rate_text_view">Average Tax Rate:</string>
     <string name="net_income_text_view">After Tax Income:</string>
     <string name="content_description_flag_image">Province flag image</string>
@@ -28,7 +28,7 @@
     <string name="eligible_dividends">Eligible Dividends</string>
     <string name="non_eligible_dividends">Non-eligible Dividends</string>
     <string name="hide_all_options">Hide All Options</string>
-    <string name="total_taxable_income">Total Taxable Income:</string>
+    <string name="total_taxable_income">Taxable Income:</string>
     <string name="marginal_tax_rate">Marginal Tax rate</string>
     <string name="enter_annual_income">Enter Annual Income</string>
     <string name="eligible_dividends_tax">Eligible Dividends Tax:</string>
@@ -45,9 +45,10 @@
     <string name="gst_value">GST: %s C$</string>
     <string name="pst_value">PST:  %s C$</string>
     <string name="hst_value">HST: %s C$</string>
-    <string name="discount_validation_message">Provide valid discount rate in % (1...100)</string>
+    <string name="discount_validation_message">Provide valid discount rate in % (1…100)</string>
     <string name="qst_value">QST: %s C$</string>
     <string name="cart_total_value">Total: %s C$</string>
     <string name="cart_taxes_value">Taxes: %s C$</string>
     <string name="cart_title">Cart:</string>
+    <string name="dividend_credit">Dividend Tax Credit:</string>
 </resources>

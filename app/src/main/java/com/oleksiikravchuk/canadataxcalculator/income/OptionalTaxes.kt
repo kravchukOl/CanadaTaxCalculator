@@ -45,19 +45,17 @@ class OptionalTaxes {
     }
 
     fun getTaxCreditOnNonEligibleDivs(amount: Double, province: Province): Double {
-        val federalCredit =
-            getNonEligibleDivsGrossUpIncome(amount) * this.federalNonEligibleTaxCreditRate
-        val provincialCredit =
-            getNonEligibleDivsGrossUpIncome(amount) * province.nonEligibleTaxCreditRate
+        val grossedUpIncome = getNonEligibleDivsGrossUpIncome(amount)
+        val federalCredit = grossedUpIncome * this.federalNonEligibleTaxCreditRate
+        val provincialCredit = grossedUpIncome * province.nonEligibleTaxCreditRate
 
         return federalCredit + provincialCredit
     }
 
     fun getTaxCreditOnEligibleDivs(amount: Double, province: Province): Double {
-        val provincialCredit =
-            getEligibleDivsGrossUpIncome(amount) * this.federalEligibleTaxCreditRate
-        val federalCredit =
-            getEligibleDivsGrossUpIncome(amount) * province.eligibleTaxCreditRate
+        val grossedUpIncome = getNonEligibleDivsGrossUpIncome(amount)
+        val federalCredit = grossedUpIncome * this.federalEligibleTaxCreditRate
+        val provincialCredit = grossedUpIncome * province.eligibleTaxCreditRate
 
         return federalCredit + provincialCredit
     }

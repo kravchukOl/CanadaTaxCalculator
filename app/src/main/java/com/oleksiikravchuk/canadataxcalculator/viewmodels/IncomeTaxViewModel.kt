@@ -47,30 +47,21 @@ class IncomeTaxViewModel : ViewModel() {
     val provinceSurtax: LiveData<Double>
         get() = _provinceSurtax
 
-    private val _capitalGainsTax: MutableLiveData<Double> = MutableLiveData()
-    val capitalGainsTax: LiveData<Double>
-        get() = _capitalGainsTax
-
     private val _rrspRefund: MutableLiveData<Double> = MutableLiveData()
-    val  rrspRefund: LiveData<Double>
+    val rrspRefund: LiveData<Double>
         get() = _rrspRefund
 
-    private val _eligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
-    val  eligibleDividendsTax: LiveData<Double>
-        get() = _eligibleDividendsTax
-
-    private val _nonEligibleDividendsTax: MutableLiveData<Double> = MutableLiveData()
-    val  nonEligibleDividendsTax : LiveData<Double>
-        get() = _nonEligibleDividendsTax
+    private val _dividendTaxCredit: MutableLiveData<Double> = MutableLiveData()
+    val dividendTaxCredit: LiveData<Double>
+        get() = _dividendTaxCredit
 
     private val _deductionEI: MutableLiveData<Double> = MutableLiveData()
-    val  deductionEI : LiveData<Double>
+    val deductionEI: LiveData<Double>
         get() = _deductionEI
 
     private val _contributionCPP: MutableLiveData<Double> = MutableLiveData()
-    val contributionCPP : LiveData<Double>
+    val contributionCPP: LiveData<Double>
         get() = _contributionCPP
-
 
 
     fun calculate() {
@@ -89,35 +80,21 @@ class IncomeTaxViewModel : ViewModel() {
             this._provinceSurtax.value = surtax
         }
 
-        val totalIncomeTax = federalTax + provincialTax - dividendCredits()
+        val dividendCredit = dividendCredits()
+        if (dividendCredit > 0) {
+            _dividendTaxCredit.value = dividendCredit
+        }
+
+
+        var totalIncomeTax = federalTax + provincialTax - dividendCredits()
+        if (totalIncomeTax < 0) {
+            totalIncomeTax = 0.0
+        }
 
         var marginalTaxRate = federal.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
         marginalTaxRate += provincial.getMarginalTaxRate(totalTaxableIncome, selectedProvince)
 
         val averageTaxRate = totalIncomeTax / getTotalActualIncome()
-
-        if (this.capitalGains > 0) {
-            this._capitalGainsTax.value =
-                this.optionalTaxes.getCapitalGainsTax(capitalGains, marginalTaxRate)
-        }
-
-        if (this.eligibleDividends > 0) {
-            _eligibleDividendsTax.value =
-                this.optionalTaxes.getEligibleDivsTax(
-                    eligibleDividends,
-                    selectedProvince,
-                    marginalTaxRate
-                )
-        }
-
-        if (this.nonEligibleDividends > 0) {
-            this._nonEligibleDividendsTax.value =
-                this.optionalTaxes.getNonEligibleDivsTax(
-                    nonEligibleDividends,
-                    selectedProvince,
-                    marginalTaxRate
-                )
-        }
 
         var deductionEI = 0.0
         if (this.isEiIncluded) {
@@ -135,7 +112,7 @@ class IncomeTaxViewModel : ViewModel() {
             )
             this._contributionCPP.value = contributionCpp
         }
-        val totalNetIncome = totalTaxableIncome - totalIncomeTax - contributionCpp - deductionEI
+        val totalNetIncome = getTotalActualIncome() - totalIncomeTax - contributionCpp - deductionEI
 
 
 

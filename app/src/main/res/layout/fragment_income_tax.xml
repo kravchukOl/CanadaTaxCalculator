@@ -146,7 +146,7 @@
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -176,7 +176,7 @@
 
             <ImageButton
                 android:padding="8dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:background="@drawable/image_button_background"
                 android:id="@+id/button_rrsp_contribution"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -484,71 +484,91 @@
                         tools:text="3,215.32 $" />
                 </TableRow>
 
+<!--                <TableRow-->
+<!--                    android:id="@+id/table_row_capital_gains_tax"-->
+<!--                    android:visibility="gone"-->
+<!--                    tools:visibility="visible">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_margin="8dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:text="@string/capital_gains_tax"-->
+<!--                        android:textSize="16sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/text_view_capital_gains_tax"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="8dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:textAlignment="textEnd"-->
+<!--                        android:textSize="16sp"-->
+<!--                        tools:text="1,255.11 $" />-->
+<!--                </TableRow>-->
+
+<!--                <TableRow-->
+<!--                    android:id="@+id/table_row_eligible_tax"-->
+<!--                    android:visibility="gone"-->
+<!--                    tools:visibility="visible">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_margin="8dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:text="@string/eligible_dividends_tax"-->
+<!--                        android:textSize="16sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/text_view_eligible_div_tax"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="8dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:textAlignment="textEnd"-->
+<!--                        android:textSize="16sp"-->
+<!--                        tools:text="1,366.22 $" />-->
+<!--                </TableRow>-->
+
+<!--                <TableRow-->
+<!--                    android:id="@+id/table_row_non_eligible_tax"-->
+<!--                    android:visibility="gone"-->
+<!--                    tools:visibility="visible">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_margin="8dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:text="@string/non_eligible_dividends_tax"-->
+<!--                        android:textSize="16sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/text_view_non_eligible_div_tax"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="8dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:textAlignment="textEnd"-->
+<!--                        android:textSize="16sp"-->
+<!--                        tools:text="1,477.33 $" />-->
+<!--                </TableRow>-->
+
                 <TableRow
-                    android:id="@+id/table_row_capital_gains_tax"
+                    android:id="@+id/table_row_dividend_credit"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <TextView
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="@string/capital_gains_tax"
+                        android:text="@string/dividend_credit"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/text_view_capital_gains_tax"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/text_view_dividend_credit"
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textAlignment="textEnd"
+                        android:textColor="@color/green_text_color"
                         android:textSize="16sp"
-                        tools:text="1,255.11 $" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/table_row_eligible_tax"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <TextView
-                        android:layout_margin="8dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="@string/eligible_dividends_tax"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/text_view_eligible_div_tax"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:textAlignment="textEnd"
-                        android:textSize="16sp"
-                        tools:text="1,366.22 $" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/table_row_non_eligible_tax"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <TextView
-                        android:layout_margin="8dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="@string/non_eligible_dividends_tax"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/text_view_non_eligible_div_tax"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:textAlignment="textEnd"
-                        android:textSize="16sp"
-                        tools:text="1,477.33 $" />
+                        tools:text="2,123.32 $" />
                 </TableRow>
 
                 <TableRow>
-
                     <TextView
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"
@@ -560,7 +580,7 @@
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"
                         android:textAlignment="textEnd"
-                        android:textColor="#D32F2F"
+                        android:textColor="@color/red_text_color"
                         android:textSize="16sp"
                         tools:text="8,123.32 $" />
                 </TableRow>
@@ -613,7 +633,7 @@
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"
                         android:textAlignment="textEnd"
-                        android:textColor="#2E7D32"
+                        android:textColor="@color/green_text_color"
                         android:textSize="16sp"
                         tools:text="8,123.32 $" />
                 </TableRow>
@@ -634,7 +654,7 @@
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-medium"
                         android:textAlignment="textEnd"
-                        android:textColor="#2E7D32"
+                        android:textColor="@color/green_text_color"
                         android:textSize="16sp"
                         tools:text="3,321.12 $" />
                 </TableRow>

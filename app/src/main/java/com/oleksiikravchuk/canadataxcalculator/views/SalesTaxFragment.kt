@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.oleksiikravchuk.canadataxcalculator.R
@@ -23,7 +24,7 @@ import com.oleksiikravchuk.canadataxcalculator.viewmodels.SalesTaxViewModel
 class SalesTaxFragment : Fragment() {
 
     lateinit var binding: FragmentSalesTaxBinding
-    lateinit var viewModel: SalesTaxViewModel
+    val viewModel: SalesTaxViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -38,7 +39,7 @@ class SalesTaxFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[SalesTaxViewModel::class.java]
+        //viewModel = ViewModelProvider(this)[SalesTaxViewModel::class.java]
 
         setSpinnerAdapter()
         renderUiState(viewModel.saleItemUiState.value)

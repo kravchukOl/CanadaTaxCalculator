@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputEditText
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
@@ -40,8 +41,6 @@ class IncomeTaxFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        viewModel = ViewModelProvider(this)[IncomeTaxViewModel::class.java]
 
         restoreInput()
         setSpinnerAdapter()
@@ -91,19 +90,9 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewSurtax.text = String.format("%.2f$", tax)
         }
 
-        viewModel.capitalGainsTax.observe(viewLifecycleOwner) { tax ->
-            binding.tableRowCapitalGainsTax.visibility = View.VISIBLE
-            binding.textViewCapitalGainsTax.text = String.format("%.2f$", tax)
-        }
-
-        viewModel.eligibleDividendsTax.observe(viewLifecycleOwner) { tax ->
-            binding.tableRowEligibleTax.visibility = View.VISIBLE
-            binding.textViewEligibleDivTax.text = String.format("%.2f$", tax)
-        }
-
-        viewModel.nonEligibleDividendsTax.observe(viewLifecycleOwner) { tax ->
-            binding.tableRowNonEligibleTax.visibility = View.VISIBLE
-            binding.textViewNonEligibleDivTax.text = String.format("%.2f$", tax)
+        viewModel.dividendTaxCredit.observe((viewLifecycleOwner)) { credit ->
+            binding.textViewDividendCredit.text = String.format("%.2f$", credit)
+            binding.tableRowDividendCredit.visibility = View.VISIBLE
         }
 
         viewModel.deductionEI.observe(viewLifecycleOwner) { deduction ->
@@ -126,6 +115,7 @@ class IncomeTaxFragment : Fragment() {
     private fun initListeners() {
         onEnterKeyPressedInit()
 
+
         binding.editTextAnnualIncome.addTextChangedListener {
             if (it.isNullOrEmpty()) {
                 viewModel.basicIncome = 0.0
@@ -134,6 +124,7 @@ class IncomeTaxFragment : Fragment() {
             }
             calculateTaxes()
         }
+
 
         binding.editTextRrcp.addTextChangedListener {
             if (it.isNullOrEmpty()) {
@@ -283,8 +274,9 @@ class IncomeTaxFragment : Fragment() {
 
     private fun calculateTaxes() {
         if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
-            Toast.makeText(context, getString(R.string.enter_annual_income), Toast.LENGTH_SHORT)
-                .show()
+//            Toast.makeText(context, getString(R.string.enter_annual_income), Toast.LENGTH_SHORT)
+//                .show()
+            binding.editTextAnnualIncome.setText("0")
         } else {
             binding.cardViewSummary.visibility = View.VISIBLE
             disableOptionalRows()
@@ -294,12 +286,12 @@ class IncomeTaxFragment : Fragment() {
 
     private fun disableOptionalRows() {
         binding.tableRowCppQppContribution.visibility = View.GONE
-        binding.tableRowCapitalGainsTax.visibility = View.GONE
+//        binding.tableRowCapitalGainsTax.visibility = View.GONE
         binding.tableRowSurtax.visibility = View.GONE
         binding.tableRowEmploymentInsuranceDeduction.visibility = View.GONE
         binding.tableRowTotalTaxableIncome.visibility = View.GONE
-        binding.tableRowEligibleTax.visibility = View.GONE
-        binding.tableRowNonEligibleTax.visibility = View.GONE
+//        binding.tableRowEligibleTax.visibility = View.GONE
+//        binding.tableRowNonEligibleTax.visibility = View.GONE
         binding.tableRowRrspRefund.visibility = View.GONE
     }
 
