@@ -46,7 +46,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#8386e2"
+            android:background="@drawable/card_background_ocean_blue"
             android:padding="12dp">
 
             <Spinner
@@ -179,7 +179,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="28dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="4dp"
         android:elevation="10dp"
         app:cardCornerRadius="16dp"
@@ -212,6 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                tools:listitem="@layout/cart_item"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@id/divider_cart_summary"
                 app:layout_constraintStart_toStartOf="parent"

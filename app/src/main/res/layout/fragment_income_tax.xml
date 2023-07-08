@@ -46,7 +46,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/card_background"
+            android:background="@drawable/card_background_blue"
             android:padding="12dp">
 
             <Spinner

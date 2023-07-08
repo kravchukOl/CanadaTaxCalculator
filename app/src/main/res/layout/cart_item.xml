@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
+
+    <EditText
+        android:id="@+id/text_view_item_tag"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="<Item Tag>" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintBaseline_toBaselineOf="@id/text_view_item_tag"
+        app:layout_constraintStart_toEndOf="@id/text_view_item_tag"
+        tools:text="12.25 C$" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_item_tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_view_item_tag" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:src="@drawable/ic_baseline_cancel_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_item_tag"
+        app:layout_constraintEnd_toStartOf="@id/icon_delete"
+        app:layout_constraintTop_toTopOf="@id/text_view_item_tag"
+        tools:visibility="gone" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:src="@drawable/ic_baseline_check_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/icon_delete"
+        app:layout_constraintEnd_toStartOf="@id/icon_cancel"
+        app:layout_constraintTop_toTopOf="@id/icon_delete"
+        tools:visibility="gone" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
