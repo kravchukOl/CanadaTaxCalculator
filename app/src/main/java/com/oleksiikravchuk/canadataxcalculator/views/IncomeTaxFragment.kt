@@ -10,17 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.google.android.material.textfield.TextInputEditText
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
-import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceArrayAdapter
+import com.oleksiikravchuk.canadataxcalculator.adapters.ProvinceAdapter
 import com.oleksiikravchuk.canadataxcalculator.databinding.FragmentIncomeTaxBinding
 import com.oleksiikravchuk.canadataxcalculator.utils.RatesAndAmounts2023
 import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
@@ -28,7 +25,7 @@ import com.oleksiikravchuk.canadataxcalculator.viewmodels.IncomeTaxViewModel
 class IncomeTaxFragment : Fragment() {
 
     private lateinit var binding: FragmentIncomeTaxBinding
-    private val  viewModel: IncomeTaxViewModel by viewModels()
+    private val viewModel: IncomeTaxViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +74,11 @@ class IncomeTaxFragment : Fragment() {
             binding.textViewNetIncome.text = String.format("%.2f$", uiState.totalNetIncome)
             binding.textViewAverageTaxRate.text = String.format("%.1f%%", uiState.averageTaxRate)
             binding.textViewMarginalTaxRate.text = String.format("%.1f%%", uiState.marginalTaxRate)
+        }
+
+        viewModel.totalActualIncome.observe(viewLifecycleOwner) { income ->
+            binding.textViewTotalActualIncome.text = String.format("%.2f$", income)
+            binding.tableRowTotalActualIncome.visibility = View.VISIBLE
         }
 
         viewModel.totalTaxableIncome.observe(viewLifecycleOwner) { income ->
@@ -181,7 +183,8 @@ class IncomeTaxFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
-        binding.textViewShowOptionsTop.setOnClickListener {
+
+        binding.buttonShowOptionsTop.setOnClickListener {
             when (binding.constraintLayoutOptions.visibility) {
                 View.GONE -> showOptions()
                 else -> hideOptions()
@@ -206,11 +209,11 @@ class IncomeTaxFragment : Fragment() {
             calculateTaxes()
         }
 
-        binding.textHideOptions.setOnClickListener {
+        binding.buttonHideOptions.setOnClickListener {
             hideOptions()
         }
 
-        binding.buttonRrspContribution.setOnClickListener {
+        binding.buttonRrspContributionInfo.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.RRSP)
         }
@@ -221,15 +224,15 @@ class IncomeTaxFragment : Fragment() {
 //            }
 //        }
 
-        binding.buttonCapitalGains.setOnClickListener {
+        binding.buttonCapitalGainsInfo.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.CapitalGains)
         }
-        binding.buttonEligibleDividends.setOnClickListener {
+        binding.buttonEligibleDividendsInfo.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.EligibleDividends)
         }
-        binding.buttonNonEligibleDividends.setOnClickListener {
+        binding.buttonNonEligibleDividendsInfo.setOnClickListener {
             closeSoftKeyboard()
             showEntryInfoSnackBar(EntryInfo.NonEligibleDividends)
         }
@@ -274,14 +277,12 @@ class IncomeTaxFragment : Fragment() {
 
     private fun calculateTaxes() {
         if (binding.editTextAnnualIncome.text.isNullOrEmpty()) {
-//            Toast.makeText(context, getString(R.string.enter_annual_income), Toast.LENGTH_SHORT)
-//                .show()
             binding.editTextAnnualIncome.setText("0")
-        } else {
-            binding.cardViewSummary.visibility = View.VISIBLE
-            disableOptionalRows()
-            viewModel.calculate()
+            viewModel.basicIncome = 0.0
         }
+        binding.cardViewSummary.visibility = View.VISIBLE
+        disableOptionalRows()
+        viewModel.calculate()
     }
 
     private fun disableOptionalRows() {
@@ -293,11 +294,12 @@ class IncomeTaxFragment : Fragment() {
 //        binding.tableRowEligibleTax.visibility = View.GONE
 //        binding.tableRowNonEligibleTax.visibility = View.GONE
         binding.tableRowRrspRefund.visibility = View.GONE
+        binding.tableRowTotalActualIncome.visibility = View.GONE
     }
 
     private fun setSpinnerAdapter() {
         val provincesArray = RatesAndAmounts2023.provincesAndRates2023
-        binding.spinnerProvinces.adapter = ProvinceArrayAdapter(provincesArray)
+        binding.spinnerProvinces.adapter = ProvinceAdapter(provincesArray)
     }
 
     private fun showEntryInfoSnackBar(entryInfo: EntryInfo) {

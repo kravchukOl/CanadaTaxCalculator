@@ -3,55 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
     <EditText
         android:id="@+id/text_view_item_tag"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:hint="<Item Tag>" />
+        android:hint="@string/item_s_tag"
+        tools:hint="Item's Tag"
+        android:inputType="text"
+        android:importantForAutofill="no" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/text_view_item_total"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:textSize="20sp"
+        android:textAlignment="center"
         android:fontFamily="sans-serif-medium"
+        android:textSize="20sp"
         app:layout_constraintBaseline_toBaselineOf="@id/text_view_item_tag"
+        app:layout_constraintEnd_toStartOf="@+id/icon_confirm"
         app:layout_constraintStart_toEndOf="@id/text_view_item_tag"
         tools:text="12.25 C$" />
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/icon_delete"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:src="@drawable/ic_baseline_delete_24"
+        app:icon="@drawable/ic_baseline_delete_24"
+        app:iconTint="@color/secondary_blue"
         app:layout_constraintBottom_toBottomOf="@id/text_view_item_tag"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_view_item_tag" />
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/icon_cancel"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:src="@drawable/ic_baseline_cancel_24"
+        app:iconTint="@color/secondary_blue"
+        app:icon="@drawable/ic_baseline_cancel_24"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/text_view_item_tag"
         app:layout_constraintEnd_toStartOf="@id/icon_delete"
         app:layout_constraintTop_toTopOf="@id/text_view_item_tag"
         tools:visibility="gone" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="wrap_content"
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:id="@+id/icon_confirm"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:src="@drawable/ic_baseline_check_24"
+        app:iconTint="@color/secondary_blue"
+        app:icon="@drawable/ic_baseline_check_circle_24"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/icon_delete"
         app:layout_constraintEnd_toStartOf="@id/icon_cancel"

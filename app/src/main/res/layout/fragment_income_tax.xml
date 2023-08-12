@@ -102,22 +102,23 @@
                 android:text="@string/current_year"
                 android:textColor="@color/white"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@id/text_view_show_options_top"
+                app:layout_constraintBottom_toBottomOf="@id/button_show_options_top"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:id="@+id/text_view_show_options_top"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_show_options_top"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:clickable="true"
+                android:layout_height="38dp"
                 android:drawablePadding="8dp"
-                android:focusable="true"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/show_all_options"
                 android:textAlignment="center"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:drawableStartCompat="@drawable/ic_baseline_arrow_drop_down_circle_24"
+                app:icon="@drawable/ic_baseline_arrow_drop_down_circle_24"
+                app:iconTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -146,7 +147,7 @@
             android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
             android:visibility="gone"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -154,10 +155,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/rrsp_contribution"
-                app:layout_constraintEnd_toStartOf="@id/button_rrsp_contribution"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_rrsp_contribution_info"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -167,22 +169,21 @@
                     android:inputType="numberDecimal"
                     android:maxWidth="150dp"
                     android:textAlignment="center"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:textSize="15sp">
 
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageButton
-                android:padding="8dp"
-                android:background="@drawable/image_button_background"
-                android:id="@+id/button_rrsp_contribution"
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_rrsp_contribution_info"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_question_mark_24"
+                android:padding="8dp"
+                app:icon="@drawable/ic_question_mark_24"
+                app:iconTint="@color/secondary_blue"
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_rrcp_contribution"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/input_layout_rrcp_contribution" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -190,10 +191,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/capital_gains"
-                app:layout_constraintEnd_toStartOf="@id/button_capital_gains"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_capital_gains_info"
                 app:layout_constraintTop_toBottomOf="@id/input_layout_rrcp_contribution">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -209,15 +211,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageButton
-                android:padding="8dp"
-                android:id="@+id/button_capital_gains"
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_capital_gains_info"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/image_button_background"
-                android:src="@drawable/ic_question_mark_24"
+                android:padding="8dp"
+                app:icon="@drawable/ic_question_mark_24"
+                app:iconTint="@color/secondary_blue"
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_capital_gains"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/input_layout_capital_gains" />
 
 
@@ -226,10 +229,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/eligible_dividends"
-                app:layout_constraintEnd_toStartOf="@id/button_eligible_dividends"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_eligible_dividends_info"
                 app:layout_constraintTop_toBottomOf="@id/input_layout_capital_gains">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -243,15 +247,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <ImageButton
-                android:id="@+id/button_eligible_dividends"
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_eligible_dividends_info"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/image_button_background"
                 android:padding="8dp"
-                android:src="@drawable/ic_question_mark_24"
+                app:icon="@drawable/ic_question_mark_24"
+                app:iconTint="@color/secondary_blue"
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_eligible_dividends"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/input_layout_eligible_dividends" />
 
 
@@ -260,44 +265,58 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="8dp"
                 android:hint="@string/non_eligible_dividends"
-                app:layout_constraintEnd_toStartOf="@id/button_non_eligible_dividends"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_non_eligible_dividends_info"
                 app:layout_constraintTop_toBottomOf="@id/input_layout_eligible_dividends">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_non_eligible_dividends"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
-                    android:layout_marginEnd="16dp"
                     android:inputType="numberDecimal"
                     android:maxWidth="150dp"
                     android:textAlignment="center"
                     android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageButton
-                android:id="@+id/button_non_eligible_dividends"
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_non_eligible_dividends_info"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/image_button_background"
                 android:padding="8dp"
-                android:src="@drawable/ic_question_mark_24"
+                app:icon="@drawable/ic_question_mark_24"
+                app:iconTint="@color/secondary_blue"
                 app:layout_constraintBottom_toBottomOf="@id/input_layout_non_eligible_dividends"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/input_layout_non_eligible_dividends" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_ei_deduction_info"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:icon="@drawable/ic_question_mark_24"
+                app:iconTint="@color/secondary_blue"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_employment_insurance_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_view_employment_insurance_info" />
 
             <TextView
                 android:id="@+id/text_view_employment_insurance_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/ei_deduction"
                 app:layout_constraintBaseline_toBaselineOf="@id/switch_ei_deduction"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_ei_deduction_info"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -305,21 +324,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:layout_marginVertical="8dp"
                 android:fontFamily="sans-serif-medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/input_layout_non_eligible_dividends"
                 app:switchPadding="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_cpp_contribution_info"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:icon="@drawable/ic_question_mark_24"
+                app:iconTint="@color/secondary_blue"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_cpp_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_view_cpp_info" />
 
             <TextView
                 android:id="@+id/text_view_cpp_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/switch_cpp_deduction"
                 app:layout_constraintBaseline_toBaselineOf="@id/switch_cpp_deduction"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_cpp_contribution_info"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -332,14 +365,28 @@
                 app:layout_constraintTop_toBottomOf="@id/switch_ei_deduction"
                 app:switchPadding="8dp" />
 
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_self_employed_info"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:icon="@drawable/ic_question_mark_24"
+                app:iconTint="@color/secondary_blue"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_self_employed_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_view_self_employed_info" />
+
             <TextView
                 android:id="@+id/text_view_self_employed_info"
                 style="@style/OptionsTextViewWithDrawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="@string/self_employed"
                 app:layout_constraintBaseline_toBaselineOf="@id/switch_self_employed"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/button_self_employed_info" />
 
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -347,24 +394,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                app:layout_constraintBottom_toTopOf="@id/text_hide_options"
+                app:layout_constraintBottom_toTopOf="@id/button_hide_options"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/switch_cpp_deduction"
                 app:switchPadding="8dp" />
 
-            <TextView
-                android:id="@+id/text_hide_options"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_hide_options"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:clickable="true"
+                android:layout_height="36dp"
                 android:drawablePadding="4dp"
-                android:focusable="true"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/hide_all_options"
                 android:textAlignment="center"
-                android:textColor="#303030"
-                app:drawableStartCompat="@drawable/ic_baseline_arrow_drop_up_24"
+                android:textAllCaps="false"
+                android:textColor="@color/secondary_blue"
+                app:icon="@drawable/ic_baseline_arrow_drop_up_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -372,6 +419,33 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:layout_margin="24dp"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:cardCornerRadius="16dp"-->
+    <!--        tools:visibility="visible">-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@drawable/card_background_blue"-->
+    <!--            android:padding="12dp">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/text_view_tax_brackets"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:fontFamily="sans-serif-medium"-->
+    <!--                android:text="Tax Brackets:"-->
+    <!--                android:textColor="@color/white"-->
+    <!--                android:textSize="16sp"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent" />-->
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--    </androidx.cardview.widget.CardView>-->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_summary"
@@ -401,6 +475,28 @@
                 android:layout_height="wrap_content"
                 android:columnCount="2"
                 android:stretchColumns="0,1">
+
+                <TableRow
+                    android:id="@+id/table_row_total_actual_income"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/actual_income"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/text_view_total_actual_income"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp"
+                        tools:text="99,999.99 $" />
+                </TableRow>
 
                 <TableRow
                     android:id="@+id/table_row_total_taxable_income"
@@ -484,68 +580,68 @@
                         tools:text="3,215.32 $" />
                 </TableRow>
 
-<!--                <TableRow-->
-<!--                    android:id="@+id/table_row_capital_gains_tax"-->
-<!--                    android:visibility="gone"-->
-<!--                    tools:visibility="visible">-->
+                <!--                <TableRow-->
+                <!--                    android:id="@+id/table_row_capital_gains_tax"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    tools:visibility="visible">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_margin="8dp"-->
-<!--                        android:fontFamily="sans-serif-medium"-->
-<!--                        android:text="@string/capital_gains_tax"-->
-<!--                        android:textSize="16sp" />-->
+                <!--                    <TextView-->
+                <!--                        android:layout_margin="8dp"-->
+                <!--                        android:fontFamily="sans-serif-medium"-->
+                <!--                        android:text="@string/capital_gains_tax"-->
+                <!--                        android:textSize="16sp" />-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/text_view_capital_gains_tax"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="8dp"-->
-<!--                        android:fontFamily="sans-serif-medium"-->
-<!--                        android:textAlignment="textEnd"-->
-<!--                        android:textSize="16sp"-->
-<!--                        tools:text="1,255.11 $" />-->
-<!--                </TableRow>-->
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/text_view_capital_gains_tax"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_margin="8dp"-->
+                <!--                        android:fontFamily="sans-serif-medium"-->
+                <!--                        android:textAlignment="textEnd"-->
+                <!--                        android:textSize="16sp"-->
+                <!--                        tools:text="1,255.11 $" />-->
+                <!--                </TableRow>-->
 
-<!--                <TableRow-->
-<!--                    android:id="@+id/table_row_eligible_tax"-->
-<!--                    android:visibility="gone"-->
-<!--                    tools:visibility="visible">-->
+                <!--                <TableRow-->
+                <!--                    android:id="@+id/table_row_eligible_tax"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    tools:visibility="visible">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_margin="8dp"-->
-<!--                        android:fontFamily="sans-serif-medium"-->
-<!--                        android:text="@string/eligible_dividends_tax"-->
-<!--                        android:textSize="16sp" />-->
+                <!--                    <TextView-->
+                <!--                        android:layout_margin="8dp"-->
+                <!--                        android:fontFamily="sans-serif-medium"-->
+                <!--                        android:text="@string/eligible_dividends_tax"-->
+                <!--                        android:textSize="16sp" />-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/text_view_eligible_div_tax"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="8dp"-->
-<!--                        android:fontFamily="sans-serif-medium"-->
-<!--                        android:textAlignment="textEnd"-->
-<!--                        android:textSize="16sp"-->
-<!--                        tools:text="1,366.22 $" />-->
-<!--                </TableRow>-->
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/text_view_eligible_div_tax"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_margin="8dp"-->
+                <!--                        android:fontFamily="sans-serif-medium"-->
+                <!--                        android:textAlignment="textEnd"-->
+                <!--                        android:textSize="16sp"-->
+                <!--                        tools:text="1,366.22 $" />-->
+                <!--                </TableRow>-->
 
-<!--                <TableRow-->
-<!--                    android:id="@+id/table_row_non_eligible_tax"-->
-<!--                    android:visibility="gone"-->
-<!--                    tools:visibility="visible">-->
+                <!--                <TableRow-->
+                <!--                    android:id="@+id/table_row_non_eligible_tax"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    tools:visibility="visible">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_margin="8dp"-->
-<!--                        android:fontFamily="sans-serif-medium"-->
-<!--                        android:text="@string/non_eligible_dividends_tax"-->
-<!--                        android:textSize="16sp" />-->
+                <!--                    <TextView-->
+                <!--                        android:layout_margin="8dp"-->
+                <!--                        android:fontFamily="sans-serif-medium"-->
+                <!--                        android:text="@string/non_eligible_dividends_tax"-->
+                <!--                        android:textSize="16sp" />-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/text_view_non_eligible_div_tax"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="8dp"-->
-<!--                        android:fontFamily="sans-serif-medium"-->
-<!--                        android:textAlignment="textEnd"-->
-<!--                        android:textSize="16sp"-->
-<!--                        tools:text="1,477.33 $" />-->
-<!--                </TableRow>-->
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/text_view_non_eligible_div_tax"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_margin="8dp"-->
+                <!--                        android:fontFamily="sans-serif-medium"-->
+                <!--                        android:textAlignment="textEnd"-->
+                <!--                        android:textSize="16sp"-->
+                <!--                        tools:text="1,477.33 $" />-->
+                <!--                </TableRow>-->
 
                 <TableRow
                     android:id="@+id/table_row_dividend_credit"
@@ -569,6 +665,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:layout_margin="8dp"
                         android:fontFamily="sans-serif-black"

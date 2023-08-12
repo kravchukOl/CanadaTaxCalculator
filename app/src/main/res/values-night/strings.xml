@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="price_before_tax">Price before Tax</string>
+    <string name="apply_discount">Apply Discount</string>
+    <string name="discount">Discount (%)</string>
+</resources>

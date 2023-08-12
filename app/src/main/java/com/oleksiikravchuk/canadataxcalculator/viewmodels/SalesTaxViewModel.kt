@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oleksiikravchuk.canadataxcalculator.models.Province
-import com.oleksiikravchuk.canadataxcalculator.sales.CartItem
+import com.oleksiikravchuk.canadataxcalculator.models.CartItem
 import com.oleksiikravchuk.canadataxcalculator.sales.SalesTax
 
 class SalesTaxViewModel : ViewModel() {

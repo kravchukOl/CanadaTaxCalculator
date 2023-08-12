@@ -1,4 +1,4 @@
-package com.oleksiikravchuk.canadataxcalculator.sales
+package com.oleksiikravchuk.canadataxcalculator.models
 
 data class CartItem(
     val subTotal: Double,

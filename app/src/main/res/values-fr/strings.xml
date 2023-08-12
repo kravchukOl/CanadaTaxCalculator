@@ -27,7 +27,7 @@
     <string name="capital_gains">Capital Gains</string>
     <string name="eligible_dividends">Eligible Dividends</string>
     <string name="non_eligible_dividends">Non-eligible Dividends</string>
-    <string name="hide_all_options">Hide All Options</string>
+    <string name="hide_all_options">Hide Options</string>
     <string name="total_taxable_income">Taxable Income:</string>
     <string name="marginal_tax_rate">Marginal Tax rate</string>
     <string name="enter_annual_income">Enter Annual Income</string>
@@ -52,4 +52,9 @@
     <string name="cart_taxes_value">Taxes: %s C$</string>
     <string name="cart_title">Cart:</string>
     <string name="dividend_credit">Dividend Tax Credit:</string>
+    <string name="actual_income">Total income</string>
+    <string name="item_s_tag">Item\'s Tag</string>
+    <string name="price_before_tax">Price before Tax</string>
+    <string name="apply_discount">Apply Discount</string>
+    <string name="discount">Discount (%)</string>
 </resources>

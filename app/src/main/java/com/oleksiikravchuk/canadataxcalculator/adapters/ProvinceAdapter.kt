@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.oleksiikravchuk.canadataxcalculator.models.Province
 import com.oleksiikravchuk.canadataxcalculator.R
 
-class ProvinceArrayAdapter(private val dataArray: Array<Province>)
+class ProvinceAdapter(private val dataArray: Array<Province>)
     : BaseAdapter() {
 
     override fun getCount(): Int {
